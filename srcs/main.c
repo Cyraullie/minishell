@@ -6,12 +6,17 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:35:36 by lpittet           #+#    #+#             */
-/*   Updated: 2025/01/13 16:10:09 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/01/13 16:20:10 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+/**
+ * @brief create a modifiable environment variable
+ * @param envp , env variable
+ * @return NULL on failure, char **env on success
+ */
 char	**get_env(char **envp)
 {
 	int		i;
@@ -32,13 +37,13 @@ char	**get_env(char **envp)
 	return (env);
 }
 
-int main(int ac, char **av, char **envp)
+int	main(int ac, char **av, char **envp)
 {
 	char	*line;
 	char	**env;
-	
+
 	env = av;     //TODO remove these lines placeholders to be able to compile
-	if (ac < 0)     
+	if (ac < 0)
 		return (1);
 	env = get_env(envp);
 	while (1)
