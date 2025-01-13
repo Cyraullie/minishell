@@ -7,7 +7,7 @@ CFLAGS = -Wall -Werror -Wextra  -g
 SRCDIR = srcs/
 OBJDIR = objs/
 
-SRCS =  $(addprefix $(SRCDIR), main.c)
+SRCS =  $(addprefix $(SRCDIR), main.c parsing.c parsing_utils.c)
 
 OBJS = $(SRCS:$(SRCDIR)%.c=$(OBJDIR)%.o)
 

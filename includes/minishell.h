@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:38:10 by lpittet           #+#    #+#             */
-/*   Updated: 2025/01/13 14:03:41 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/01/13 15:35:11 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,5 +18,18 @@
 # include <fcntl.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+
+typedef struct s_command
+{
+	char	*cmd;
+	char	*flags;
+	char	**cmd_tab;
+} t_command;
+
+// parsing_utils.c
+char	**mini_split(char const *s, char c);
+
+// parsing.c
+int		parsing(char *line, t_command *cmd);
 
 #endif
