@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:38:10 by lpittet           #+#    #+#             */
-/*   Updated: 2025/01/13 14:03:41 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/01/13 16:07:05 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,5 +18,6 @@
 # include <fcntl.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <stdlib.h>
 
 #endif
