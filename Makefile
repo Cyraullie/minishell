@@ -7,7 +7,11 @@ CFLAGS = -Wall -Werror -Wextra  -g
 SRCDIR = srcs/
 OBJDIR = objs/
 
-SRCS =  $(addprefix $(SRCDIR), main.c parsing.c parsing_utils.c)
+SRCS =  $(addprefix $(SRCDIR), main.c)# parsing.c parsing_utils.c)
+
+LIBFT_PATH = libft
+
+LIBFT = $(LIBFT_PATH)/libft.a
 
 OBJS = $(SRCS:$(SRCDIR)%.c=$(OBJDIR)%.o)
 
@@ -17,14 +21,20 @@ $(OBJDIR)%.o: $(SRCDIR)%.c
 	@mkdir -p $(OBJDIR)
 	@$(CC) $(CFLAGS) -c $< -o $@
 
-$(NAME): $(OBJS)
-	@$(CC) $(CFLAGS) $(OBJS) -lreadline -o $(NAME) 
+$(NAME): $(OBJS) $(LIBFT)
+	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -lreadline -o $(NAME)
+
+
+$(LIBFT):
+	@$(MAKE) -C $(LIBFT_PATH)
 
 clean:
 	@rm -rf $(OBJDIR)
+	@$(MAKE) clean -C $(LIBFT_PATH)
 
 fclean: clean
 	@rm -f $(NAME)
+	@$(MAKE) fclean -C $(LIBFT_PATH)
 
 re: fclean all
 
