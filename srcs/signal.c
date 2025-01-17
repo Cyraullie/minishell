@@ -1,30 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/13 13:35:36 by lpittet           #+#    #+#             */
-/*   Updated: 2025/01/17 16:23:09 by cgoldens         ###   ########.fr       */
+/*   Created: 2025/01/17 15:47:36 by cgoldens          #+#    #+#             */
+/*   Updated: 2025/01/17 16:13:27 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	main(void)
+/**
+ * @brief handle signal for SIGINT (Ctrl+C)
+ * 
+ * @param sig the signal in int
+ */
+void	handle_sigint(int sig)
 {
-	char		*line;
-	//t_command	cmd;
-
-	init_sig();
-	while (1)
+	if (sig == SIGINT)
 	{
-		line = readline("minishell> ");
-		handle_eof(line);
-		if (line && *line)
-			add_history(line);
-		//parsing(line, &cmd);
-		free(line);
+		write(STDOUT_FILENO, "\nminishell> ", 12);
 	}
+}
+
+void	handle_eof(char *line)
+{
+	if (!line)
+	{
+		printf("exit\n");
+		exit(0);
+	}
+}
+
+void	init_sig(void)
+{
+	signal(SIGINT, handle_sigint);
+	signal(SIGQUIT, SIG_IGN);
 }
