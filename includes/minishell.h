@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:38:10 by lpittet           #+#    #+#             */
-/*   Updated: 2025/01/17 16:13:32 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/01/17 16:35:25 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,8 @@ int		parsing(char *line, t_command *cmd);
 void	handle_sigint(int sig);
 void	init_sig(void);
 void	handle_eof(char *line);
+
+//builtins.c
+void	echo(char *msg, int n);
 
 #endif
