@@ -1,52 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtins.c                                         :+:      :+:    :+:   */
+/*   builtins_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/17 16:30:34 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/01/20 11:03:48 by cgoldens         ###   ########.fr       */
+/*   Created: 2025/01/17 17:10:47 by cgoldens          #+#    #+#             */
+/*   Updated: 2025/01/17 17:34:45 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-/**
- * @brief 
- * 
- * @param msg 
- * @param n 
- */
-void	echo(char **cmd)
+int	find_valid_flag(char *msg, char flag)
 {
 	int	i;
-	int	n;
 
 	i = 1;
-	n = find_valid_flag(cmd[i], 'n');
-	while (find_valid_flag(cmd[i], 'n'))
+	if (msg[0] == '-')
 	{
-		i++;
+		while (msg[i])
+		{
+			if (msg[i] != flag)
+			{
+				return (0);
+			}
+			i++;
+		}
+		return (1);
 	}
-	while (cmd[i] != NULL)
-	{
-		printf("%s", cmd[i]);
-		i++;
-		if (cmd[i] != NULL)
-			printf(" ");
-	}
-	if (!n)
-		printf("\n");
+	return (0);
 }
-
-/**
- * @brief 
- * 
- * @param env 
- */
-/*void	env(char **env)
-{
-
-}*/
-

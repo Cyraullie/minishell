@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:35:36 by lpittet           #+#    #+#             */
-/*   Updated: 2025/01/17 16:27:25 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/01/20 11:02:24 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int	main(int ac, char **av, char **envp)
 {
 	char		*line;
 	char		**env;
+	char		*cmd[5];
 	//t_command	cmd;
 
 	(void)ac;
@@ -49,6 +50,12 @@ int	main(int ac, char **av, char **envp)
 	env = get_env(envp);
 	(void)env;
 	init_sig();
+	cmd[0] = "echo";
+	cmd[1] = "-nnnnn";
+	cmd[2] = "-nna";
+	cmd[3] = "blabla";
+	cmd[4] = NULL;
+	echo(cmd);
 	while (1)
 	{
 		line = readline("minishell> ");

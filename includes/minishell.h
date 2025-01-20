@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:38:10 by lpittet           #+#    #+#             */
-/*   Updated: 2025/01/17 16:35:25 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/01/17 17:28:14 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,9 @@ void	init_sig(void);
 void	handle_eof(char *line);
 
 //builtins.c
-void	echo(char *msg, int n);
+void	echo(char **cmd);
+
+//builtins_utils.c
+int		find_valid_flag(char *msg, char flag);
 
 #endif
