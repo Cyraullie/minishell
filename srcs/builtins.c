@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 16:30:34 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/01/20 13:48:55 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/01/20 14:21:43 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,4 +88,24 @@ void	ft_env(char **cmd, char **env)
 	i = 0;
 	while (env[i])
 		printf("%s\n", env[i++]);
+}
+
+/**
+ * @brief function to display actual location in directory
+ * 
+ * @param cmd command line array
+ */
+void	ft_pwd(char **cmd)
+{
+	char	*buf;
+
+	if (cmd[1])
+	{
+		printf("pwd: too many arguments\n");
+		return ;
+	}
+	buf = malloc(sizeof(char *) * BUFFER_SIZE);
+	getcwd(buf, BUFFER_SIZE);
+	printf("%s\n", buf);
+	free(buf);
 }
