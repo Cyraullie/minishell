@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:35:36 by lpittet           #+#    #+#             */
-/*   Updated: 2025/01/20 11:02:24 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/01/20 14:05:28 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ char	**get_env(char **envp)
 	if (!env)
 		return (NULL);
 	i = 0;
-	while (envp[i])
+	while (env[i])
 	{
-		env[i] = envp[i];
+		env[i] = ft_strdup(envp[i]);
 		i++;
 	}
 	env[i] = NULL;
@@ -50,12 +50,13 @@ int	main(int ac, char **av, char **envp)
 	env = get_env(envp);
 	(void)env;
 	init_sig();
-	cmd[0] = "echo";
-	cmd[1] = "-nnnnn";
-	cmd[2] = "-nna";
-	cmd[3] = "blabla";
+	cmd[0] = "pwd";
+	cmd[1] = NULL;
+	//cmd[1] = "test";
+	cmd[2] = NULL;
+	cmd[3] = NULL;
 	cmd[4] = NULL;
-	echo(cmd);
+	ft_pwd(cmd);
 	while (1)
 	{
 		line = readline("minishell> ");
