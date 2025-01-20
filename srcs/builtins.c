@@ -6,21 +6,18 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 16:30:34 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/01/20 16:06:25 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/01/20 16:22:18 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-//TODO export 
-//TODO unset
 
 /**
  * @brief function to write a text and handle -n option
  * 
  * @param cmd get command line array
  */
-void	echo(char **cmd)
+void	ft_echo(char **cmd)
 {
 	int	i;
 	int	n;

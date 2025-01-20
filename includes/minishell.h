@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:38:10 by lpittet           #+#    #+#             */
-/*   Updated: 2025/01/20 15:38:07 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/01/20 16:22:23 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	init_sig(void);
 void	handle_eof(char *line);
 
 //builtins.c
-void	echo(char **cmd);
+void	ft_echo(char **cmd);
 int		ft_exit(char **cmd);
 void	ft_env(char **cmd, char **env);
 void	ft_pwd(char **cmd);
