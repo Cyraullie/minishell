@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:38:10 by lpittet           #+#    #+#             */
-/*   Updated: 2025/01/20 13:54:45 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/01/20 15:38:07 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,11 @@ void	echo(char **cmd);
 int		ft_exit(char **cmd);
 void	ft_env(char **cmd, char **env);
 void	ft_pwd(char **cmd);
+void	ft_cd(char **cmd);
 
 //builtins_utils.c
 int		find_valid_flag(char *msg, char flag);
+char	*get_userhome(void);
+char	*get_path(void);
 
 #endif
