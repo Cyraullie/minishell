@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:38:10 by lpittet           #+#    #+#             */
-/*   Updated: 2025/01/17 17:28:14 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/01/20 13:01:52 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <fcntl.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include "../libft/includes/libft.h"
 
 typedef struct s_command
 {
@@ -34,7 +35,6 @@ char	**mini_split(char const *s, char c);
 // parsing.c
 int		parsing(char *line, t_command *cmd);
 
-
 // signal.c
 void	handle_sigint(int sig);
 void	init_sig(void);
@@ -42,6 +42,7 @@ void	handle_eof(char *line);
 
 //builtins.c
 void	echo(char **cmd);
+int		ft_exit(char **cmd);
 
 //builtins_utils.c
 int		find_valid_flag(char *msg, char flag);
