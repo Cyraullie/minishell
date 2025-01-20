@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:38:10 by lpittet           #+#    #+#             */
-/*   Updated: 2025/01/20 13:01:52 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/01/20 13:13:46 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	handle_eof(char *line);
 //builtins.c
 void	echo(char **cmd);
 int		ft_exit(char **cmd);
+void	ft_env(char **cmd, char **env);
 
 //builtins_utils.c
 int		find_valid_flag(char *msg, char flag);
