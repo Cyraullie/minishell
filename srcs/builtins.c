@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 16:30:34 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/01/20 13:03:51 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/01/20 13:48:55 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,11 +71,21 @@ int	ft_exit(char **cmd)
 }
 
 /**
- * @brief 
+ * @brief function to display env data
  * 
- * @param env 
+ * @param cmd get command line array
+ * @param env get env data
  */
-/*void	env(char **env)
+void	ft_env(char **cmd, char **env)
 {
+	int	i;
 
-}*/
+	if (cmd[1])
+	{
+		printf("env: too many arguments\n");
+		return ;
+	}
+	i = 0;
+	while (env[i])
+		printf("%s\n", env[i++]);
+}
