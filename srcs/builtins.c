@@ -6,11 +6,14 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 16:30:34 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/01/20 14:21:43 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/01/20 16:06:25 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+//TODO export 
+//TODO unset
 
 /**
  * @brief function to write a text and handle -n option
@@ -108,4 +111,35 @@ void	ft_pwd(char **cmd)
 	getcwd(buf, BUFFER_SIZE);
 	printf("%s\n", buf);
 	free(buf);
+}
+
+/**
+ * @brief function to move in different directory
+ * 
+ * @param cmd command line array
+ */
+void	ft_cd(char **cmd)
+{
+	char	*uh;
+
+	uh = get_userhome();
+	if (cmd[2])
+	{
+		printf("cd: too many arguments\n");
+		return ;
+	}
+	if (cmd[1] && !ft_strncmp(cmd[1], "~/", 2))
+	{
+		uh = ft_strjoin(uh, ft_strchr(cmd[1], '/'));
+		cmd[1] = uh;
+	}
+	if (cmd[1] && ft_strncmp(cmd[1], "~", 1))
+	{
+		if (!access(cmd[1], X_OK))
+			chdir(cmd[1]);
+		else
+			printf("cd: permission denied: %s\n", cmd[1]);
+		return ;
+	}
+	chdir(get_userhome());
 }
