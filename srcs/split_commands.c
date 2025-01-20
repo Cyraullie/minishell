@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 15:32:36 by lpittet           #+#    #+#             */
-/*   Updated: 2025/01/17 14:19:16 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/01/20 15:29:23 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ void	split_commands(char *s, char **tab, int num_cmds)
 }
 //TODO clean if substr fail
 
-char	**mini_split(char *s, t_command **cmd)
+char	**mini_split(char *s, t_command ***cmd)
 {
 	char			**tab;
 	unsigned int	num_cmds;
@@ -105,7 +105,7 @@ char	**mini_split(char *s, t_command **cmd)
 	tab = malloc((1 + num_cmds) * sizeof(char *));
 	if (!tab)
 		return (NULL);
-	cmd = malloc(sizeof(t_command *) * num_cmds + 1);
+	*cmd = ft_calloc(sizeof(t_command *) , num_cmds + 1);
 	if (!cmd)
 		return (NULL);
 	split_commands(s, tab, num_cmds);

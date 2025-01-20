@@ -6,11 +6,24 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 15:02:10 by lpittet           #+#    #+#             */
-/*   Updated: 2025/01/17 14:12:12 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/01/20 16:01:58 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+void	free_tab(char **tab)
+{
+	int	i;
+
+	i = 0;
+	while (tab[i])
+	{
+		free(tab[i]);
+		i++;
+	}
+	free(tab);
+}
 
 char	*ft_strtrim_and_free(char *s1, char *set)
 {
@@ -48,10 +61,10 @@ char	*ft_strjoin_and_free(char *s1, char *s2)
 	return (join);
 }
 
-int	parsing(char *line, t_command **cmd, char **env)
+int parsing(char *line, t_command ***cmd, char **env)
 {
-	char	**tab;
 	char	*line_next;
+	char	**tab;
 	int		i;
 
 	line = ft_strtrim_and_free(line, " ");
@@ -63,16 +76,17 @@ int	parsing(char *line, t_command **cmd, char **env)
 		parsing(line, cmd, env);
 		return (0);
 	}
-	i = 0;
 	tab = mini_split(line, cmd);
+	i = 0;
 	while (tab[i])
 	{
-		printf("cmd %i %s\n", i + 1, tab[i]);
+		*cmd[i] = ft_calloc(sizeof(t_command), 1);
+		if (!*cmd[i])
+			return (0);
+		setup_command(tab[i], &(*cmd[i]));
 		i++;
 	}
-	// while (tab[i])
-	// {
-	// 	setup_command(tab[i], cmd[i], env);
-	// }
-	return (ft_strlen(tab[0]));
+	(*cmd[i]) = NULL;
+	free_tab(tab);
+	return (0);
 }

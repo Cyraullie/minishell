@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:35:36 by lpittet           #+#    #+#             */
-/*   Updated: 2025/01/17 11:38:38 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/01/20 16:32:44 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char	**get_env(char **envp)
 int	main(int ac, char **av, char **envp)
 {
 	char		*line;
-	t_command	*cmd;
+	t_command	**cmd;
 	char		**env;
 	
 	if (ac < 0)

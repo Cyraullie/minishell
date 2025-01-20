@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:38:10 by lpittet           #+#    #+#             */
-/*   Updated: 2025/01/17 14:16:46 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/01/20 14:16:18 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,14 @@ typedef struct s_command
 } t_command;
 
 // split_commands.c
-char	**mini_split(char *s, t_command **cmd);
-int 	ft_isspace(int c);
-void	toggle_quotes(char *c, int i, int *in_d_quotes, int *in_s_quotes);
+char	**mini_split(char *s, t_command ***cmd);
+int 		ft_isspace(int c);
+void		toggle_quotes(char *c, int i, int *in_d_quotes, int *in_s_quotes);
 
 // parsing.c
-int		parsing(char *line, t_command **cmd, char **env);
+int			parsing(char *line, t_command ***cmd, char **env);
 
 // setup_commands.c
-void 	setup_command(char *line, t_command *cmd, char **env);
+void 		setup_command(char *line, t_command **cmd);
 
 #endif
