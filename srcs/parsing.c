@@ -6,25 +6,20 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 15:02:10 by lpittet           #+#    #+#             */
-/*   Updated: 2025/01/20 16:01:58 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/01/21 13:59:53 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	free_tab(char **tab)
-{
-	int	i;
-
-	i = 0;
-	while (tab[i])
-	{
-		free(tab[i]);
-		i++;
-	}
-	free(tab);
-}
-
+/**
+ * @brief delete all character at the start and end of s1 that are in set
+ * 		  and frees s1
+ * 
+ * @param s1 
+ * @param set 
+ * @return char* 
+ */
 char	*ft_strtrim_and_free(char *s1, char *set)
 {
 	char	*trimmed;
@@ -46,6 +41,14 @@ char	*ft_strtrim_and_free(char *s1, char *set)
 	return (trimmed);
 }
 
+/**
+ * @brief join 2 strings and frees the first one
+ * 
+ * @param s1 
+ * @param s2 
+ * @return char* 
+ */
+
 char	*ft_strjoin_and_free(char *s1, char *s2)
 {
 	char	*join;
@@ -61,11 +64,19 @@ char	*ft_strjoin_and_free(char *s1, char *s2)
 	return (join);
 }
 
-int parsing(char *line, t_command ***cmd, char **env)
+/**
+ * @brief parse the input at each iterations and format it
+ * 		  so that it can be executed easily
+ * @param line 
+ * @param cmd 
+ * @param env 
+ * @return int 
+ */
+int	parsing(char *line, t_command **cmd, char **env)
 {
-	char	*line_next;
-	char	**tab;
-	int		i;
+	char		*line_next;
+	char		**tab;
+	int			i;
 
 	line = ft_strtrim_and_free(line, " ");
 	if (line[ft_strlen(line) - 1] == '|')
@@ -76,17 +87,13 @@ int parsing(char *line, t_command ***cmd, char **env)
 		parsing(line, cmd, env);
 		return (0);
 	}
-	tab = mini_split(line, cmd);
+	tab = mini_split(line);
 	i = 0;
 	while (tab[i])
 	{
-		*cmd[i] = ft_calloc(sizeof(t_command), 1);
-		if (!*cmd[i])
-			return (0);
-		setup_command(tab[i], &(*cmd[i]));
+		create_list(tab[i], cmd);
 		i++;
 	}
-	(*cmd[i]) = NULL;
 	free_tab(tab);
 	return (0);
 }

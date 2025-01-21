@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   setup_commands.c                                   :+:      :+:    :+:   */
+/*   create_list.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 11:11:23 by lpittet           #+#    #+#             */
-/*   Updated: 2025/01/20 13:50:51 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/01/21 13:04:01 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	count_words(char *line, int in_d_quotes, int in_s_quotes)
 
 char	*fill_words(char *line, int *i)
 {
-	int 	len;
+	int		len;
 	int		in_s_quotes;
 	int		in_d_quotes;
 	char	*word;
@@ -68,7 +68,7 @@ char	**fill_tab(char *line, char **tab, size_t num_words)
 	int		i;
 	size_t	iword;
 
-	i  = 0;
+	i = 0;
 	iword = 0;
 	while (iword < num_words)
 	{
@@ -96,11 +96,23 @@ char	**split_quotes(char *line)
 	return (tab);
 }
 
-void	setup_command(char *line, t_command **cmd)
+/**
+ * @brief create the different commands stored in a chained list
+ * 
+ * @param line 
+ * @param cmd 
+ */
+void	create_list(char *line, t_command **cmd)
 {
-	(*cmd)->cmd_tab = split_quotes(line);
-	(*cmd)->cmd = NULL;
-	(*cmd)->flags = NULL;
-	(*cmd)->read = NULL;
-	(*cmd)->write = NULL;
+	t_command	*new;
+	char		**tab;
+
+	tab = split_quotes(line);
+	new = ft_listnew(tab);
+	if (!new)
+	{
+		ft_listdelete(*cmd);
+		return ;
+	}
+	ft_listadd_back(cmd, new);
 }
