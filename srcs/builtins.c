@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 16:30:34 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/01/21 13:42:32 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/01/21 16:22:55 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,14 +56,14 @@ int	ft_exit(char **cmd, char **env)
 	{
 		if (!ft_isdigit(cmd[1][i]))
 		{
-			printf("bash: exit: %s: numeric argument required\n", cmd[1]);
+			printf("exit: %s: numeric argument required\n", cmd[1]);
 			exit(2);
 		}
 		i++;
 	}
 	if (cmd[2])
 	{
-		printf("bash: exit: too many arguments\n");
+		ft_putstr_fd("exit: too many arguments\n", 2);
 		return (1);
 	}
 	if (cmd[1])
@@ -87,7 +87,7 @@ void	ft_env(char **cmd, char **env)
 	i = 0;
 	if (cmd[1])
 	{
-		printf("env: too many arguments\n");
+		ft_putstr_fd("env: too many arguments\n", 2);
 		return ;
 	}
 	while (env[i])
@@ -105,7 +105,7 @@ void	ft_pwd(char **cmd)
 
 	if (cmd[1])
 	{
-		printf("pwd: too many arguments\n");
+		ft_putstr_fd("pwd: too many arguments\n", 2);
 		return ;
 	}
 	buf = malloc(sizeof(char *) * BUFFER_SIZE);
@@ -126,7 +126,7 @@ void	ft_cd(char **cmd)
 	uh = get_userhome();
 	if (cmd[2])
 	{
-		printf("cd: too many arguments\n");
+		ft_putstr_fd("cd: too many arguments\n", 2);
 		return ;
 	}
 	if (cmd[1] && !ft_strncmp(cmd[1], "~/", 2))
@@ -138,8 +138,10 @@ void	ft_cd(char **cmd)
 	{
 		if (!access(cmd[1], X_OK))
 			chdir(cmd[1]);
+		else if (access(cmd[1], F_OK))
+			perror(cmd[1]);
 		else
-			printf("cd: permission denied: %s\n", cmd[1]);
+			perror(cmd[1]);
 		return ;
 	}
 	chdir(get_userhome());
