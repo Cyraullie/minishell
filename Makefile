@@ -29,9 +29,6 @@ header:
 	@echo "                                            "
 	@echo "$(RESET)"
 
-
-
-
 $(OBJDIR)%.o: $(SRCDIR)%.c
 	@mkdir -p $(OBJDIR)
 	@$(CC) $(CFLAGS) -c $< -o $@

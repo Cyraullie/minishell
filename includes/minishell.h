@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:38:10 by lpittet           #+#    #+#             */
-/*   Updated: 2025/01/20 16:22:23 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/01/21 13:42:51 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,18 +41,25 @@ int		parsing(char *line, t_command *cmd);
 // signal.c
 void	handle_sigint(int sig);
 void	init_sig(void);
-void	handle_eof(char *line);
+void	handle_eof(char *line, char **env);
 
 //builtins.c
 void	ft_echo(char **cmd);
-int		ft_exit(char **cmd);
+int		ft_exit(char **cmd, char **env);
 void	ft_env(char **cmd, char **env);
 void	ft_pwd(char **cmd);
 void	ft_cd(char **cmd);
+char	**ft_unset(char **cmd, char **env);
 
 //builtins_utils.c
 int		find_valid_flag(char *msg, char flag);
 char	*get_userhome(void);
 char	*get_path(void);
+char	**del_line(char **env, char *title);
+int		get_envline(char **env, char *title);
+void	del_envline(char **env, char **nenv, char *title);
+
+//clean.c
+void	clean_env(char **env);
 
 #endif
