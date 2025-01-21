@@ -16,6 +16,7 @@ LIBFT = $(LIBFT_PATH)/libft.a
 OBJS = $(SRCS:$(SRCDIR)%.c=$(OBJDIR)%.o)
 
 GREEN = \033[1;32m
+RESET = \033[0m
 
 all: header $(NAME)
 
