@@ -7,15 +7,30 @@ CFLAGS = -Wall -Werror -Wextra  -g
 SRCDIR = srcs/
 OBJDIR = objs/
 
-SRCS =  $(addprefix $(SRCDIR), main.c parsing.c split_commands.c create_list.c list.c parsing_utils.c)
 
+SRCS =  $(addprefix $(SRCDIR), main.c parsing.c split_commands.c create_list.c list.c parsing_utils.c signal.c)
 LIBFT_PATH = libft
 
 LIBFT = $(LIBFT_PATH)/libft.a
 
 OBJS = $(SRCS:$(SRCDIR)%.c=$(OBJDIR)%.o)
 
-all: $(NAME)
+GREEN = \033[1;32m
+
+all: header $(NAME)
+
+header:
+	@echo "$(GREEN)"
+	@echo "              _       _      __         ____"
+	@echo "   ____ ___  (_)___  (_)____/ /_  ___  / / /"
+	@echo "  / __ \`__ \/ / __ \/ / ___/ __ \/ _ \/ / / "
+	@echo " / / / / / / / / / / (__  ) / / /  __/ / /  "
+	@echo "/_/ /_/ /_/_/_/ /_/_/____/_/ /_/\___/_/_/   "
+	@echo "                                            "
+	@echo "$(RESET)"
+
+
+
 
 $(OBJDIR)%.o: $(SRCDIR)%.c
 	@mkdir -p $(OBJDIR)
