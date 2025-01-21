@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 16:30:34 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/01/20 16:22:18 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/01/21 13:42:32 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,10 @@ void	ft_echo(char **cmd)
  * @brief function to exit the program
  * 
  * @param cmd get command line array
+ * @param env get environment var
  * @return int return error state
  */
-int	ft_exit(char **cmd)
+int	ft_exit(char **cmd, char **env)
 {
 	int	i;
 
@@ -66,7 +67,10 @@ int	ft_exit(char **cmd)
 		return (1);
 	}
 	if (cmd[1])
+	{
+		clean_env(env);
 		exit(ft_atoi(cmd[1]));
+	}
 	exit(0);
 }
 
@@ -80,12 +84,12 @@ void	ft_env(char **cmd, char **env)
 {
 	int	i;
 
+	i = 0;
 	if (cmd[1])
 	{
 		printf("env: too many arguments\n");
 		return ;
 	}
-	i = 0;
 	while (env[i])
 		printf("%s\n", env[i++]);
 }
