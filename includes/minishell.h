@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:38:10 by lpittet           #+#    #+#             */
-/*   Updated: 2025/01/21 15:27:39 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/01/21 17:25:19 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,11 @@ void	del_envline(char **env, char **nenv, char *title);
 
 //builtins_utils2.c
 void	write_env(char **env);
+void	add_envline(char **env, char **nenv, char *title, char **name);
+void	dup_env(char **env, char **nenv, int i, int j);
 
 //clean.c
 void	clean_env(char **env);
+void	check_tabenv(char **env, int i);
 
 #endif
