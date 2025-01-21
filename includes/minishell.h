@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:38:10 by lpittet           #+#    #+#             */
-/*   Updated: 2025/01/21 13:42:51 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/01/21 15:27:39 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,10 @@ int		ft_exit(char **cmd, char **env);
 void	ft_env(char **cmd, char **env);
 void	ft_pwd(char **cmd);
 void	ft_cd(char **cmd);
+
+//builtins2.c
 char	**ft_unset(char **cmd, char **env);
+char	**ft_export(char **cmd, char **env);
 
 //builtins_utils.c
 int		find_valid_flag(char *msg, char flag);
@@ -58,6 +61,9 @@ char	*get_path(void);
 char	**del_line(char **env, char *title);
 int		get_envline(char **env, char *title);
 void	del_envline(char **env, char **nenv, char *title);
+
+//builtins_utils2.c
+void	write_env(char **env);
 
 //clean.c
 void	clean_env(char **env);
