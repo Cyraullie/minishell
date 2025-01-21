@@ -7,7 +7,7 @@ CFLAGS = -Wall -Werror -Wextra  -g
 SRCDIR = srcs/
 OBJDIR = objs/
 
-SRCS =  $(addprefix $(SRCDIR), main.c signal.c builtins.c builtins_utils.c)# parsing.c parsing_utils.c)
+SRCS =  $(addprefix $(SRCDIR), main.c signal.c builtins.c builtins2.c clean.c builtins_utils.c)# parsing.c parsing_utils.c)
 
 LIBFT_PATH = libft
 
