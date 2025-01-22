@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 16:20:02 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/01/21 17:22:00 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/01/22 10:18:25 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,22 +57,18 @@ char	**ft_export(char **cmd, char **env)
 {
 	char	**nenv;
 	char	**name;
-	int		i;
 	int		j;
 
 	j = 1;
+	nenv = NULL;
 	if (!cmd[j])//TODO export tout court = declare -x ZDOTDIR="/home/cgoldens"
 		write_env(env);
 	while (cmd[j])
 	{
 		name = ft_split(cmd[j], '=');
-		i = 0;
-		while (env[i])
-			i++;
-		if (get_envline(env, name[0]) == -1)
-			nenv = ft_calloc(sizeof(char *), i + 2);
-		else
-			nenv = ft_calloc(sizeof(char *), i + 1);
+		if (!name)
+			return (NULL);
+		nenv = create_nenv(env, name);
 		if (!nenv)
 			return (NULL);
 		add_envline(env, nenv, cmd[j++], name);
