@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:35:36 by lpittet           #+#    #+#             */
-/*   Updated: 2025/01/21 15:26:36 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/01/22 16:17:54 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,21 +44,19 @@ int	main(int ac, char **av, char **envp)
 	t_command	*cmd;
 	char		**env;
 
-	if (ac < 0)
-		return (1);
-	env = av;
+	(void)ac;
+	(void)av;
 	env = get_env(envp);
-  init_sig();
-
+	init_sig();
 	while (1)
 	{
 		cmd = NULL;
 		line = readline("minishell> ");
-		parsing(line, &cmd, env);
 		handle_eof(line);
 		if (line && *line)
 			add_history(line);
-    ft_listdelete(cmd);
+		parsing(line, &cmd, env);
+		ft_listdelete(cmd);
 	}
 	return (ft_strlen(env[0]));
 }

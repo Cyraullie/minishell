@@ -6,14 +6,14 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 10:08:14 by lpittet           #+#    #+#             */
-/*   Updated: 2025/01/21 13:09:59 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/01/22 16:17:22 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
 /**
- * @brief create a new node for a chained list initializing the
+ * @brief create a new node for a linked list initializing the
  * 		  raw data only
  * 
  * @param content 
@@ -31,7 +31,9 @@ t_command	*ft_listnew(char **content)
 	new->cmd_tab = NULL;
 	new->flags = NULL;
 	new->read = NULL;
-	new->read_type = 0;
+	new->heredoc = 0;
+	new->pipe_in = 0;
+	new->pipe_out = 0;
 	new->write = NULL;
 	new->write_type = 0;
 	new->next = NULL;
@@ -39,7 +41,7 @@ t_command	*ft_listnew(char **content)
 }
 
 /**
- * @brief get the last element of a chained list
+ * @brief get the last element of a linked list
  * 
  * @param list 
  * @return t_command* 

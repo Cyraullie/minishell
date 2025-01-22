@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 15:02:10 by lpittet           #+#    #+#             */
-/*   Updated: 2025/01/21 13:59:53 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/01/22 16:15:03 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ char	*ft_strjoin_and_free(char *s1, char *s2)
 
 /**
  * @brief parse the input at each iterations and format it
- * 		  so that it can be executed easily
+ * 		  so that it can be executed easily and put every command in a linked list
  * @param line 
  * @param cmd 
  * @param env 
@@ -74,19 +74,12 @@ char	*ft_strjoin_and_free(char *s1, char *s2)
  */
 int	parsing(char *line, t_command **cmd, char **env)
 {
-	char		*line_next;
 	char		**tab;
+	t_command	*head;
 	int			i;
 
 	line = ft_strtrim_and_free(line, " ");
-	if (line[ft_strlen(line) - 1] == '|')
-	{
-		line_next = readline(">");
-		line = ft_strjoin_and_free(line, line_next);
-		free(line_next);
-		parsing(line, cmd, env);
-		return (0);
-	}
+	(void)env;
 	tab = mini_split(line);
 	i = 0;
 	while (tab[i])
@@ -94,6 +87,9 @@ int	parsing(char *line, t_command **cmd, char **env)
 		create_list(tab[i], cmd);
 		i++;
 	}
+	head = *cmd;
+	assign_token(cmd);
+	*cmd = head;
 	free_tab(tab);
 	return (0);
 }
