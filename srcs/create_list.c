@@ -97,16 +97,17 @@ char	**split_quotes(char *line)
 }
 
 /**
- * @brief create the different commands stored in a chained list
+ * @brief create the different commands stored in a linked list
  * 
- * @param line 
- * @param cmd 
+ * @param line line received, previously split on | character
+ * @param cmd adress of the first element of the list
  */
 void	create_list(char *line, t_command **cmd)
 {
 	t_command	*new;
 	char		**tab;
 
+	line = separate_tokens(line);
 	tab = split_quotes(line);
 	new = ft_listnew(tab);
 	if (!new)
@@ -115,4 +116,5 @@ void	create_list(char *line, t_command **cmd)
 		return ;
 	}
 	ft_listadd_back(cmd, new);
+	free(line);
 }

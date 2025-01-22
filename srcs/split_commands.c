@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 15:32:36 by lpittet           #+#    #+#             */
-/*   Updated: 2025/01/21 15:26:47 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/01/22 14:09:39 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,29 +16,29 @@
  * @brief check the string from an index i and toggle the corresponding
  * 		  quotes marker, if need be (i.e. already toggled, or closed later)
  * 
- * @param c string
+ * @param s string
  * @param i index in the string
  * @param in_d_quotes 
  * @param in_s_quotes 
  */
-void	toggle_quotes(char *c, int i, int *in_d_quotes, int *in_s_quotes)
+void	toggle_quotes(char *s, int i, int *in_d_quotes, int *in_s_quotes)
 {
-	if (c[i] == '\"' && !*in_s_quotes)
+	if (s[i] == '\"' && !*in_s_quotes)
 	{
-		while (c[++i])
+		while (s[++i])
 		{
-			if (c[i] == '\"' || *in_d_quotes)
+			if (s[i] == '\"' || *in_d_quotes)
 			{
 				*in_d_quotes = !*in_d_quotes;
 				return ;
 			}
 		}
 	}
-	if (c[i] == '\'' && !*in_d_quotes)
+	if (s[i] == '\'' && !*in_d_quotes)
 	{
-		while (c[++i])
+		while (s[++i])
 		{
-			if (c[i] == '\'' || *in_s_quotes)
+			if (s[i] == '\'' || *in_s_quotes)
 			{
 				*in_s_quotes = !*in_s_quotes;
 				return ;
@@ -87,7 +87,7 @@ char	*get_substr(char *s, int *i)
 			break ;
 		*i = *i + 1;
 	}
-	result = ft_substr(s, start, start - *i);
+	result = ft_substr(s, start, start + *i);
 	return (result);
 }
 

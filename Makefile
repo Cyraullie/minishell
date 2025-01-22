@@ -8,7 +8,7 @@ SRCDIR = srcs/
 OBJDIR = objs/
 
 
-SRCS =  $(addprefix $(SRCDIR), main.c parsing.c split_commands.c create_list.c list.c parsing_utils.c signal.c)
+SRCS =  $(addprefix $(SRCDIR), main.c parsing.c split_commands.c create_list.c list.c parsing_utils.c signal.c token.c separate_token.c)
 LIBFT_PATH = libft
 
 LIBFT = $(LIBFT_PATH)/libft.a
