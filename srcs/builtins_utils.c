@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 17:10:47 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/01/21 14:48:46 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/01/22 10:22:24 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,11 @@ char	*get_path(void)
 	char	*p;
 
 	p = malloc(sizeof(char *) * BUFFER_SIZE);
+	if (!p)
+		return (NULL);
 	getcwd(p, BUFFER_SIZE);
+	if (!p)
+		return (NULL);
 	return (p);
 }
 
@@ -65,10 +69,16 @@ char	*get_userhome(void)
 	char	*u_p;
 
 	u_p = malloc(sizeof(char) * 6);
+	if (!u_p)
+		return (NULL);
 	u_p = "/home/";
 	p = get_path();
 	p_a = ft_split(p, '/');
+	if (!p_a)
+		return (NULL);
 	u_p = ft_strjoin(u_p, p_a[1]);
+	if (!u_p)
+		return (NULL);
 	return (u_p);
 }
 

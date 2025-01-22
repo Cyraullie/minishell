@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 16:30:34 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/01/21 16:22:55 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/01/22 10:20:52 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,11 @@ void	ft_pwd(char **cmd)
 		return ;
 	}
 	buf = malloc(sizeof(char *) * BUFFER_SIZE);
+	if (!buf)
+		return ;
 	getcwd(buf, BUFFER_SIZE);
+	if (!buf)
+		return ;
 	printf("%s\n", buf);
 	free(buf);
 }
@@ -131,8 +135,9 @@ void	ft_cd(char **cmd)
 	}
 	if (cmd[1] && !ft_strncmp(cmd[1], "~/", 2))
 	{
-		uh = ft_strjoin(uh, ft_strchr(cmd[1], '/'));
-		cmd[1] = uh;
+		cmd[1] = ft_strjoin(uh, ft_strchr(cmd[1], '/'));
+		if (!cmd[1])
+			return ;
 	}
 	if (cmd[1] && ft_strncmp(cmd[1], "~", 1))
 	{
