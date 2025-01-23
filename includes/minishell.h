@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:38:10 by lpittet           #+#    #+#             */
-/*   Updated: 2025/01/22 13:29:14 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/01/23 16:44:59 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,21 @@ void	sort_env(char **env, int *tab);
 
 //clean.c
 void	clean_env(char **env);
+
+//check.c
 void	check_tabenv(char **env, int i);
+int		is_order(int *pos, char **name);
+int		get_maxlength_env(char **name);
+
+//sort.c
+void	sort_tab(char **env, int *tab, int size);
+void	get_by_letter(char c, char **env, int *tab);
+void	sort_env(char **env, int *tab);
+void	get_pos(int *pos, char **name);
+void	move_tab(char **name, int *tab, int *pos);
+
+//alloc.c
+char	**alloc_name(int size, char **env, int *tab);
+int		*alloc_pos(int size);
 
 #endif
