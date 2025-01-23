@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 15:47:36 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/01/22 15:40:17 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/01/23 09:16:24 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,11 @@ void	handle_sigint(int sig)
 	}
 }
 
-void	handle_eof(char *line)
+void	handle_eof(char *line, char **env)
 {
 	if (!line)
 	{
+		free_tab(env);
 		printf("exit\n");
 		exit(0);
 	}

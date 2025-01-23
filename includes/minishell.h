@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:38:10 by lpittet           #+#    #+#             */
-/*   Updated: 2025/01/22 16:16:17 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/01/23 09:15:49 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void		ft_listdelete(t_command *list);
 // signal.c
 void		handle_sigint(int sig);
 void		init_sig(void);
-void		handle_eof(char *line);
+void		handle_eof(char *line, char **env);
 
 // token.c
 void		assign_token(t_command **cmd);
