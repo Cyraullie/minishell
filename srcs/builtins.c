@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 16:30:34 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/01/22 10:20:52 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/01/23 16:55:05 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,19 +23,22 @@ void	ft_echo(char **cmd)
 	int	n;
 
 	i = 1;
-	n = find_valid_flag(cmd[i], 'n');
-	while (find_valid_flag(cmd[i], 'n'))
+	if (cmd[i])
 	{
-		i++;
+		n = find_valid_flag(cmd[i], 'n');
+		while (cmd[i] && find_valid_flag(cmd[i], 'n'))
+			i++;
+		while (cmd[i])
+		{
+			printf("%s", cmd[i]); 
+			i++;
+			if (cmd[i])
+				printf(" ");
+		}
+		if (!n)
+			printf("\n");
 	}
-	while (cmd[i] != NULL)
-	{
-		printf("%s", cmd[i]);
-		i++;
-		if (cmd[i] != NULL)
-			printf(" ");
-	}
-	if (!n)
+	else
 		printf("\n");
 }
 
@@ -126,7 +129,7 @@ void	ft_pwd(char **cmd)
 void	ft_cd(char **cmd)
 {
 	char	*uh;
-
+	//TODO update env pwd & oldpwd
 	uh = get_userhome();
 	if (cmd[2])
 	{
