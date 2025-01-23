@@ -1,0 +1,14 @@
+{
+	ignore_readline_leaks
+	Memcheck:Leak
+	match-leak-kinds: reachable
+	...
+	fun:readline
+}
+{
+	ignore_rl_history_leaks
+	Memcheck:Leak
+	match-leak-kinds: reachable
+	...
+	fun:add_history
+}

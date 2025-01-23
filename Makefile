@@ -7,8 +7,7 @@ CFLAGS = -Wall -Werror -Wextra  -g
 SRCDIR = srcs/
 OBJDIR = objs/
 
-SRCS =  $(addprefix $(SRCDIR), main.c signal.c check.c sort.c alloc.c builtins.c builtins2.c clean.c builtins_utils.c builtins_utils2.c)# parsing.c parsing_utils.c)
-
+SRCS =  $(addprefix $(SRCDIR), main.c parsing.c split_commands.c create_list.c list.c parsing_utils.c signal.c token.c separate_token.c check.c sort.c alloc.c builtins.c builtins2.c clean.c builtins_utils.c builtins_utils2.c)
 LIBFT_PATH = libft
 
 LIBFT = $(LIBFT_PATH)/libft.a
@@ -16,6 +15,7 @@ LIBFT = $(LIBFT_PATH)/libft.a
 OBJS = $(SRCS:$(SRCDIR)%.c=$(OBJDIR)%.o)
 
 GREEN = \033[1;32m
+RESET = \033[0m
 
 all: header $(NAME)
 
@@ -49,5 +49,8 @@ fclean: clean
 	@$(MAKE) fclean -C $(LIBFT_PATH)
 
 re: fclean all
+
+debug: $(NAME)
+	@valgrind --leak-check=full --show-leak-kinds=all --suppressions=ignore_readline_leaks.supp ./minishell
 
 .PHONY: all clean fclean re

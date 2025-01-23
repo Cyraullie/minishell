@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 15:47:36 by cgoldens          #+#    #+#             */
 /*   Updated: 2025/01/21 14:07:05 by cgoldens         ###   ########.fr       */
@@ -25,11 +25,6 @@ void	handle_sigint(int sig)
 	}
 }
 
-/**
- * @brief handle "signal" for EOF (Ctrl+D)
- * 
- * @param line the line get in readline to catch an EOF
- */
 
 /**
  * @brief handle "signal" for EOF (Ctrl+D)

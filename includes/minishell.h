@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:38:10 by lpittet           #+#    #+#             */
 /*   Updated: 2025/01/23 16:44:59 by cgoldens         ###   ########.fr       */
@@ -27,16 +27,30 @@
 
 typedef struct s_command
 {
-	char	*cmd;
-	char	*flags;
-	char	**cmd_tab;
-}		t_command;
+	char				*read;
+	int					heredoc;
+	int					pipe_in;
+	char				*write;
+	mode_t				write_type;
+	int					pipe_out;
+	char				*cmd;
+	char				*flags;
+	char				**cmd_tab;
+	char				**raw;
+	struct s_command	*next;
+}	t_command;
 
-// parsing_utils.c
-char	**mini_split(char const *s, char c);
+// split_commands.c
+char		**mini_split(char *s);
+int			ft_isspace(int c);
+void		toggle_quotes(char *s, int i, int *in_d_quotes, int *in_s_quotes);
 
 // parsing.c
-int		parsing(char *line, t_command *cmd);
+int			parsing(char *line, t_command **cmd, char **env);
+void		free_tab(char **tab);
+
+// create_list.c
+void		create_list(char *line, t_command **cmd);
 
 // signal.c
 void	handle_sigint(int sig);
@@ -88,5 +102,23 @@ void	move_tab(char **name, int *tab, int *pos);
 //alloc.c
 char	**alloc_name(int size, char **env, int *tab);
 int		*alloc_pos(int size);
+
+// list.c
+t_command	*ft_listnew(char **content);
+t_command	*ft_listlast(t_command *list);
+void		ft_listadd_back(t_command **list, t_command *new);
+void		ft_listdelete(t_command *list);
+
+// signal.c
+void		handle_sigint(int sig);
+void		init_sig(void);
+void		handle_eof(char *line, char **env);
+
+// token.c
+void		assign_token(t_command **cmd);
+
+// separat_token.c
+char		*separate_tokens(char *line);
+
 
 #endif
