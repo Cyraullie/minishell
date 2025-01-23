@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:38:10 by lpittet           #+#    #+#             */
-/*   Updated: 2025/01/22 10:18:37 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/01/22 13:29:14 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ void	write_env(char **env);
 void	add_envline(char **env, char **nenv, char *title, char **name);
 void	dup_env(char **env, char **nenv, int i, int j);
 char	**create_nenv(char **env, char **name);
+int		check_normenv(char *n);
+void	sort_env(char **env, int *tab);
 
 //clean.c
 void	clean_env(char **env);
