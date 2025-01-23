@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 16:30:34 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/01/23 16:55:05 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/01/23 17:01:15 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	ft_echo(char **cmd)
 			i++;
 		while (cmd[i])
 		{
-			printf("%s", cmd[i]); 
+			printf("%s", cmd[i]);
 			i++;
 			if (cmd[i])
 				printf(" ");
