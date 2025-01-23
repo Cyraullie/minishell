@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:35:36 by lpittet           #+#    #+#             */
-/*   Updated: 2025/01/22 16:17:54 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/01/23 09:16:00 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	main(int ac, char **av, char **envp)
 	{
 		cmd = NULL;
 		line = readline("minishell> ");
-		handle_eof(line);
+		handle_eof(line, env);
 		if (line && *line)
 			add_history(line);
 		parsing(line, &cmd, env);
