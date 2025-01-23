@@ -7,8 +7,7 @@ CFLAGS = -Wall -Werror -Wextra  -g
 SRCDIR = srcs/
 OBJDIR = objs/
 
-
-SRCS =  $(addprefix $(SRCDIR), main.c parsing.c split_commands.c create_list.c list.c parsing_utils.c signal.c token.c separate_token.c)
+SRCS =  $(addprefix $(SRCDIR), main.c parsing.c split_commands.c create_list.c list.c parsing_utils.c signal.c token.c separate_token.c check.c sort.c alloc.c builtins.c builtins2.c clean.c builtins_utils.c builtins_utils2.c)
 LIBFT_PATH = libft
 
 LIBFT = $(LIBFT_PATH)/libft.a
@@ -29,9 +28,6 @@ header:
 	@echo "/_/ /_/ /_/_/_/ /_/_/____/_/ /_/\___/_/_/   "
 	@echo "                                            "
 	@echo "$(RESET)"
-
-
-
 
 $(OBJDIR)%.o: $(SRCDIR)%.c
 	@mkdir -p $(OBJDIR)
