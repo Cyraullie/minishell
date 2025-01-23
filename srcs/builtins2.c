@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 16:20:02 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/01/22 11:20:53 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/01/23 16:25:12 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ char	**ft_export(char **cmd, char **env)
 	while (cmd[j])
 	{
 		name = ft_split(cmd[j], '=');
-		if (!name )
+		if (!name)
 			return (NULL);
 		if (check_normenv(name[0]))
 		{
