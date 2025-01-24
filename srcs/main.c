@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
+//TODO check leaks to all buitlins
 /**
  * @brief create a modifiable environment variable
  * @param envp , env variable
@@ -23,6 +23,7 @@ char	**get_env(char **envp)
 	char	**env;
 
 	i = 0;
+	env = NULL;
 	while (envp[i])
 		i++;
 	env = malloc(sizeof(char *) * (i + 1));
@@ -31,12 +32,18 @@ char	**get_env(char **envp)
 	i = 0;
 	while (envp[i])
 	{
-		env[i] = envp[i];
+		env[i] = ft_strdup(envp[i]);
+		if (!env[i])
+		{
+			clean_env(env);
+			return (NULL);
+		}
 		i++;
 	}
 	env[i] = NULL;
 	return (env);
 }
+
 
 int	main(int ac, char **av, char **envp)
 {
@@ -53,6 +60,7 @@ int	main(int ac, char **av, char **envp)
 		cmd = NULL;
 		line = readline("minishell> ");
 		handle_eof(line, env);
+		//TODO add complete history in .ms_history
 		if (line && *line)
 			add_history(line);
 		parsing(line, &cmd, env);
