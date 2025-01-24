@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 15:47:36 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/01/23 10:59:49 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/01/24 14:56:04 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void	handle_sigint(int sig)
 	}
 }
 
-
 /**
  * @brief handle "signal" for EOF (Ctrl+D)
  * 
@@ -36,7 +35,7 @@ void	handle_eof(char *line, char **env)
 {
 	if (!line)
 	{
-		clean_env(env);
+		clean_tab(env);
 		free(line);
 		printf("exit\n");
 		exit(0);

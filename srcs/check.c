@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 17:10:33 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/01/23 16:27:37 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/01/24 10:09:46 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	check_tabenv(char **env, int i)
 {
 	if (!env[i])
 	{
-		clean_env(env);
+		clean_tab(env);
 		return ;
 	}
 }

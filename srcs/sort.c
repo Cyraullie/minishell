@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 16:21:19 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/01/23 16:36:25 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/01/24 10:09:46 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	sort_tab(char **env, int *tab, int size)
 	get_pos(pos, name);
 	while (!is_order(pos, name))
 		move_tab(name, tab, pos);
-	clean_env(name);
+	clean_tab(name);
 	free(pos);
 }
 

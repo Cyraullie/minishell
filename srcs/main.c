@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:35:36 by lpittet           #+#    #+#             */
-/*   Updated: 2025/01/24 16:40:19 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/01/24 16:47:00 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char	**get_env(char **envp)
 		env[i] = ft_strdup(envp[i]);
 		if (!env[i])
 		{
-			clean_env(env);
+			clean_tab(env);
 			return (NULL);
 		}
 		i++;
@@ -43,7 +43,6 @@ char	**get_env(char **envp)
 	env[i] = NULL;
 	return (env);
 }
-
 
 int	main(int ac, char **av, char **envp)
 {
@@ -55,15 +54,15 @@ int	main(int ac, char **av, char **envp)
 	(void)av;
 	env = get_env(envp);
 	init_sig();
+	start_history();
 	while (1)
 	{
 		cmd = NULL;
 		line = readline("minishell> ");
 		handle_eof(line, env);
-		//TODO add complete history in .ms_history
-		if (line && *line)
-			add_history(line);
+		handle_history(line);
 		parsing(line, &cmd, env);
+		//TODO exec builtins exec(&cmd, env);
 		ft_listdelete(cmd);
 	}
 	return (0);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_commands.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 15:32:36 by lpittet           #+#    #+#             */
-/*   Updated: 2025/01/22 14:09:39 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/01/24 10:08:50 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ void	split_commands(char *s, char **tab, int num_cmds)
 		tab[j] = get_substr(s, &i);
 		if (!tab[j++])
 		{
-			free_tab(tab);
+			clean_tab(tab);
 			return ;
 		}
 		while (s[i] == '|' || ft_isspace(s[i]))

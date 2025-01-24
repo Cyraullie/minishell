@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 17:10:47 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/01/22 10:22:24 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/01/24 10:09:46 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ void	del_envline(char **env, char **nenv, char *title)
 			nenv[j] = ft_strdup(env[i]);
 			if (!nenv[j])
 			{
-				clean_env(nenv);
+				clean_tab(nenv);
 				return ;
 			}
 			j++;
