@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:35:36 by lpittet           #+#    #+#             */
-/*   Updated: 2025/01/23 09:16:00 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/01/24 10:09:46 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char	**get_env(char **envp)
 		env[i] = ft_strdup(envp[i]);
 		if (!env[i])
 		{
-			clean_env(env);
+			clean_tab(env);
 			return (NULL);
 		}
 		i++;
@@ -64,6 +64,7 @@ int	main(int ac, char **av, char **envp)
 		if (line && *line)
 			add_history(line);
 		parsing(line, &cmd, env);
+		//TODO exec builtins exec(&cmd, env);
 		ft_listdelete(cmd);
 	}
 	return (ft_strlen(env[0]));
