@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:38:10 by lpittet           #+#    #+#             */
-/*   Updated: 2025/01/24 16:08:36 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/01/24 16:33:31 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,5 +134,6 @@ char		*separate_tokens(char *line);
 
 //history.c
 void		handle_history(char *line);
+void		start_history(void);
 
 #endif
