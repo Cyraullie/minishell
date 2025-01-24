@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 16:30:34 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/01/24 10:09:46 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/01/24 11:54:31 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ void	ft_pwd(char **cmd)
  * 
  * @param cmd command line array
  */
-void	ft_cd(char **cmd)
+void	ft_cd(char **cmd, char ***env)
 {
 	char	*uh;
 	//TODO update env pwd & oldpwd
@@ -142,15 +142,5 @@ void	ft_cd(char **cmd)
 		if (!cmd[1])
 			return ;
 	}
-	if (cmd[1] && ft_strncmp(cmd[1], "~", 1))
-	{
-		if (!access(cmd[1], X_OK))
-			chdir(cmd[1]);
-		else if (access(cmd[1], F_OK))
-			perror(cmd[1]);
-		else
-			perror(cmd[1]);
-		return ;
-	}
-	chdir(get_userhome());
+	ft_chdir(cmd, env);
 }

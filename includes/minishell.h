@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:38:10 by lpittet           #+#    #+#             */
-/*   Updated: 2025/01/24 10:09:46 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/01/24 11:53:51 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	ft_echo(char **cmd);
 int		ft_exit(char **cmd, char **env);
 void	ft_env(char **cmd, char **env);
 void	ft_pwd(char **cmd);
-void	ft_cd(char **cmd);
+void	ft_cd(char **cmd, char ***env);
 
 //builtins2.c
 char	**ft_unset(char **cmd, char **env);
@@ -82,6 +82,11 @@ void	dup_env(char **env, char **nenv, int i, int j);
 char	**create_nenv(char **env, char **name);
 int		check_normenv(char *n);
 void	sort_env(char **env, int *tab);
+
+//builtins_utils3.c
+void	ft_chdir(char **cmd, char ***env);
+void	update_oldpwd(char *path , char ***env);
+void	update_pwd(char *path , char ***env);
 
 //clean.c
 void	clean_tab(char **env);
