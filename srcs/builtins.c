@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 16:30:34 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/01/24 11:54:31 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/01/24 14:56:32 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ void	ft_pwd(char **cmd)
 void	ft_cd(char **cmd, char ***env)
 {
 	char	*uh;
-	//TODO update env pwd & oldpwd
+
 	uh = get_userhome();
 	if (cmd[2])
 	{

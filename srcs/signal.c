@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 15:47:36 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/01/24 10:09:46 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/01/24 14:56:04 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	handle_sigint(int sig)
 		write(STDOUT_FILENO, "\nminishell> ", 12);
 	}
 }
-
 
 /**
  * @brief handle "signal" for EOF (Ctrl+D)
