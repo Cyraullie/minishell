@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 08:56:18 by lpittet           #+#    #+#             */
-/*   Updated: 2025/01/22 16:16:58 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/01/24 15:08:54 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 /**
  * @brief get the different redirection file or types
  * 
- * @param cmd an element of the chainde list
+ * @param cmd an element of the linked list
  * @return t_command* the cmd param modified
  */
 t_command	*get_redir(t_command *cmd)
@@ -34,12 +34,76 @@ t_command	*get_redir(t_command *cmd)
 		if (!ft_strncmp(cmd->raw[i], ">", 2)
 			|| !ft_strncmp(cmd->raw[i], ">>", 3))
 		{
+			if (!open_previous_file(cmd))
+				return (cmd);
 			cmd->write = cmd->raw[i + 1];
 			if (!ft_strncmp(cmd->raw[i], ">>", 3))
 				cmd->write_type = O_APPEND | O_CREAT | O_WRONLY;
 			else
 				cmd->write_type = O_TRUNC | O_CREAT | O_WRONLY;
 		}
+	}
+	return (cmd);
+}
+
+t_command	*get_cmd(t_command *cmd)
+{
+	int	i;
+
+	i = -1;
+	while (cmd->raw[++i])
+	{
+		if (!ft_isredir(cmd->raw[i][0]))
+		{
+			cmd->cmd = cmd->raw[i];
+			break ;
+		}
+		else
+			i++;
+	}
+	return (cmd);
+}
+
+int	count_arg_number(t_command *cmd)
+{
+	int	count;
+	int	i;
+
+	count = 0;
+	i = -1;
+	while (cmd->raw[++i])
+	{
+		if (!ft_isredir(cmd->raw[i][0]))
+			count++;
+		else
+			i++;
+	}
+	return (count);
+}
+
+t_command	*get_cmd_args(t_command *cmd)
+{
+	int	count;
+	int	i;
+	int	j;
+
+	if (!cmd->cmd)
+		return (cmd);
+	count = count_arg_number(cmd);
+	cmd->cmd_tab = ft_calloc(count + 1, sizeof(char *));
+	if (!cmd->cmd_tab)
+		return (NULL);
+	i = -1;
+	j = 0;
+	while (cmd->raw[++i])
+	{
+		if (!ft_isredir(cmd->raw[i][0]))
+		{
+			cmd->cmd_tab[j] = cmd->raw[i];
+			j++;
+		}
+		else
+			i++;
 	}
 	return (cmd);
 }
@@ -58,6 +122,8 @@ void	assign_token(t_command **cmd)
 	while (*cmd)
 	{
 		*cmd = get_redir(*cmd);
+		*cmd = get_cmd(*cmd);
+		*cmd = get_cmd_args(*cmd);
 		if (i > 0 && !(*cmd)->heredoc && !(*cmd)->read)
 			(*cmd)->pipe_in = 1;
 		if ((*cmd)->next && !(*cmd)->write)

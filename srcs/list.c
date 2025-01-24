@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 10:08:14 by lpittet           #+#    #+#             */
-/*   Updated: 2025/01/22 16:17:22 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/01/24 11:53:51 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ t_command	*ft_listnew(char **content)
 	new->raw = content;
 	new->cmd = NULL;
 	new->cmd_tab = NULL;
-	new->flags = NULL;
+	new->run = 1;
 	new->read = NULL;
 	new->heredoc = 0;
 	new->pipe_in = 0;
@@ -81,7 +81,7 @@ void	ft_listdelete(t_command *list)
 		temp = list->next;
 	free_tab(list->raw);
 	if (list->cmd_tab)
-		free_tab(list->cmd_tab);
+		free(list->cmd_tab);
 	free(list);
 	if (temp)
 		ft_listdelete(temp);
