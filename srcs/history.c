@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 16:05:17 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/01/24 16:42:24 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/01/24 16:59:06 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,19 @@
  */
 void	handle_history(char *line)
 {
-	int	fd;
+	int		fd;
+	char	*l_hist;
 
 	if (line && *line)
 	{
 		add_history(line);
 		fd = open(".ms_history", O_CREAT | O_WRONLY | O_APPEND, 0644);
-		line = ft_strjoin(line, "\n");
-		write(fd, line, ft_strlen(line));
+		l_hist = ft_strjoin(line, "\n");
+		if (!l_hist)
+			return ;
+		write(fd, l_hist, ft_strlen(l_hist));
 		close(fd);
+		free(l_hist);
 	}
 }
 
@@ -41,7 +45,7 @@ void	start_history(void)
 	char	**file;
 	int		i;
 
-	buf = malloc(sizeof(char *) * BUFFER_SIZE + 1);
+	buf = ft_calloc(sizeof(char *), BUFFER_SIZE + 1);
 	if (!buf)
 		return ;
 	fd = open(".ms_history", O_CREAT | O_RDONLY, 0644);

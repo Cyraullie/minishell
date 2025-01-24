@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 10:08:14 by lpittet           #+#    #+#             */
-/*   Updated: 2025/01/24 10:08:50 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/01/24 16:53:39 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	ft_listdelete(t_command *list)
 		temp = list->next;
 	clean_tab(list->raw);
 	if (list->cmd_tab)
-		clean_tab(list->cmd_tab);
+		free(list->cmd_tab);
 	free(list);
 	if (temp)
 		ft_listdelete(temp);
