@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:38:10 by lpittet           #+#    #+#             */
-/*   Updated: 2025/01/23 16:44:59 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/01/24 10:09:46 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ void		toggle_quotes(char *s, int i, int *in_d_quotes, int *in_s_quotes);
 
 // parsing.c
 int			parsing(char *line, t_command **cmd, char **env);
-void		free_tab(char **tab);
 
 // create_list.c
 void		create_list(char *line, t_command **cmd);
@@ -85,7 +84,7 @@ int		check_normenv(char *n);
 void	sort_env(char **env, int *tab);
 
 //clean.c
-void	clean_env(char **env);
+void	clean_tab(char **env);
 
 //check.c
 void	check_tabenv(char **env, int i);

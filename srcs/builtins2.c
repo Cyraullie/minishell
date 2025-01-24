@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 16:20:02 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/01/23 16:25:12 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/01/24 10:09:46 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	**ft_unset(char **cmd, char **env)
 		if (!nenv)
 			return (NULL);
 		del_envline(env, nenv, cmd[j++]);
-		clean_env(env);
+		clean_tab(env);
 		env = nenv;
 	}
 	return (nenv);
@@ -73,7 +73,7 @@ char	**ft_export(char **cmd, char **env)
 			if (!nenv)
 				return (NULL);
 			add_envline(env, nenv, cmd[j], name);
-			clean_env(env);
+			clean_tab(env);
 			env = nenv;
 		}
 		j++;

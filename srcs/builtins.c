@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 16:30:34 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/01/23 17:01:15 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/01/24 10:09:46 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	ft_exit(char **cmd, char **env)
 	}
 	if (cmd[1])
 	{
-		clean_env(env);
+		clean_tab(env);
 		exit(ft_atoi(cmd[1]));
 	}
 	exit(0);

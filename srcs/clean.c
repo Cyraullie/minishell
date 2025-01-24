@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 13:40:24 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/01/21 14:33:37 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/01/24 10:05:49 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,19 @@
 /**
  * @brief function to free env
  * 
- * @param env environment variable
+ * @param tab 2D malloc array
  */
-void	clean_env(char **env)
+void	clean_tab(char **tab)
 {
 	int	i;
 
-	if (!env)
+	if (!tab)
 		return ;
 	i = 0;
-	while (env[i])
+	while (tab[i])
 	{
-		free(env[i]);
+		free(tab[i]);
 		i++;
 	}
-	free(env);
+	free(tab);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 15:02:10 by lpittet           #+#    #+#             */
-/*   Updated: 2025/01/22 16:15:03 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/01/24 10:08:50 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,6 @@ int	parsing(char *line, t_command **cmd, char **env)
 	head = *cmd;
 	assign_token(cmd);
 	*cmd = head;
-	free_tab(tab);
+	clean_tab(tab);
 	return (0);
 }
