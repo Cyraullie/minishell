@@ -31,10 +31,10 @@ typedef struct s_command
 	int					heredoc;
 	int					pipe_in;
 	char				*write;
-	mode_t				write_type;
+	int					write_type;
+	int					run;
 	int					pipe_out;
 	char				*cmd;
-	char				*flags;
 	char				**cmd_tab;
 	char				**raw;
 	struct s_command	*next;
@@ -129,11 +129,15 @@ void		handle_eof(char *line, char **env);
 // token.c
 void		assign_token(t_command **cmd);
 
-// separat_token.c
+// separate_token.c
 char		*separate_tokens(char *line);
 
 //history.c
 void		handle_history(char *line);
 void		start_history(void);
+
+// parsing_utils.c
+int			ft_isredir(int c);
+int			open_previous_file(t_command *cmd);
 
 #endif

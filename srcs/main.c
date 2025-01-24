@@ -65,5 +65,5 @@ int	main(int ac, char **av, char **envp)
 		//TODO exec builtins exec(&cmd, env);
 		ft_listdelete(cmd);
 	}
-	return (ft_strlen(env[0]));
+	return (0);
 }

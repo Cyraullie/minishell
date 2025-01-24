@@ -29,7 +29,7 @@ t_command	*ft_listnew(char **content)
 	new->raw = content;
 	new->cmd = NULL;
 	new->cmd_tab = NULL;
-	new->flags = NULL;
+	new->run = 1;
 	new->read = NULL;
 	new->heredoc = 0;
 	new->pipe_in = 0;
