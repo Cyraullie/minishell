@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:38:10 by lpittet           #+#    #+#             */
-/*   Updated: 2025/01/24 11:53:51 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/01/24 14:53:16 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,12 @@ void	sort_env(char **env, int *tab);
 void	ft_chdir(char **cmd, char ***env);
 void	update_oldpwd(char *path , char ***env);
 void	update_pwd(char *path , char ***env);
+char	**handle_export(char *arg, char **env, char ***nenv);
+void	concat_nexistvar(char ***nenv, char **name, int j);
+
+//builtins_utils4.c
+void	handle_concat(char **env, char ***nenv, char **name);
+void	concat_existvar(char *env, char ***nenv, char **name, int j);
 
 //clean.c
 void	clean_tab(char **env);
