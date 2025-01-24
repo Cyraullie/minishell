@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 15:02:10 by lpittet           #+#    #+#             */
-/*   Updated: 2025/01/22 16:15:03 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/01/24 16:38:14 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,9 @@ char	*ft_strjoin_and_free(char *s1, char *s2)
 /**
  * @brief parse the input at each iterations and format it
  * 		  so that it can be executed easily and put every command in a linked list
- * @param line 
- * @param cmd 
- * @param env 
+ * @param line the input written in the prompt
+ * @param cmd the address of the first element of a linked list
+ * @param env environnement variable
  * @return int 
  */
 int	parsing(char *line, t_command **cmd, char **env)

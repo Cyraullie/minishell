@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:35:36 by lpittet           #+#    #+#             */
-/*   Updated: 2025/01/23 09:16:00 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/01/24 16:40:19 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,5 +66,5 @@ int	main(int ac, char **av, char **envp)
 		parsing(line, &cmd, env);
 		ft_listdelete(cmd);
 	}
-	return (ft_strlen(env[0]));
+	return (0);
 }
