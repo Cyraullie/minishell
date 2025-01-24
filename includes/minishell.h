@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:38:10 by lpittet           #+#    #+#             */
-/*   Updated: 2025/01/24 14:53:16 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/01/24 15:17:15 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,66 +52,66 @@ int			parsing(char *line, t_command **cmd, char **env);
 void		create_list(char *line, t_command **cmd);
 
 // signal.c
-void	handle_sigint(int sig);
-void	init_sig(void);
-void	handle_eof(char *line, char **env);
+void		handle_sigint(int sig);
+void		init_sig(void);
+void		handle_eof(char *line, char **env);
 
 //builtins.c
-void	ft_echo(char **cmd);
-int		ft_exit(char **cmd, char **env);
-void	ft_env(char **cmd, char **env);
-void	ft_pwd(char **cmd);
-void	ft_cd(char **cmd, char ***env);
+void		ft_echo(char **cmd);
+int			ft_exit(char **cmd, char **env);
+void		ft_env(char **cmd, char **env);
+void		ft_pwd(char **cmd);
+void		ft_cd(char **cmd, char ***env);
 
 //builtins2.c
-char	**ft_unset(char **cmd, char **env);
-char	**ft_export(char **cmd, char **env);
+char		**ft_unset(char **cmd, char **env);
+char		**ft_export(char **cmd, char **env);
 
 //builtins_utils.c
-int		find_valid_flag(char *msg, char flag);
-char	*get_userhome(void);
-char	*get_path(void);
-char	**del_line(char **env, char *title);
-int		get_envline(char **env, char *title);
-void	del_envline(char **env, char **nenv, char *title);
+int			find_valid_flag(char *msg, char flag);
+char		*get_userhome(void);
+char		*get_path(void);
+char		**del_line(char **env, char *title);
+int			get_envline(char **env, char *title);
+void		del_envline(char **env, char **nenv, char *title);
 
 //builtins_utils2.c
-void	write_env(char **env);
-void	add_envline(char **env, char **nenv, char *title, char **name);
-void	dup_env(char **env, char **nenv, int i, int j);
-char	**create_nenv(char **env, char **name);
-int		check_normenv(char *n);
-void	sort_env(char **env, int *tab);
+void		write_env(char **env);
+void		add_envline(char **env, char **nenv, char *title, char **name);
+void		dup_env(char **env, char **nenv, int i, int j);
+char		**create_nenv(char **env, char **name);
+int			check_normenv(char *n);
+void		sort_env(char **env, int *tab);
 
 //builtins_utils3.c
-void	ft_chdir(char **cmd, char ***env);
-void	update_oldpwd(char *path , char ***env);
-void	update_pwd(char *path , char ***env);
-char	**handle_export(char *arg, char **env, char ***nenv);
-void	concat_nexistvar(char ***nenv, char **name, int j);
+void		ft_chdir(char **cmd, char ***env);
+void		update_oldpwd(char *path, char ***env);
+void		update_pwd(char *path, char ***env);
+char		**handle_export(char *arg, char **env, char ***nenv);
+void		concat_nexistvar(char ***nenv, char **name, int j);
 
 //builtins_utils4.c
-void	handle_concat(char **env, char ***nenv, char **name);
-void	concat_existvar(char *env, char ***nenv, char **name, int j);
+void		handle_concat(char **env, char ***nenv, char **name);
+void		concat_existvar(char *env, char ***nenv, char **name, int j);
 
 //clean.c
-void	clean_tab(char **env);
+void		clean_tab(char **env);
 
 //check.c
-void	check_tabenv(char **env, int i);
-int		is_order(int *pos, char **name);
-int		get_maxlength_env(char **name);
+void		check_tabenv(char **env, int i);
+int			is_order(int *pos, char **name);
+int			get_maxlength_env(char **name);
 
 //sort.c
-void	sort_tab(char **env, int *tab, int size);
-void	get_by_letter(char c, char **env, int *tab);
-void	sort_env(char **env, int *tab);
-void	get_pos(int *pos, char **name);
-void	move_tab(char **name, int *tab, int *pos);
+void		sort_tab(char **env, int *tab, int size);
+void		get_by_letter(char c, char **env, int *tab);
+void		sort_env(char **env, int *tab);
+void		get_pos(int *pos, char **name);
+void		move_tab(char **name, int *tab, int *pos);
 
 //alloc.c
-char	**alloc_name(int size, char **env, int *tab);
-int		*alloc_pos(int size);
+char		**alloc_name(int size, char **env, int *tab);
+int			*alloc_pos(int size);
 
 // list.c
 t_command	*ft_listnew(char **content);
@@ -129,6 +129,5 @@ void		assign_token(t_command **cmd);
 
 // separat_token.c
 char		*separate_tokens(char *line);
-
 
 #endif
