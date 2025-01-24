@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 08:56:18 by lpittet           #+#    #+#             */
-/*   Updated: 2025/01/24 15:08:54 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/01/24 16:40:01 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,12 @@ t_command	*get_redir(t_command *cmd)
 	return (cmd);
 }
 
+/**
+ * @brief find the command token
+ * 
+ * @param cmd a element of the linked list t_command
+ * @return cmd arg, with the cmd attribute correctly set
+ */
 t_command	*get_cmd(t_command *cmd)
 {
 	int	i;
@@ -64,6 +70,12 @@ t_command	*get_cmd(t_command *cmd)
 	return (cmd);
 }
 
+/**
+ * @brief count the number of arguments that will be used in get_cmd_args
+ * 
+ * @param cmd a element of the linked list t_command
+ * @return the number of argument that need to fit in a table
+ */
 int	count_arg_number(t_command *cmd)
 {
 	int	count;
@@ -81,6 +93,12 @@ int	count_arg_number(t_command *cmd)
 	return (count);
 }
 
+/**
+ * @brief create a table of strings that can be used later by execve
+ * 
+ * @param cmd a element of the linked listb t_command
+ * @return the cmd arg, with the table added
+ */
 t_command	*get_cmd_args(t_command *cmd)
 {
 	int	count;

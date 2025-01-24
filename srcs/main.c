@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:35:36 by lpittet           #+#    #+#             */
-/*   Updated: 2025/01/24 14:55:58 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/01/24 16:40:19 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,3 @@ int	main(int ac, char **av, char **envp)
 	}
 	return (0);
 }
-//TODO doc
