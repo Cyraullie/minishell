@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:38:10 by lpittet           #+#    #+#             */
-/*   Updated: 2025/01/24 15:55:07 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/01/24 16:08:36 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,5 +131,8 @@ void		assign_token(t_command **cmd);
 
 // separat_token.c
 char		*separate_tokens(char *line);
+
+//history.c
+void		handle_history(char *line);
 
 #endif

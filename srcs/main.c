@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:35:36 by lpittet           #+#    #+#             */
-/*   Updated: 2025/01/24 15:08:46 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/01/24 16:08:21 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,7 @@ int	main(int ac, char **av, char **envp)
 		line = readline("minishell> ");
 		handle_eof(line, env);
 		//TODO add complete history in .ms_history
-		if (line && *line)
-			add_history(line);
+		handle_history(line);
 		parsing(line, &cmd, env);
 		//TODO exec builtins exec(&cmd, env);
 		ft_listdelete(cmd);
