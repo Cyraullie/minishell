@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:38:10 by lpittet           #+#    #+#             */
-/*   Updated: 2025/01/24 15:17:15 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/01/24 15:55:07 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,8 @@ void		concat_nexistvar(char ***nenv, char **name, int j);
 //builtins_utils4.c
 void		handle_concat(char **env, char ***nenv, char **name);
 void		concat_existvar(char *env, char ***nenv, char **name, int j);
+char		**split_equal(char *str);
+char		*multiple_equal(char **a_str);
 
 //clean.c
 void		clean_tab(char **env);

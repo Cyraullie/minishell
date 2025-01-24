@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 10:12:29 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/01/24 14:52:22 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/01/24 15:50:53 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ char	**handle_export(char *arg, char **env, char ***nenv)
 {
 	char	**name;
 
-	name = ft_split(arg, '=');
+	name = split_equal(arg);
 	if (!name)
 		return (NULL);
 	if (name[0][ft_strlen(name[0]) - 1] != '+')
