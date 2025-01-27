@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 10:08:14 by lpittet           #+#    #+#             */
-/*   Updated: 2025/01/24 16:53:39 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/01/27 10:48:06 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,8 @@ void	ft_listdelete(t_command *list)
 	t_command	*temp;
 
 	temp = NULL;
+	if (!list)
+		return ; 
 	if (list->next)
 		temp = list->next;
 	clean_tab(list->raw);
