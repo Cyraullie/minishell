@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 10:08:14 by lpittet           #+#    #+#             */
-/*   Updated: 2025/01/27 10:48:06 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/01/27 10:55:41 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	ft_listdelete(t_command *list)
 
 	temp = NULL;
 	if (!list)
-		return ; 
+		return ;
 	if (list->next)
 		temp = list->next;
 	clean_tab(list->raw);
