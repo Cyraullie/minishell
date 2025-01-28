@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 13:51:33 by lpittet           #+#    #+#             */
-/*   Updated: 2025/01/24 16:39:38 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/01/28 11:51:45 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int	open_previous_file(t_command *cmd)
 	}
 	return (1);
 }
+//TODO add heredoc to this
 
 int	ft_isspace(int c)
 {
@@ -58,4 +59,3 @@ void	free_tab(char **tab)
 	}
 	free(tab);
 }
-

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 15:02:10 by lpittet           #+#    #+#             */
-/*   Updated: 2025/01/24 16:38:14 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/01/27 16:12:27 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ char	*ft_strjoin_and_free(char *s1, char *s2)
  * 		  so that it can be executed easily and put every command in a linked list
  * @param line the input written in the prompt
  * @param cmd the address of the first element of a linked list
- * @param env environnement variable
+ * @param env environnement variables table
  * @return int 
  */
 int	parsing(char *line, t_command **cmd, char **env)
@@ -78,6 +78,11 @@ int	parsing(char *line, t_command **cmd, char **env)
 	t_command	*head;
 	int			i;
 
+	if (!check_syntax(line))
+	{
+		free(line);
+		return (1);
+	}
 	line = ft_strtrim_and_free(line, " ");
 	(void)env;
 	tab = mini_split(line);

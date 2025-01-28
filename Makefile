@@ -7,7 +7,11 @@ CFLAGS = -Wall -Werror -Wextra  -g
 SRCDIR = srcs/
 OBJDIR = objs/
 
-SRCS =  $(addprefix $(SRCDIR), main.c parsing.c split_commands.c create_list.c list.c parsing_utils.c signal.c token.c separate_token.c check.c sort.c alloc.c builtins.c builtins2.c clean.c builtins_utils.c builtins_utils2.c builtins_utils3.c builtins_utils4.c history.c exec_builtins.c)
+SRCS =  $(addprefix $(SRCDIR), main.c parsing.c split_commands.c create_list.c list.c parsing_utils.c signal.c token.c \
+								separate_token.c check.c sort.c alloc.c builtins.c builtins2.c \
+								clean.c builtins_utils.c builtins_utils2.c builtins_utils3.c builtins_utils4.c history.c \
+								syntax.c exec_builtins.c)
+
 LIBFT_PATH = libft
 
 LIBFT = $(LIBFT_PATH)/libft.a
@@ -51,6 +55,6 @@ fclean: clean
 re: fclean all
 
 debug: $(NAME)
-	@valgrind --leak-check=full --show-leak-kinds=all --suppressions=ignore_readline_leaks.supp ./minishell
+	@valgrind --leak-check=full --show-leak-kinds=all --suppressions=ignore_readline_leaks.supp --log-file="leaks.log" ./minishell
 
 .PHONY: all clean fclean re debug

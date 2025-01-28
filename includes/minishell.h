@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:38:10 by lpittet           #+#    #+#             */
-/*   Updated: 2025/01/27 11:01:37 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/01/28 14:43:01 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,5 +142,8 @@ int			open_previous_file(t_command *cmd);
 
 // exec_builtins.c
 void		exec_built(t_command **cmd, char ***env);
+
+// syntax.c
+int			check_syntax(char *line);
 
 #endif
