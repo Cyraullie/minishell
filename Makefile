@@ -54,6 +54,6 @@ fclean: clean
 re: fclean all
 
 debug: $(NAME)
-	@valgrind --leak-check=full --show-leak-kinds=all --suppressions=ignore_readline_leaks.supp ./minishell
+	@valgrind --leak-check=full --show-leak-kinds=all --suppressions=ignore_readline_leaks.supp --log-file="leaks.log" ./minishell
 
 .PHONY: all clean fclean re debug

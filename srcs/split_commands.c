@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_commands.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 15:32:36 by lpittet           #+#    #+#             */
-/*   Updated: 2025/01/24 10:08:50 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/01/28 11:43:30 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ char	*get_substr(char *s, int *i)
 			break ;
 		*i = *i + 1;
 	}
-	result = ft_substr(s, start, start + *i);
+	result = ft_substr(s, start, *i - start);
 	return (result);
 }
 
