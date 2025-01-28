@@ -2,3 +2,4 @@
 minishell
 .vscode/*
 .ms_history
+leaks.log
