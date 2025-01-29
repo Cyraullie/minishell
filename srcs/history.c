@@ -6,14 +6,11 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 16:05:17 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/01/24 16:59:06 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/01/29 10:29:44 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-//TODO add in history the .ms_history file
-//TODO 
 
 /**
  * @brief function to handle what append with the history
@@ -28,7 +25,7 @@ void	handle_history(char *line)
 	if (line && *line)
 	{
 		add_history(line);
-		fd = open(".ms_history", O_CREAT | O_WRONLY | O_APPEND, 0644);
+		fd = open(HISTORY_FILE, O_CREAT | O_WRONLY | O_APPEND, 0644);
 		l_hist = ft_strjoin(line, "\n");
 		if (!l_hist)
 			return ;
@@ -38,6 +35,10 @@ void	handle_history(char *line)
 	}
 }
 
+/**
+ * @brief function to get all old history in .ms_history
+ * 
+ */
 void	start_history(void)
 {
 	int		fd;
@@ -48,7 +49,7 @@ void	start_history(void)
 	buf = ft_calloc(sizeof(char *), BUFFER_SIZE + 1);
 	if (!buf)
 		return ;
-	fd = open(".ms_history", O_CREAT | O_RDONLY, 0644);
+	fd = open(HISTORY_FILE, O_CREAT | O_RDONLY, 0644);
 	read(fd, buf, BUFFER_SIZE);
 	file = ft_split(buf, '\n');
 	if (!file)
