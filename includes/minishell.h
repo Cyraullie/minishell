@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:38:10 by lpittet           #+#    #+#             */
-/*   Updated: 2025/01/28 14:43:01 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/01/29 11:46:49 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 1000
 # endif
+# ifndef HISTORY_FILE
+#  define HISTORY_FILE ".ms_history"
+# endif
 # include <stdio.h>
 # include <unistd.h>
 # include <signal.h>
@@ -24,6 +27,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../libft/includes/libft.h"
+# include <sys/wait.h>
 
 typedef struct s_command
 {
@@ -146,4 +150,5 @@ void		exec_built(t_command **cmd, char ***env);
 // syntax.c
 int			check_syntax(char *line);
 
+extern sig_atomic_t	g_stop;
 #endif
