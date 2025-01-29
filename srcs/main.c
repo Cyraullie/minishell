@@ -6,11 +6,12 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:35:36 by lpittet           #+#    #+#             */
-/*   Updated: 2025/01/28 14:43:21 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/01/29 15:09:11 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
 //TODO check leaks to all buitlins
 /**
  * @brief create a modifiable environment variable
@@ -44,21 +45,59 @@ char	**get_env(char **envp)
 	return (env);
 }
 
+char	*my_getenv(char *var_name, char **env)
+{
+	int	ienv;
+	int	i;
+
+	ienv = get_envline(env, var_name);
+	if (ienv == -1)
+		return (NULL);
+	i = 0;
+	while (env[ienv][i] != '=')
+		i++;
+	return (ft_substr(env[ienv], i + 1, ft_strlen(env[ienv])));
+}
+
+void	increment_shlvl(char ***env)
+{
+	int		content;
+	char	*cmd[3];
+
+	content = ft_atoi(my_getenv("SHLVL", *env));
+	content++;
+	cmd[0] = "export";
+	cmd[1] = "SHLVL=";
+	cmd[2] = NULL;
+	cmd[1] = ft_strjoin(cmd[1], ft_itoa(content));
+	*env = ft_export(cmd, *env);
+}
+
+void	init_minishell(char ***env, char **envp)
+{
+	*env = get_env(envp);
+	increment_shlvl(env);
+	init_sig();
+	start_history();
+}
+//TODO if ctrlC need ctrlD 2 time ???
 int	main(int ac, char **av, char **envp)
 {
 	char		*line;
 	t_command	*cmd;
 	char		**env;
 
-	(void)ac;
-	(void)av;
-	env = get_env(envp);
-	init_sig();
-	start_history();
-	while (1)
+	init_minishell(&env, envp);
+	while (ac && av[0])
 	{
 		cmd = NULL;
 		line = readline("minishell> ");
+		if (g_stop)
+		{
+			free(line);
+			g_stop = 0;
+			continue ;
+		}
 		handle_eof(line, env);
 		handle_history(line);
 		parsing(line, &cmd, env);
