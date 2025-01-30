@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 13:51:33 by lpittet           #+#    #+#             */
-/*   Updated: 2025/01/28 11:51:45 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/01/28 16:26:47 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,20 +42,3 @@ int	ft_isredir(int c)
 	return (c == '<' || c == '>');
 }
 
-/**
- * @brief iterate through a char** in order to free everything
- * 
- * @param tab 
- */
-void	free_tab(char **tab)
-{
-	int	i;
-
-	i = 0;
-	while (tab[i])
-	{
-		free(tab[i]);
-		i++;
-	}
-	free(tab);
-}

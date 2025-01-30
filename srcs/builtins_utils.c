@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 17:10:47 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/01/24 10:09:46 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/01/29 11:03:07 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ char	*get_userhome(void)
  * 
  * @param env environment variable
  * @param title name of the variable
- * @return int state if the line are find
+ * @return int -1 if not found, index of the line if found
  */
 int	get_envline(char **env, char *title)
 {

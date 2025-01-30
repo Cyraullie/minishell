@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 08:56:18 by lpittet           #+#    #+#             */
-/*   Updated: 2025/01/28 11:51:26 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/01/29 14:25:51 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ t_command	*get_cmd_args(t_command *cmd)
  * 
  * @param cmd address of the first element of the list
  */
-void	assign_token(t_command **cmd)
+void	assign_token(t_command **cmd, char **env)
 {
 	int	i;
 
@@ -141,7 +141,8 @@ void	assign_token(t_command **cmd)
 	while (*cmd)
 	{
 		*cmd = get_redir(*cmd);
-		*cmd = get_cmd(*cmd);
+		(*cmd)->raw = expansion((*cmd)->raw, env);
+ 		*cmd = get_cmd(*cmd);
 		*cmd = get_cmd_args(*cmd);
 		if (i > 0 && !(*cmd)->heredoc && !(*cmd)->read)
 			(*cmd)->pipe_in = 1;

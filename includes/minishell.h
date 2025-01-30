@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:38:10 by lpittet           #+#    #+#             */
-/*   Updated: 2025/01/27 10:54:53 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/01/29 14:26:15 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ void		init_sig(void);
 void		handle_eof(char *line, char **env);
 
 // token.c
-void		assign_token(t_command **cmd);
+void		assign_token(t_command **cmd, char **env);
 
 // separate_token.c
 char		*separate_tokens(char *line);
@@ -142,5 +142,8 @@ int			open_previous_file(t_command *cmd);
 
 // syntax.c
 int			check_syntax(char *line);
+
+// expansion.c
+char		**expansion(char **tab, char **env);
 
 #endif
