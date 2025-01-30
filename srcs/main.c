@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:35:36 by lpittet           #+#    #+#             */
-/*   Updated: 2025/01/29 15:09:11 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/01/30 13:34:40 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	init_minishell(char ***env, char **envp)
 	init_sig();
 	start_history();
 }
-//TODO if ctrlC need ctrlD 2 time ???
+
 int	main(int ac, char **av, char **envp)
 {
 	char		*line;
@@ -92,13 +92,14 @@ int	main(int ac, char **av, char **envp)
 	{
 		cmd = NULL;
 		line = readline("minishell> ");
+		handle_eof(line, env);
 		if (g_stop)
 		{
 			free(line);
+			line = NULL;
 			g_stop = 0;
 			continue ;
 		}
-		handle_eof(line, env);
 		handle_history(line);
 		parsing(line, &cmd, env);
 		exec_built(&cmd, &env);

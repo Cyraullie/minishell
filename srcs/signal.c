@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 15:47:36 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/01/29 11:46:38 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/01/30 13:33:08 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	handle_eof(char *line, char **env)
 {
 	if (!line)
 	{
+		g_stop = 0;
 		clean_tab(env);
 		free(line);
 		printf("exit\n");
