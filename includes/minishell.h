@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:38:10 by lpittet           #+#    #+#             */
-/*   Updated: 2025/01/29 11:46:49 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/01/31 15:06:17 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ void		clean_tab(char **env);
 void		check_tabenv(char **env, int i);
 int			is_order(int *pos, char **name);
 int			get_maxlength_env(char **name);
+int			is_builtin(char *cmd);
 
 //sort.c
 void		sort_tab(char **env, int *tab, int size);
@@ -137,8 +138,8 @@ void		assign_token(t_command **cmd);
 char		*separate_tokens(char *line);
 
 //history.c
-void		handle_history(char *line);
-void		start_history(void);
+void		handle_history(char *line, char **env);
+void		start_history(char **env);
 
 // parsing_utils.c
 int			ft_isredir(int c);
@@ -149,6 +150,8 @@ void		exec_built(t_command **cmd, char ***env);
 
 // syntax.c
 int			check_syntax(char *line);
+
+char		*my_getenv(char *var_name, char **env);
 
 extern sig_atomic_t	g_stop;
 #endif
