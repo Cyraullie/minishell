@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 10:49:01 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/01/29 10:47:58 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/01/31 15:26:53 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,72 @@ void	builtins(t_command *cmd_tmp, char ***env)
 	}
 }
 
+static	char	*get_full_path(char *path, char *cmd)
+{
+	path = ft_strjoin(path, "/");
+	if (!path)
+		return (NULL);
+	path = ft_strjoin(path, cmd);
+	if (!path)
+		return (NULL);
+	return (path);
+}
+
+
+static	char	*search_env(char **env)
+{
+	int		i;
+	char	*path_list;
+
+	i = 0;
+	while (env[i])
+	{
+		if (ft_strnstr(env[i], "PATH=", 5))
+		{
+			path_list = env[i];
+			return (path_list + 5);
+		}
+		i++;
+	}
+	ft_putendl_fd("PATH not found", 2);
+	return (NULL);
+}
+
+char	*find_path(char *cmd, char ***env)
+{
+	char	*path_list;
+	char	**src;
+	int		i;
+	char	*path;
+
+	path_list = search_env(*env);
+	if (!path_list)
+		exit(1);
+	src = ft_split(path_list, ':');
+	i = 0;
+	while (src[i])
+	{
+		path = get_full_path(src[i], cmd);
+		if (!access(path, F_OK))
+		{
+			free(src);
+			return (path);
+		}
+		free(path);
+		i++;
+	}
+	free(src);
+	return (NULL);
+}
+
+void	exec(t_command *cmd_tmp, char ***env)
+{
+	char	*path;
+
+	path = find_path(cmd_tmp->cmd, env);
+	execve(path, cmd_tmp->cmd_tab, *env);
+}
+
 /**
  * @brief 
  * 
@@ -52,6 +118,8 @@ void	handle_redir(t_command *cmd_tmp)
 	if (cmd_tmp->write)
 	{
 		fd = open(cmd_tmp->write, cmd_tmp->write_type, 0755);
+		if (fd == -1)
+			perror("open");
 		dup2(fd, STDOUT_FILENO);
 		close(fd);
 	}
@@ -63,29 +131,47 @@ void	handle_pipe(t_command *cmd_tmp, char ***env)
 	pid_t	pid;
 
 	if (cmd_tmp->next)
-	{
 		pipe(pipefd);
-		pid = fork();
+
+	pid = fork();
+	if (pid == -1)
+	{
+		perror("fork");
+		exit(EXIT_FAILURE);
 	}
-	if (pid == 0)
+
+	if (pid == 0) // Processus enfant
 	{
 		if (cmd_tmp->pipe_out)
 		{
-			close(pipefd[0]);
-			dup2(pipefd[1], STDOUT_FILENO);
+			close(pipefd[0]); // Fermer la lecture du pipe
+			dup2(pipefd[1], STDOUT_FILENO); // Rediriger stdout vers le pipe
 			close(pipefd[1]);
 		}
-		builtins(cmd_tmp, env);
-		exit(EXIT_SUCCESS);
+		if (is_builtin(cmd_tmp->cmd))
+		{
+			builtins(cmd_tmp, env); // Exécuter le builtin
+			exit(EXIT_SUCCESS); // Sortir uniquement du processus enfant
+		}
+		else
+		{
+			exec(cmd_tmp, env); // Exécuter une commande externe
+			exit(EXIT_FAILURE); // Si exec échoue, quitter l'enfant
+		}
 	}
-	if (cmd_tmp->next)
+	else // Processus parent
 	{
-		close(pipefd[1]);
-		dup2(pipefd[0], STDIN_FILENO);
-		close(pipefd[0]);
-		waitpid(pid, NULL, 0);
+		if (cmd_tmp->next)
+		{
+			close(pipefd[1]); // Fermer l'écriture du pipe
+			dup2(pipefd[0], STDIN_FILENO); // Lire à partir du pipe
+			close(pipefd[0]);
+		}
+		waitpid(pid, NULL, 0); // Attendre que l'enfant termine
 	}
 }
+
+
 
 void	exec_built(t_command **cmd, char ***env)
 {
@@ -96,15 +182,16 @@ void	exec_built(t_command **cmd, char ***env)
 	while (cmd_tmp)
 	{
 		out_cpy = dup(STDOUT_FILENO);
-		if (cmd_tmp->write)
+
+		if (cmd_tmp->write) // Redirection
 			handle_redir(cmd_tmp);
 		else
 			handle_pipe(cmd_tmp, env);
 
-		builtins(cmd_tmp, env);
-
 		dup2(out_cpy, STDOUT_FILENO);
 		close(out_cpy);
-		cmd_tmp = cmd_tmp->next;
+
+		cmd_tmp = cmd_tmp->next; // On passe à la commande suivante
 	}
 }
+

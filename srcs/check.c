@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 17:10:33 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/01/24 10:09:46 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/01/30 14:18:56 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,4 +61,23 @@ int	get_maxlength_env(char **name)
 			len = ft_strlen(name[i]);
 	}
 	return (len);
+}
+
+int	is_builtin(char *cmd)
+{
+	if (!ft_strncmp(cmd, "echo", 5))
+		return (1);
+	else if (!ft_strncmp(cmd, "cd", 3))
+		return (1);
+	else if (!ft_strncmp(cmd, "pwd", 4))
+		return (1);
+	else if (!ft_strncmp(cmd, "export", 7))
+		return (1);
+	else if (!ft_strncmp(cmd, "unset", 6))
+		return (1);
+	else if (!ft_strncmp(cmd, "env", 4))
+		return (1);
+	else if (!ft_strncmp(cmd, "exit", 5))
+		return (1);
+	return (0);
 }
