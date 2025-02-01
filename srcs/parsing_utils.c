@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 13:51:33 by lpittet           #+#    #+#             */
-/*   Updated: 2025/01/28 16:26:47 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/01 14:25:18 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,3 +42,20 @@ int	ft_isredir(int c)
 	return (c == '<' || c == '>');
 }
 
+/**
+ * @brief Get the number of elements in a table
+ * 
+ * @param tab 
+ * @return int, the number of elements in the table
+ */
+int	get_tab_size(char **tab)
+{
+	int	i;
+
+	i = 0;
+	if (!tab)
+		return (0);
+	while (tab[i])
+		i++;
+	return (i);
+}

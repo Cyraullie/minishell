@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:35:36 by lpittet           #+#    #+#             */
-/*   Updated: 2025/01/29 14:55:21 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/01 14:27:27 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,34 +63,34 @@ int	main(int ac, char **av, char **envp)
 		handle_history(line);
 		parsing(line, &cmd, env);
 		//TODO exec builtins exec(&cmd, env);
-		while (cmd)
-        {
-            printf("|------------------------------|\n");
-            if (cmd->heredoc)
-                printf("heredoc\n");
-            if (cmd->pipe_in)
-                printf("pipe_in\n");
-            if (cmd->pipe_out)
-                printf("pipe out\n");
-            if (cmd->read)
-                printf("read = %s\n", cmd->read);
-            if (cmd->write)
-                printf("write = %s\n", cmd->write);
-            if (!cmd->run)
-                printf("SKIP\n");
-            if (cmd->cmd)
-            {
-                int i = 0;
-                printf("command = %s\n", cmd->cmd);
-                while (cmd->cmd_tab[i])
-                {
-                    printf("tab %i %s\n",i, cmd->cmd_tab[i]);
-                    i++;
-                }
-            }
-            cmd = cmd->next;
-        }
-		//ft_listdelete(cmd);
+		// while (cmd)
+        // {
+        //     printf("|------------------------------|\n");
+        //     if (cmd->heredoc)
+        //         printf("heredoc\n");
+        //     if (cmd->pipe_in)
+        //         printf("pipe_in\n");
+        //     if (cmd->pipe_out)
+        //         printf("pipe out\n");
+        //     if (cmd->read)
+        //         printf("read = %s\n", cmd->read);
+        //     if (cmd->write)
+        //         printf("write = %s\n", cmd->write);
+        //     if (!cmd->run)
+        //         printf("SKIP\n");
+        //     if (cmd->cmd)
+        //     {
+        //         int i = 0;
+        //         printf("command = %s\n", cmd->cmd);
+        //         while (cmd->cmd_tab[i])
+        //         {
+        //             printf("tab %i %s\n",i, cmd->cmd_tab[i]);
+        //             i++;
+        //         }
+        //     }
+        //     cmd = cmd->next;
+        // }
+		ft_listdelete(cmd);
 	}
 	return (0);
 }

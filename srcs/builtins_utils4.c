@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_utils4.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 14:47:55 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/01/24 15:57:37 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/01 14:25:31 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,4 +115,18 @@ char	**split_equal(char *str)
 		}
 	}
 	return (a_str);
+}
+
+char	*my_getenv(char *var_name, char **env)
+{
+	int	ienv;
+	int	i;
+
+	ienv = get_envline(env, var_name);
+	if (ienv == -1)
+		return (NULL);
+	i = 0;
+	while (env[ienv][i] != '=')
+		i++;
+	return (ft_substr(env[ienv], i + 1, ft_strlen(env[ienv])));
 }

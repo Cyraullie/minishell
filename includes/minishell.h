@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:38:10 by lpittet           #+#    #+#             */
-/*   Updated: 2025/01/29 14:26:15 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/01 13:40:31 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ void		handle_concat(char **env, char ***nenv, char **name);
 void		concat_existvar(char *env, char ***nenv, char **name, int j);
 char		**split_equal(char *str);
 char		*multiple_equal(char **a_str);
+char		*my_getenv(char *var_name, char **env);
 
 //clean.c
 void		clean_tab(char **env);
@@ -139,6 +140,7 @@ void		start_history(void);
 // parsing_utils.c
 int			ft_isredir(int c);
 int			open_previous_file(t_command *cmd);
+int			get_tab_size(char **tab);
 
 // syntax.c
 int			check_syntax(char *line);

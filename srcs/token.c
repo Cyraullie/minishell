@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 08:56:18 by lpittet           #+#    #+#             */
-/*   Updated: 2025/01/29 14:25:51 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/01 14:26:14 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,7 @@ void	assign_token(t_command **cmd, char **env)
 	{
 		*cmd = get_redir(*cmd);
 		(*cmd)->raw = expansion((*cmd)->raw, env);
- 		*cmd = get_cmd(*cmd);
+		*cmd = get_cmd(*cmd);
 		*cmd = get_cmd_args(*cmd);
 		if (i > 0 && !(*cmd)->heredoc && !(*cmd)->read)
 			(*cmd)->pipe_in = 1;
