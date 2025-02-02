@@ -10,7 +10,7 @@ OBJDIR = objs/
 SRCS =  $(addprefix $(SRCDIR), main.c parsing.c split_commands.c create_list.c list.c parsing_utils.c signal.c token.c \
 								separate_token.c check.c sort.c alloc.c builtins.c builtins2.c \
 								clean.c builtins_utils.c builtins_utils2.c builtins_utils3.c builtins_utils4.c history.c \
-								syntax.c expansion.c)
+								syntax.c expansion.c remove_quotes.c)
 LIBFT_PATH = libft
 
 LIBFT = $(LIBFT_PATH)/libft.a

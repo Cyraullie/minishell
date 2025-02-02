@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:38:10 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/01 13:40:31 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/02 11:11:13 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,5 +147,8 @@ int			check_syntax(char *line);
 
 // expansion.c
 char		**expansion(char **tab, char **env);
+
+// remove_quotes.c
+char		*remove_quotes(char *token);
 
 #endif

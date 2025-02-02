@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 08:56:18 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/01 14:26:14 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/02 11:28:59 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ t_command	*get_redir(t_command *cmd)
 		if (!ft_strncmp(cmd->raw[i], "<", 2)
 			|| !ft_strncmp(cmd->raw[i], "<<", 3))
 		{
+			//TODO add heredoc to this
 			if (!ft_strncmp(cmd->raw[i], "<<", 3))
 				cmd->heredoc = 1;
 			cmd->read = cmd->raw[i + 1];
@@ -34,7 +35,6 @@ t_command	*get_redir(t_command *cmd)
 		if (!ft_strncmp(cmd->raw[i], ">", 2)
 			|| !ft_strncmp(cmd->raw[i], ">>", 3))
 		{
-			//TODO add heredoc to this
 			if (!open_previous_file(cmd))
 				return (cmd);
 			cmd->write = cmd->raw[i + 1];

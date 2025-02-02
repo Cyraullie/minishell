@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 16:31:24 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/01 14:28:47 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/02 11:10:48 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,7 @@ char	*get_var_name(char *str, int i)
 	char	*var_name;
 
 	len = 0;
-	while (str[i] && !ft_isspace(str[i]) && str[i] != '\'' && str[i] != '$'
-		&& str[i] != '\"' && str[i] != '|' && !ft_isredir(str[i]))
+	while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
 	{
 		i++;
 		len++;
@@ -124,8 +123,9 @@ char	**expansion(char **tab, char **env)
 			new_tab[i] = expand_var(tab[i], env, 0, 0);
 		else
 			new_tab[i] = ft_strdup(tab[i]);
-		//TODO remove quotes
+		new_tab[i] = remove_quotes(new_tab[i]);
 	}
 	clean_tab(tab);
 	return (new_tab);
 }
+//TODO make place and deal with $?
