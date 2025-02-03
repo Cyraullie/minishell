@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 16:32:33 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/02/03 16:32:55 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/03 16:46:44 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ void	add_envline(char **env, char **nenv, char *title, char **name)
 	int		i;
 	int		j;
 
-	i = 0;
+	i = -1;
 	j = 0;
-	while (env[i])
+	while (env[++i])
 	{
 		if (i != get_envline(env, name[0]))
 			dup_env(env, nenv, i, j++);
@@ -35,7 +35,6 @@ void	add_envline(char **env, char **nenv, char *title, char **name)
 			nenv[j] = ft_strdup(title);
 			check_tabenv(nenv, j++);
 		}
-		i++;
 	}
 	if (get_envline(env, name[0]) == -1)
 	{

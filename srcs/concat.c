@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 16:16:57 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/02/03 16:19:08 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/03 17:10:09 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ void	concat_nexistvar(char ***nenv, char **name, int j)
 	check_tabenv(*nenv, j);
 	free(title);
 }
-
+//TODO concatenage qui bloque quand on fait une env var qui n'a pas de content
+//TODO le set qui bloque quand on fait une env var qui n'a pas de content
 /**
  * @brief function to concat existing var with new string
  * 
@@ -47,6 +48,9 @@ void	concat_existvar(char *env, char ***nenv, char **name, int j)
 {
 	char	*title;
 
+	if (contain_equal(env))
+		env = ft_strjoin(env, "=");
+	printf("%s_%d\n", env, contain_equal(env));
 	title = ft_strjoin(env, name[1]);
 	if (!title)
 		return ;
@@ -67,16 +71,16 @@ void	handle_concat(char **env, char ***nenv, char **name)
 	int		i;
 	int		j;
 
-	i = 0;
+	i = -1;
 	j = 0;
 	name[0][ft_strlen(name[0]) - 1] = '\0';
-	while (env[i])
+	while (env[++i])
 	{
 		if (i != get_envline(env, name[0]))
-			dup_env(env, *nenv, i, j++);
+			dup_env(env, *nenv, i, j);
 		else
-			concat_existvar(env[i], nenv, name, j++);
-		i++;
+			concat_existvar(env[i], nenv, name, j);
+		j++;
 	}
 	if (get_envline(env, name[0]) == -1)
 		concat_nexistvar(nenv, name, j++);

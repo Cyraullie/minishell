@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 10:49:01 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/01/31 15:26:53 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/03 17:09:06 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	builtins(t_command *cmd_tmp, char ***env)
 			ft_exit(cmd_tmp->cmd_tab, *env);
 	}
 }
-
+/*
 static	char	*get_full_path(char *path, char *cmd)
 {
 	path = ft_strjoin(path, "/");
@@ -105,12 +105,7 @@ void	exec(t_command *cmd_tmp, char ***env)
 	execve(path, cmd_tmp->cmd_tab, *env);
 }
 
-/**
- * @brief 
- * 
- * @param cmd_tmp 
- * @param env 
- */
+
 void	handle_redir(t_command *cmd_tmp)
 {
 	int	fd;
@@ -171,7 +166,7 @@ void	handle_pipe(t_command *cmd_tmp, char ***env)
 	}
 }
 
-
+*/
 
 void	exec_built(t_command **cmd, char ***env)
 {
@@ -182,11 +177,12 @@ void	exec_built(t_command **cmd, char ***env)
 	while (cmd_tmp)
 	{
 		out_cpy = dup(STDOUT_FILENO);
-
-		if (cmd_tmp->write) // Redirection
+		/*if (cmd_tmp->write) // Redirection
 			handle_redir(cmd_tmp);
-		else
+		else if (cmd_tmp->pipe_in || cmd_tmp->pipe_out)
 			handle_pipe(cmd_tmp, env);
+		else*/
+			builtins(cmd_tmp, env);
 
 		dup2(out_cpy, STDOUT_FILENO);
 		close(out_cpy);
