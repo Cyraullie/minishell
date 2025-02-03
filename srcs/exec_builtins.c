@@ -6,17 +6,17 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 10:49:01 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/02/03 17:09:06 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/03 17:24:32 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
 /**
- * @brief 
+ * @brief function to select the right builtins
  * 
- * @param cmd_tmp 
- * @param env 
+ * @param cmd_tmp command write to call builtins
+ * @param env array with the environment variable
  */
 void	builtins(t_command *cmd_tmp, char ***env)
 {
@@ -168,6 +168,12 @@ void	handle_pipe(t_command *cmd_tmp, char ***env)
 
 */
 
+/**
+ * @brief function to handle execution of command
+ * 
+ * @param cmd commande write in the shell
+ * @param env array with the environment variable
+ */
 void	exec_built(t_command **cmd, char ***env)
 {
 	t_command	*cmd_tmp;
