@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:38:10 by lpittet           #+#    #+#             */
-/*   Updated: 2025/01/31 15:06:17 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/03 16:36:25 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,45 +60,56 @@ void		handle_sigint(int sig);
 void		init_sig(void);
 void		handle_eof(char *line, char **env);
 
-//builtins.c
+//echo.c
 void		ft_echo(char **cmd);
-int			ft_exit(char **cmd, char **env);
-void		ft_env(char **cmd, char **env);
-void		ft_pwd(char **cmd);
-void		ft_cd(char **cmd, char ***env);
-
-//builtins2.c
-char		**ft_unset(char **cmd, char **env);
-char		**ft_export(char **cmd, char **env);
-
-//builtins_utils.c
 int			find_valid_flag(char *msg, char flag);
-char		*get_userhome(void);
+
+//exit.c
+int			ft_exit(char **cmd, char **env);
+
+//env.c
+void		ft_env(char **cmd, char **env);
+int			contain_equal(char *str);
+
+//pwd.c
+void		ft_pwd(char **cmd);
+
+//cd.c
+void		ft_cd(char **cmd, char ***env);
 char		*get_path(void);
-char		**del_line(char **env, char *title);
-int			get_envline(char **env, char *title);
+char		*get_userhome(void);
+void		ft_chdir(char **cmd, char ***env);
+
+//update_pwd.c
+void		update_pwd(char *path, char ***env);
+void		update_oldpwd(char *path, char ***env);
+
+//unset.c
+char		**ft_unset(char **cmd, char **env);
 void		del_envline(char **env, char **nenv, char *title);
 
-//builtins_utils2.c
+//env_utils.c
+int			get_envline(char **env, char *title);
+char		*get_env_content(char *var_name, char **env);
+char		**create_env_array(char **envp);
+
+//export.c
+char		**ft_export(char **cmd, char **env);
 void		write_env(char **env);
-void		add_envline(char **env, char **nenv, char *title, char **name);
-void		dup_env(char **env, char **nenv, int i, int j);
-char		**create_nenv(char **env, char **name);
-int			check_normenv(char *n);
-void		sort_env(char **env, int *tab);
-
-//builtins_utils3.c
-void		ft_chdir(char **cmd, char ***env);
-void		update_oldpwd(char *path, char ***env);
-void		update_pwd(char *path, char ***env);
 char		**handle_export(char *arg, char **env, char ***nenv);
-void		concat_nexistvar(char ***nenv, char **name, int j);
+char		**create_nenv(char **env, char **name);
+void		dup_env(char **env, char **nenv, int i, int j);
 
-//builtins_utils4.c
+//concat.c
 void		handle_concat(char **env, char ***nenv, char **name);
 void		concat_existvar(char *env, char ***nenv, char **name, int j);
-char		**split_equal(char *str);
+void		concat_nexistvar(char ***nenv, char **name, int j);
+
+//export_utils.c
+void		add_envline(char **env, char **nenv, char *title, char **name);
+void		add_envline_without_content(char **env, char **nenv, char **name);
 char		*multiple_equal(char **a_str);
+char		**split_equal(char *str);
 
 //clean.c
 void		clean_tab(char **env);
@@ -108,6 +119,7 @@ void		check_tabenv(char **env, int i);
 int			is_order(int *pos, char **name);
 int			get_maxlength_env(char **name);
 int			is_builtin(char *cmd);
+int			check_normenv(char *n);
 
 //sort.c
 void		sort_tab(char **env, int *tab, int size);
@@ -151,7 +163,6 @@ void		exec_built(t_command **cmd, char ***env);
 // syntax.c
 int			check_syntax(char *line);
 
-char		*my_getenv(char *var_name, char **env);
 
 extern sig_atomic_t	g_stop;
 #endif

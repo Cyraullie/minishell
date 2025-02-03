@@ -6,65 +6,26 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:35:36 by lpittet           #+#    #+#             */
-/*   Updated: 2025/01/31 15:11:13 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/03 16:32:02 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
 //TODO check leaks to all buitlins
+//TODO fix norme
+//TODO sort file and function for better visibility
 /**
- * @brief create a modifiable environment variable
- * @param envp , env variable
- * @return NULL on failure, char **env on success
+ * @brief 
+ * 
+ * @param env 
  */
-char	**get_env(char **envp)
-{
-	int		i;
-	char	**env;
-
-	i = 0;
-	env = NULL;
-	while (envp[i])
-		i++;
-	env = malloc(sizeof(char *) * (i + 1));
-	if (!env)
-		return (NULL);
-	i = 0;
-	while (envp[i])
-	{
-		env[i] = ft_strdup(envp[i]);
-		if (!env[i])
-		{
-			clean_tab(env);
-			return (NULL);
-		}
-		i++;
-	}
-	env[i] = NULL;
-	return (env);
-}
-
-char	*my_getenv(char *var_name, char **env)
-{
-	int	ienv;
-	int	i;
-
-	ienv = get_envline(env, var_name);
-	if (ienv == -1)
-		return (NULL);
-	i = 0;
-	while (env[ienv][i] != '=')
-		i++;
-	return (ft_substr(env[ienv], i + 1, ft_strlen(env[ienv])));
-}
-
 void	increment_shlvl(char ***env)
 {
 	int		content;
 	char	*cmd[3];
 
-	content = ft_atoi(my_getenv("SHLVL", *env));
+	content = ft_atoi(get_env_content("SHLVL", *env));
 	content++;
 	cmd[0] = "export";
 	cmd[1] = "SHLVL=";
@@ -73,14 +34,28 @@ void	increment_shlvl(char ***env)
 	*env = ft_export(cmd, *env);
 }
 
+/**
+ * @brief 
+ * 
+ * @param env 
+ * @param envp 
+ */
 void	init_minishell(char ***env, char **envp)
 {
-	*env = get_env(envp);
+	*env = create_env_array(envp);
 	increment_shlvl(env);
 	init_sig();
 	start_history(*env);
 }
 
+/**
+ * @brief 
+ * 
+ * @param ac 
+ * @param av 
+ * @param envp 
+ * @return int 
+ */
 int	main(int ac, char **av, char **envp)
 {
 	char		*line;

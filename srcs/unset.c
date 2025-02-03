@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtins2.c                                        :+:      :+:    :+:   */
+/*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/20 16:20:02 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/01/24 14:47:33 by cgoldens         ###   ########.fr       */
+/*   Created: 2025/02/03 16:00:10 by cgoldens          #+#    #+#             */
+/*   Updated: 2025/02/03 16:06:37 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,22 +46,34 @@ char	**ft_unset(char **cmd, char **env)
 }
 
 /**
- * @brief function to add an environment variable
+ * @brief function to delete the choosen line in env var
  * 
- * @param cmd get command line array
- * @param env get environment var
- * @return char** the state of the actual environment variable
+ * @param env environment variable
+ * @param nenv new environment variable
+ * @param title name of the variable 
  */
-char	**ft_export(char **cmd, char **env)
+void	del_envline(char **env, char **nenv, char *title)
 {
-	char	**nenv;
-	int		j;
+	int	i;
+	int	j;
+	int	line;
 
-	j = 1;
-	nenv = NULL;
-	if (!cmd[j])
-		write_env(env);
-	while (cmd[j])
-		handle_export(cmd[j++], env, &nenv);
-	return (nenv);
+	i = 0;
+	j = 0;
+	line = get_envline(env, title);
+	while (env[i])
+	{
+		if (line != i)
+		{
+			nenv[j] = ft_strdup(env[i]);
+			if (!nenv[j])
+			{
+				clean_tab(nenv);
+				return ;
+			}
+			j++;
+		}
+		i++;
+	}
+	nenv[i] = NULL;
 }

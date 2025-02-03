@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 16:05:17 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/01/31 15:12:45 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/03 16:24:06 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	handle_history(char *line, char **env)
 	if (line && *line)
 	{
 		add_history(line);
-		path = ft_strjoin(HISTORY_FILE, my_getenv("SHLVL", env));
+		path = ft_strjoin(HISTORY_FILE, get_env_content("SHLVL", env));
 		fd = open(path, O_CREAT | O_WRONLY | O_APPEND, 0644);
 		free(path);
 		l_hist = ft_strjoin(line, "\n");
@@ -48,7 +48,7 @@ char	*read_start_history(char **env)
 	buf = ft_calloc(sizeof(char *), BUFFER_SIZE + 1);
 	if (!buf)
 		return (NULL);
-	path = ft_strjoin(HISTORY_FILE, my_getenv("SHLVL", env));
+	path = ft_strjoin(HISTORY_FILE, get_env_content("SHLVL", env));
 	if (!path)
 	{
 		free(buf);
