@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:35:36 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/03 16:32:02 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/03 17:22:49 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 //TODO fix norme
 //TODO sort file and function for better visibility
 /**
- * @brief 
+ * @brief function to increment the shell level
  * 
- * @param env 
+ * @param env array with the environment variable
  */
 void	increment_shlvl(char ***env)
 {
@@ -35,10 +35,10 @@ void	increment_shlvl(char ***env)
 }
 
 /**
- * @brief 
+ * @brief  function to init all need at start of minishell
  * 
- * @param env 
- * @param envp 
+ * @param env array with the environment variable
+ * @param envp array with the environment variable come from out
  */
 void	init_minishell(char ***env, char **envp)
 {
@@ -49,12 +49,12 @@ void	init_minishell(char ***env, char **envp)
 }
 
 /**
- * @brief 
+ * @brief main function
  * 
- * @param ac 
- * @param av 
- * @param envp 
- * @return int 
+ * @param ac count of arguments
+ * @param av array of arguments
+ * @param envp array with the environment variable come from out
+ * @return int return if the program finish successfully or with error
  */
 int	main(int ac, char **av, char **envp)
 {

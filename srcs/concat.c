@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 16:16:57 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/02/03 17:10:09 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/03 17:19:09 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,7 @@ void	concat_nexistvar(char ***nenv, char **name, int j)
 	check_tabenv(*nenv, j);
 	free(title);
 }
-//TODO concatenage qui bloque quand on fait une env var qui n'a pas de content
-//TODO le set qui bloque quand on fait une env var qui n'a pas de content
+
 /**
  * @brief function to concat existing var with new string
  * 
@@ -48,9 +47,8 @@ void	concat_existvar(char *env, char ***nenv, char **name, int j)
 {
 	char	*title;
 
-	if (contain_equal(env))
+	if (!contain_equal(env))
 		env = ft_strjoin(env, "=");
-	printf("%s_%d\n", env, contain_equal(env));
 	title = ft_strjoin(env, name[1]);
 	if (!title)
 		return ;
