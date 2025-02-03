@@ -6,29 +6,30 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 16:05:17 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/01/24 16:59:06 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/03 16:24:06 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-//TODO add in history the .ms_history file
-//TODO 
-
 /**
  * @brief function to handle what append with the history
  * 
  * @param line var get in readline
+ * @param env 
  */
-void	handle_history(char *line)
+void	handle_history(char *line, char **env)
 {
 	int		fd;
 	char	*l_hist;
+	char	*path;
 
 	if (line && *line)
 	{
 		add_history(line);
-		fd = open(".ms_history", O_CREAT | O_WRONLY | O_APPEND, 0644);
+		path = ft_strjoin(HISTORY_FILE, get_env_content("SHLVL", env));
+		fd = open(path, O_CREAT | O_WRONLY | O_APPEND, 0644);
+		free(path);
 		l_hist = ft_strjoin(line, "\n");
 		if (!l_hist)
 			return ;
@@ -38,18 +39,46 @@ void	handle_history(char *line)
 	}
 }
 
-void	start_history(void)
+char	*read_start_history(char **env)
 {
 	int		fd;
 	char	*buf;
-	char	**file;
-	int		i;
+	char	*path;
 
 	buf = ft_calloc(sizeof(char *), BUFFER_SIZE + 1);
 	if (!buf)
-		return ;
-	fd = open(".ms_history", O_CREAT | O_RDONLY, 0644);
+		return (NULL);
+	path = ft_strjoin(HISTORY_FILE, get_env_content("SHLVL", env));
+	if (!path)
+	{
+		free(buf);
+		return (NULL);
+	}
+	fd = open(path, O_CREAT | O_RDONLY, 0644);
+	free(path);
 	read(fd, buf, BUFFER_SIZE);
+	close(fd);
+	if (!buf)
+	{
+		free(buf);
+		return (NULL);
+	}
+	return (buf);
+}
+
+/**
+ * @brief function to get all old history in .ms_history
+ * 
+ */
+void	start_history(char **env)
+{
+	char	**file;
+	int		i;
+	char	*buf;
+
+	buf = read_start_history(env);
+	if (!buf)
+		return ;
 	file = ft_split(buf, '\n');
 	if (!file)
 	{
@@ -61,5 +90,4 @@ void	start_history(void)
 	while (file[++i])
 		add_history(file[i]);
 	clean_tab(file);
-	close(fd);
 }
