@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:35:36 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/03 17:22:49 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/04 15:50:39 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,21 @@ void	increment_shlvl(char ***env)
 {
 	int		content;
 	char	*cmd[3];
+	char	*shell_content;
+	char	*index;
 
-	content = ft_atoi(get_env_content("SHLVL", *env));
+	shell_content = get_env_content("SHLVL", *env);
+	content = ft_atoi(shell_content);
+	free(shell_content);
 	content++;
 	cmd[0] = "export";
 	cmd[1] = "SHLVL=";
 	cmd[2] = NULL;
-	cmd[1] = ft_strjoin(cmd[1], ft_itoa(content));
+	index = ft_itoa(content);
+	cmd[1] = ft_strjoin(cmd[1], index);
+	free(index);
 	*env = ft_export(cmd, *env);
+	free(cmd[1]);
 }
 
 /**

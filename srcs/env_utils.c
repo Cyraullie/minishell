@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 16:01:27 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/02/03 16:57:52 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/04 15:59:03 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	get_envline(char **env, char *title)
 		if ((!ft_strncmp(name[0], title, ft_strlen(title))))
 			id = i;
 		i++;
-		free(name);
+		clean_tab(name);
 	}
 	return (id);
 }
@@ -80,8 +80,9 @@ char	**create_env_array(char **envp)
  */
 char	*get_env_content(char *var_name, char **env)
 {
-	int	ienv;
-	int	i;
+	int		ienv;
+	int		i;
+	char	*content;
 
 	ienv = get_envline(env, var_name);
 	if (ienv == -1)
@@ -89,5 +90,6 @@ char	*get_env_content(char *var_name, char **env)
 	i = 0;
 	while (env[ienv][i] != '=')
 		i++;
-	return (ft_substr(env[ienv], i + 1, ft_strlen(env[ienv])));
+	content = ft_substr(env[ienv], i + 1, ft_strlen(env[ienv]));
+	return (content);
 }
