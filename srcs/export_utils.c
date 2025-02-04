@@ -1,64 +1,66 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtins_utils4.c                                  :+:      :+:    :+:   */
+/*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/24 14:47:55 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/02/01 14:25:31 by lpittet          ###   ########.fr       */
+/*   Created: 2025/02/03 16:32:33 by cgoldens          #+#    #+#             */
+/*   Updated: 2025/02/04 14:37:34 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
 /**
- * @brief function to handle concat in export
+ * @brief function to add a line in env var
  * 
- * @param env array of environment variable
- * @param nenv new array of environment variable
- * @param name array contain actual cmd split
+ * @param env environment variable
+ * @param nenv new environment variable
+ * @param title name of the variable 
  */
-void	handle_concat(char **env, char ***nenv, char **name)
+void	add_envline(char **env, char **nenv, char *title, char **name)
 {
 	int		i;
 	int		j;
 
-	i = 0;
+	i = -1;
 	j = 0;
-	name[0][ft_strlen(name[0]) - 1] = '\0';
-	while (env[i])
+	while (env[++i])
 	{
 		if (i != get_envline(env, name[0]))
-			dup_env(env, *nenv, i, j++);
+			dup_env(env, nenv, i, j++);
 		else
-			concat_existvar(env[i], nenv, name, j++);
-		i++;
+		{
+			nenv[j] = ft_strdup(title);
+			check_tabenv(nenv, j++);
+		}
 	}
 	if (get_envline(env, name[0]) == -1)
-		concat_nexistvar(nenv, name, j++);
-	*nenv[j] = NULL;
+	{
+		nenv[j] = ft_strdup(title);
+		check_tabenv(nenv, j++);
+	}
+	nenv[j] = NULL;
 	clean_tab(name);
 }
 
-/**
- * @brief function to concat existing var with new string
- * 
- * @param env array of environment variable
- * @param nenv new array of environment variable
- * @param name array contain actual cmd split
- * @param j position in nenv
- */
-void	concat_existvar(char *env, char ***nenv, char **name, int j)
+void	add_envline_without_content(char **env, char **nenv, char **name)
 {
-	char	*title;
+	int		i;
+	int		j;
 
-	title = ft_strjoin(env, name[1]);
-	if (!title)
-		return ;
-	(*nenv)[j] = ft_strdup(title);
-	check_tabenv(*nenv, j++);
-	free(title);
+	i = -1;
+	j = 0;
+	while (env[++i])
+		dup_env(env, nenv, i, j++);
+	if (get_envline(env, name[0]) == -1)
+	{
+		nenv[j] = ft_strdup(name[0]);
+		check_tabenv(nenv, j++);
+	}
+	nenv[j] = NULL;
+	clean_tab(name);
 }
 
 /**
@@ -115,18 +117,4 @@ char	**split_equal(char *str)
 		}
 	}
 	return (a_str);
-}
-
-char	*my_getenv(char *var_name, char **env)
-{
-	int	ienv;
-	int	i;
-
-	ienv = get_envline(env, var_name);
-	if (ienv == -1)
-		return (NULL);
-	i = 0;
-	while (env[ienv][i] != '=')
-		i++;
-	return (ft_substr(env[ienv], i + 1, ft_strlen(env[ienv])));
 }

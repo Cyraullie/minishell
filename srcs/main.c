@@ -6,93 +6,79 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:35:36 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/04 13:57:06 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/04 14:38:24 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-//TODO check leaks to all buitlins
-/**
- * @brief create a modifiable environment variable
- * @param envp , env variable
- * @return NULL on failure, char **env on success
- */
-char	**get_env(char **envp)
-{
-	int		i;
-	char	**env;
 
-	i = 0;
-	env = NULL;
-	while (envp[i])
-		i++;
-	env = malloc(sizeof(char *) * (i + 1));
-	if (!env)
-		return (NULL);
-	i = 0;
-	while (envp[i])
-	{
-		env[i] = ft_strdup(envp[i]);
-		if (!env[i])
-		{
-			clean_tab(env);
-			return (NULL);
-		}
-		i++;
-	}
-	env[i] = NULL;
-	return (env);
+//TODO check leaks to all buitlins
+//TODO fix norme
+//TODO sort file and function for better visibility
+/**
+ * @brief function to increment the shell level
+ * 
+ * @param env array with the environment variable
+ */
+void	increment_shlvl(char ***env)
+{
+	int		content;
+	char	*cmd[3];
+
+	content = ft_atoi(get_env_content("SHLVL", *env));
+	content++;
+	cmd[0] = "export";
+	cmd[1] = "SHLVL=";
+	cmd[2] = NULL;
+	cmd[1] = ft_strjoin(cmd[1], ft_itoa(content));
+	*env = ft_export(cmd, *env);
 }
 
+/**
+ * @brief  function to init all need at start of minishell
+ * 
+ * @param env array with the environment variable
+ * @param envp array with the environment variable come from out
+ */
+void	init_minishell(char ***env, char **envp)
+{
+	*env = create_env_array(envp);
+	increment_shlvl(env);
+	init_sig();
+	start_history(*env);
+}
+
+/**
+ * @brief main function
+ * 
+ * @param ac count of arguments
+ * @param av array of arguments
+ * @param envp array with the environment variable come from out
+ * @return int return if the program finish successfully or with error
+ */
 int	main(int ac, char **av, char **envp)
 {
 	char		*line;
 	t_command	*cmd;
 	char		**env;
 
-	(void)ac;
-	(void)av;
-	env = get_env(envp);
-	init_sig();
-	start_history();
-	char **envt = calloc(sizeof(char), 2);
-	envt[0] = "env";
-	envt[1] = NULL;
-	ft_env(envt, env);
-	while (1)
+	init_minishell(&env, envp);
+	while (ac && av[0])
 	{
 		cmd = NULL;
 		line = readline("minishell> ");
 		handle_eof(line, env);
-		handle_history(line);
+		if (g_stop)
+		{
+			free(line);
+			line = NULL;
+			g_stop = 0;
+			continue ;
+		}
+		handle_history(line, env);
 		parsing(line, &cmd, env);
-		//TODO exec builtins exec(&cmd, env);
-		while (cmd)
-        {
-            printf("|------------------------------|\n");
-            if (cmd->heredoc)
-                printf("heredoc\n");
-            if (cmd->pipe_in)
-                printf("pipe_in\n");
-            if (cmd->pipe_out)
-                printf("pipe out\n");
-            if (cmd->read)
-                printf("read = %s\n", cmd->read);
-            if (cmd->write)
-                printf("write = %s\n", cmd->write);
-            if (cmd->cmd)
-            {
-                int i = 0;
-                printf("command = %s\n", cmd->cmd);
-                while (cmd->cmd_tab[i])
-                {
-                    printf("tab %i %s\n",i, cmd->cmd_tab[i]);
-                    i++;
-                }
-            }
-            cmd = cmd->next;
-        }
-		// ft_listdelete(cmd);
+		exec_built(&cmd, &env);
+		ft_listdelete(cmd);
 	}
 	return (0);
 }

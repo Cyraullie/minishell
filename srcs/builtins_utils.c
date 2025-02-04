@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 17:10:47 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/01/29 11:03:07 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/04 14:36:23 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,3 +141,4 @@ void	del_envline(char **env, char **nenv, char *title)
 	}
 	nenv[i] = NULL;
 }
+

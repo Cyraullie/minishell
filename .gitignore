@@ -1,5 +1,5 @@
 *.o
 minishell
 .vscode/*
-.ms_history
+.ms_history*
 leaks.log
