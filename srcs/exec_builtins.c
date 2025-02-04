@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 10:49:01 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/02/03 17:24:32 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/04 15:25:35 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,69 @@ void	builtins(t_command *cmd_tmp, char ***env)
 			ft_exit(cmd_tmp->cmd_tab, *env);
 	}
 }
-/*
+
+
+void	handle_redir(t_command *cmd_tmp)
+{
+	int	fd;
+
+	if (cmd_tmp->write)
+	{
+		fd = open(cmd_tmp->write, cmd_tmp->write_type, 0755);
+		if (fd == -1)
+			perror("open");
+		dup2(fd, STDOUT_FILENO);
+		close(fd);
+	}
+}
+
+void	handle_pipe(t_command *cmd_tmp, char ***env)
+{
+	int		pipefd[2];
+	pid_t	pid;
+
+	if (cmd_tmp->next)
+		pipe(pipefd);
+
+	pid = fork();
+	if (pid == -1)
+	{
+		perror("fork");
+		exit(EXIT_FAILURE);
+	}
+
+	if (pid == 0) // Processus enfant
+	{
+		if (cmd_tmp->pipe_out)
+		{
+			close(pipefd[0]); // Fermer la lecture du pipe
+			dup2(pipefd[1], STDOUT_FILENO); // Rediriger stdout vers le pipe
+			close(pipefd[1]);
+		}
+		if (is_builtin(cmd_tmp->cmd))
+		{
+			builtins(cmd_tmp, env); // Exécuter le builtin
+			exit(EXIT_SUCCESS); // Sortir uniquement du processus enfant
+		}
+		else
+		{
+			exec_bash(cmd_tmp, env); // Exécuter une commande externe
+			exit(EXIT_FAILURE); // Si exec échoue, quitter l'enfant
+		}
+	}
+	else // Processus parent
+	{
+		if (cmd_tmp->next)
+		{
+			close(pipefd[1]); // Fermer l'écriture du pipe
+			dup2(pipefd[0], STDIN_FILENO); // Lire à partir du pipe
+			close(pipefd[0]);
+		}
+		waitpid(pid, NULL, 0); // Attendre que l'enfant termine
+	}
+}
+
+
 static	char	*get_full_path(char *path, char *cmd)
 {
 	path = ft_strjoin(path, "/");
@@ -97,36 +159,10 @@ char	*find_path(char *cmd, char ***env)
 	return (NULL);
 }
 
-void	exec(t_command *cmd_tmp, char ***env)
+void	exec_bash(t_command *cmd_tmp, char ***env)
 {
 	char	*path;
-
-	path = find_path(cmd_tmp->cmd, env);
-	execve(path, cmd_tmp->cmd_tab, *env);
-}
-
-
-void	handle_redir(t_command *cmd_tmp)
-{
-	int	fd;
-
-	if (cmd_tmp->write)
-	{
-		fd = open(cmd_tmp->write, cmd_tmp->write_type, 0755);
-		if (fd == -1)
-			perror("open");
-		dup2(fd, STDOUT_FILENO);
-		close(fd);
-	}
-}
-
-void	handle_pipe(t_command *cmd_tmp, char ***env)
-{
-	int		pipefd[2];
 	pid_t	pid;
-
-	if (cmd_tmp->next)
-		pipe(pipefd);
 
 	pid = fork();
 	if (pid == -1)
@@ -134,39 +170,23 @@ void	handle_pipe(t_command *cmd_tmp, char ***env)
 		perror("fork");
 		exit(EXIT_FAILURE);
 	}
-
-	if (pid == 0) // Processus enfant
+	if (pid == 0)
 	{
-		if (cmd_tmp->pipe_out)
-		{
-			close(pipefd[0]); // Fermer la lecture du pipe
-			dup2(pipefd[1], STDOUT_FILENO); // Rediriger stdout vers le pipe
-			close(pipefd[1]);
-		}
-		if (is_builtin(cmd_tmp->cmd))
-		{
-			builtins(cmd_tmp, env); // Exécuter le builtin
-			exit(EXIT_SUCCESS); // Sortir uniquement du processus enfant
-		}
+		if (!access(cmd_tmp->cmd, X_OK))
+			execve(cmd_tmp->cmd, cmd_tmp->cmd_tab, *env);
 		else
 		{
-			exec(cmd_tmp, env); // Exécuter une commande externe
-			exit(EXIT_FAILURE); // Si exec échoue, quitter l'enfant
+			path = find_path(cmd_tmp->cmd, env);
+			if (!access(path, X_OK))
+				execve(path, cmd_tmp->cmd_tab, *env);
+			else
+				ft_putstr_fd("command not found\n", 2);
 		}
+		exit(EXIT_SUCCESS);
 	}
-	else // Processus parent
-	{
-		if (cmd_tmp->next)
-		{
-			close(pipefd[1]); // Fermer l'écriture du pipe
-			dup2(pipefd[0], STDIN_FILENO); // Lire à partir du pipe
-			close(pipefd[0]);
-		}
-		waitpid(pid, NULL, 0); // Attendre que l'enfant termine
-	}
+	else
+		waitpid(pid, NULL, 0);
 }
-
-*/
 
 /**
  * @brief function to handle execution of command
@@ -183,17 +203,21 @@ void	exec_built(t_command **cmd, char ***env)
 	while (cmd_tmp)
 	{
 		out_cpy = dup(STDOUT_FILENO);
-		/*if (cmd_tmp->write) // Redirection
+		/*if (cmd_tmp->write)
 			handle_redir(cmd_tmp);
 		else if (cmd_tmp->pipe_in || cmd_tmp->pipe_out)
 			handle_pipe(cmd_tmp, env);
-		else*/
-			builtins(cmd_tmp, env);
-
+		else
+		{*/
+			if (is_builtin(cmd_tmp->cmd))
+				builtins(cmd_tmp, env);
+			else
+				exec_bash(cmd_tmp, env);
+		//}
 		dup2(out_cpy, STDOUT_FILENO);
 		close(out_cpy);
 
-		cmd_tmp = cmd_tmp->next; // On passe à la commande suivante
+		cmd_tmp = cmd_tmp->next;
 	}
 }
 

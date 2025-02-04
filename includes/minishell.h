@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:38:10 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/03 16:36:25 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/04 14:51:31 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,6 +163,8 @@ void		exec_built(t_command **cmd, char ***env);
 // syntax.c
 int			check_syntax(char *line);
 
+
+void		exec_bash(t_command *cmd_tmp, char ***env);
 
 extern sig_atomic_t	g_stop;
 #endif
