@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:38:10 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/02 11:11:13 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/04 13:25:43 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ typedef struct s_command
 	int					pipe_in;
 	char				*write;
 	int					write_type;
-	int					run;
 	int					pipe_out;
 	char				*cmd;
 	char				**cmd_tab;

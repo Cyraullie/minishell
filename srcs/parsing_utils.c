@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 13:51:33 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/01 14:25:18 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/04 13:25:35 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,9 @@ int	open_previous_file(t_command *cmd)
 {
 	if (!cmd->write || !cmd->write_type)
 		return (1);
+	//TODO remove quotes from cmd->write
 	if (open(cmd->write, cmd->write_type, 755) == -1)
 	{
-		cmd->run = 0;
-		perror(cmd->write);
 		return (0);
 	}
 	return (1);

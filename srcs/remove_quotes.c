@@ -6,23 +6,28 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 10:10:12 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/02 11:27:35 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/04 13:41:09 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-char	*delete_quotes(char *token, char *new_token)
+/**
+ * @brief get a token (char *) and return a new one without mathing quotes
+ * 
+ * @param token 
+ * @param new_token token without matching quotes
+ * @param i index in token
+ * @param j index in new_token
+ * @return char* the new_token
+ */
+char	*delete_quotes(char *token, char *new_token, int i, int j)
 {
-	int		i;
-	int		j;
 	int		in_quotes[2];
 	char	quote;
 
 	in_quotes[0] = 0;
 	in_quotes[1] = 0;
-	i = -1;
-	j = 0;
 	while (token[++i])
 	{
 		if (token[i] == '\'' || token[i] == '\"')
@@ -33,7 +38,11 @@ char	*delete_quotes(char *token, char *new_token)
 				quote = token[i];
 				while (token[++i] != quote)
 					new_token[j++] = token[i];
+				in_quotes[0] = 0;
+				in_quotes[1] = 0;
 			}
+			else
+				new_token[j++] = token[i];
 		}
 		else
 			new_token[j++] = token[i];
@@ -41,6 +50,13 @@ char	*delete_quotes(char *token, char *new_token)
 	return (new_token);
 }
 
+
+/**
+ * @brief calculate the len of a string after removing quotes
+ * 
+ * @param token 
+ * @return int the len of the token after removing mathching quotes
+ */
 int	quotes_new_len(char *token)
 {
 	int	i;
@@ -62,6 +78,12 @@ int	quotes_new_len(char *token)
 	return (old_len);
 }
 
+/**
+ * @brief takes a sring and returns it wihout quotes that were closed inside
+ * 
+ * @param token a string
+ * @return char* a new string with removed quotes if necessary or the input string if no quotes to remove
+ */
 char	*remove_quotes(char *token)
 {
 	char	*new_token;
@@ -75,7 +97,7 @@ char	*remove_quotes(char *token)
 	new_token = ft_calloc(new_len + 1, sizeof(char));
 	if (!new_token)
 		return (NULL);
-	delete_quotes(token, new_token);
+	delete_quotes(token, new_token, -1, 0);
 	free(token);
 	return (new_token);
 }
