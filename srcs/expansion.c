@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 16:31:24 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/04 13:49:34 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/04 14:43:52 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	get_new_len(char *str, char **env, int in_d_quotes, int in_s_quotes)
 			var_name = get_var_name(str, i + 1);
 			if (!var_name)
 				return (0);
-			var_value = my_getenv(var_name, env);
+			var_value = get_env_content(var_name, env);
 			len += (int)ft_strlen(var_value) - (int)ft_strlen(var_name);
 			free(var_name);
 			free(var_value);
@@ -92,7 +92,7 @@ void	replace_var(char *token, char *new_token, int *index, char **env)
 		return ;
 	len = ft_strlen(var_name);
 	index[0] += len;
-	var_value = my_getenv(var_name, env);
+	var_value = get_env_content(var_name, env);
 	if (!var_value)
 		return ;
 	len = 0;
