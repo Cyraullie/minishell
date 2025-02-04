@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:38:10 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/03 16:36:25 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/04 14:35:39 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ typedef struct s_command
 	int					pipe_in;
 	char				*write;
 	int					write_type;
-	int					run;
 	int					pipe_out;
 	char				*cmd;
 	char				**cmd_tab;
@@ -109,6 +108,7 @@ void		concat_nexistvar(char ***nenv, char **name, int j);
 void		add_envline(char **env, char **nenv, char *title, char **name);
 void		add_envline_without_content(char **env, char **nenv, char **name);
 char		*multiple_equal(char **a_str);
+char		*my_getenv(char *var_name, char **env);
 char		**split_equal(char *str);
 
 //clean.c
@@ -144,7 +144,7 @@ void		init_sig(void);
 void		handle_eof(char *line, char **env);
 
 // token.c
-void		assign_token(t_command **cmd);
+void		assign_token(t_command **cmd, char **env);
 
 // separate_token.c
 char		*separate_tokens(char *line);
@@ -156,6 +156,7 @@ void		start_history(char **env);
 // parsing_utils.c
 int			ft_isredir(int c);
 int			open_previous_file(t_command *cmd);
+int			get_tab_size(char **tab);
 
 // exec_builtins.c
 void		exec_built(t_command **cmd, char ***env);
@@ -163,6 +164,10 @@ void		exec_built(t_command **cmd, char ***env);
 // syntax.c
 int			check_syntax(char *line);
 
+// expansion.c
+char		**expansion(char **tab, char **env);
 
-extern sig_atomic_t	g_stop;
+// remove_quotes.c
+char		*remove_quotes(char *token);
+
 #endif

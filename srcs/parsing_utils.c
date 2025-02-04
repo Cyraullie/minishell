@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 13:51:33 by lpittet           #+#    #+#             */
-/*   Updated: 2025/01/28 16:28:02 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/04 14:38:41 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,9 @@ int	open_previous_file(t_command *cmd)
 {
 	if (!cmd->write || !cmd->write_type)
 		return (1);
+	//TODO remove quotes from cmd->write
 	if (open(cmd->write, cmd->write_type, 755) == -1)
 	{
-		cmd->run = 0;
-		perror(cmd->write);
 		return (0);
 	}
 	return (1);
@@ -42,3 +41,20 @@ int	ft_isredir(int c)
 	return (c == '<' || c == '>');
 }
 
+/**
+ * @brief Get the number of elements in a table
+ * 
+ * @param tab 
+ * @return int, the number of elements in the table
+ */
+int	get_tab_size(char **tab)
+{
+	int	i;
+
+	i = 0;
+	if (!tab)
+		return (0);
+	while (tab[i])
+		i++;
+	return (i);
+}

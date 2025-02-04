@@ -8,8 +8,10 @@ SRCDIR = srcs/
 OBJDIR = objs/
 
 SRCS =  $(addprefix $(SRCDIR), main.c parsing.c split_commands.c create_list.c list.c parsing_utils.c signal.c token.c \
-								separate_token.c check.c sort.c alloc.c clean.c history.c syntax.c exec_builtins.c echo.c \
-								 exit.c env.c pwd.c cd.c unset.c env_utils.c update_pwd.c export.c concat.c export_utils.c)
+								separate_token.c check.c sort.c alloc.c  \
+								clean.c history.c exec_builtins.c echo.c\
+								syntax.c expansion.c remove_quotes.c \
+								exit.c env.c pwd.c cd.c unset.c env_utils.c update_pwd.c export.c concat.c export_utils.c)
 
 LIBFT_PATH = libft
 

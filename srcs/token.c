@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 08:56:18 by lpittet           #+#    #+#             */
-/*   Updated: 2025/01/28 11:51:26 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/04 14:23:43 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ t_command	*get_redir(t_command *cmd)
 		if (!ft_strncmp(cmd->raw[i], "<", 2)
 			|| !ft_strncmp(cmd->raw[i], "<<", 3))
 		{
+			//TODO add heredoc to this
 			if (!ft_strncmp(cmd->raw[i], "<<", 3))
 				cmd->heredoc = 1;
 			cmd->read = cmd->raw[i + 1];
@@ -34,7 +35,6 @@ t_command	*get_redir(t_command *cmd)
 		if (!ft_strncmp(cmd->raw[i], ">", 2)
 			|| !ft_strncmp(cmd->raw[i], ">>", 3))
 		{
-			//TODO add heredoc to this
 			if (!open_previous_file(cmd))
 				return (cmd);
 			cmd->write = cmd->raw[i + 1];
@@ -133,13 +133,15 @@ t_command	*get_cmd_args(t_command *cmd)
  * 
  * @param cmd address of the first element of the list
  */
-void	assign_token(t_command **cmd)
+void	assign_token(t_command **cmd, char **env)
 {
 	int	i;
 
 	i = 0;
 	while (*cmd)
 	{
+		//TODO deal with redir in env var
+		(*cmd)->raw = expansion((*cmd)->raw, env);
 		*cmd = get_redir(*cmd);
 		*cmd = get_cmd(*cmd);
 		*cmd = get_cmd_args(*cmd);
