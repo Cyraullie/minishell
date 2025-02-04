@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 15:02:10 by lpittet           #+#    #+#             */
-/*   Updated: 2025/01/27 16:12:27 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/01/29 11:10:25 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int	parsing(char *line, t_command **cmd, char **env)
 		i++;
 	}
 	head = *cmd;
-	assign_token(cmd);
+	assign_token(cmd, env);
 	*cmd = head;
 	clean_tab(tab);
 	return (0);

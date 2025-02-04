@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 10:08:14 by lpittet           #+#    #+#             */
-/*   Updated: 2025/01/27 10:55:41 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/04 13:26:03 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ t_command	*ft_listnew(char **content)
 	new->raw = content;
 	new->cmd = NULL;
 	new->cmd_tab = NULL;
-	new->run = 1;
 	new->read = NULL;
 	new->heredoc = 0;
 	new->pipe_in = 0;
