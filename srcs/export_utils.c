@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 16:32:33 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/02/04 14:37:34 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/04 15:56:44 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,10 +105,7 @@ char	**split_equal(char *str)
 		f_str = ft_calloc(sizeof(char *), 3);
 		f_str[i] = ft_strdup(a_str[i]);
 		if (!f_str[0])
-		{
-			free(f_str);
-			return (NULL);
-		}
+			return (free(f_str), NULL);
 		f_str[1] = multiple_equal(a_str);
 		if (!f_str[1])
 		{

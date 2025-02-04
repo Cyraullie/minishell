@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 15:54:59 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/02/03 16:10:26 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/04 13:57:42 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,18 @@ void	ft_env(char **cmd, char **env)
 	int	i;
 
 	i = -1;
-	if (cmd[1])
+	if (cmd && *cmd)
 	{
-		ft_putstr_fd("env: too many arguments\n", 2);
-		return ;
-	}
-	while (env[++i])
-	{
-		if (contain_equal(env[i]))
-			printf("%s\n", env[i]);
+		if (cmd[1])
+		{
+			ft_putstr_fd("env: too many arguments\n", 2);
+			return ;
+		}
+		while (env[++i])
+		{
+			if (contain_equal(env[i]))
+				printf("%s\n", env[i]);
+		}
 	}
 }
 

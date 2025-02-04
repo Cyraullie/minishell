@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 16:05:17 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/02/03 16:24:06 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/04 15:54:55 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,14 @@ void	handle_history(char *line, char **env)
 	int		fd;
 	char	*l_hist;
 	char	*path;
+	char	*shell_content;
 
 	if (line && *line)
 	{
 		add_history(line);
-		path = ft_strjoin(HISTORY_FILE, get_env_content("SHLVL", env));
+		shell_content = get_env_content("SHLVL", env);
+		path = ft_strjoin(HISTORY_FILE, shell_content);
+		free(shell_content);
 		fd = open(path, O_CREAT | O_WRONLY | O_APPEND, 0644);
 		free(path);
 		l_hist = ft_strjoin(line, "\n");
@@ -44,25 +47,22 @@ char	*read_start_history(char **env)
 	int		fd;
 	char	*buf;
 	char	*path;
+	char	*shell_content;
 
 	buf = ft_calloc(sizeof(char *), BUFFER_SIZE + 1);
 	if (!buf)
 		return (NULL);
-	path = ft_strjoin(HISTORY_FILE, get_env_content("SHLVL", env));
+	shell_content = get_env_content("SHLVL", env);
+	path = ft_strjoin(HISTORY_FILE, shell_content);
+	free(shell_content);
 	if (!path)
-	{
-		free(buf);
-		return (NULL);
-	}
+		return (free(buf), NULL);
 	fd = open(path, O_CREAT | O_RDONLY, 0644);
 	free(path);
 	read(fd, buf, BUFFER_SIZE);
 	close(fd);
 	if (!buf)
-	{
-		free(buf);
-		return (NULL);
-	}
+		return (free(buf), NULL);
 	return (buf);
 }
 

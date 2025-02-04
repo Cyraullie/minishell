@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:38:10 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/04 14:42:43 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/04 14:51:31 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,6 +170,7 @@ char		**expansion(char **tab, char **env);
 // remove_quotes.c
 char		*remove_quotes(char *token);
 
-extern sig_atomic_t    g_stop;
+void		exec_bash(t_command *cmd_tmp, char ***env);
 
+extern sig_atomic_t	g_stop;
 #endif
