@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 15:02:10 by lpittet           #+#    #+#             */
-/*   Updated: 2025/01/29 11:10:25 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/04 17:11:43 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ char	*ft_strjoin_and_free(char *s1, char *s2)
 	int		len;
 
 	len = ft_strlen(s1) + ft_strlen(s2) + 1;
-	join = malloc(sizeof(char) * len);
+	join = ft_calloc(sizeof(char) , len);
 	if (join == NULL)
 		return (NULL);
 	ft_strlcpy(join, s1, ft_strlen(s1) + 1);

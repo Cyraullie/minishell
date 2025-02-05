@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 15:57:33 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/02/03 15:57:47 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/04 17:11:52 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	ft_pwd(char **cmd)
 		ft_putstr_fd("pwd: too many arguments\n", 2);
 		return ;
 	}
-	buf = malloc(sizeof(char *) * BUFFER_SIZE);
+	buf = ft_calloc(sizeof(char *) , BUFFER_SIZE);
 	if (!buf)
 		return ;
 	getcwd(buf, BUFFER_SIZE);

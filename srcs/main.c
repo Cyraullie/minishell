@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:35:36 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/04 15:50:39 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/05 11:04:13 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,3 +89,6 @@ int	main(int ac, char **av, char **envp)
 	}
 	return (0);
 }
+// TODO export conditional move, export x invalid read, unset x invalid write, exit leaks, unset X segfault after unset vide, leaks cd
+
+// OK echo, pwd, env

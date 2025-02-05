@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 15:57:59 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/02/03 16:28:26 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/04 17:11:01 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ char	*get_path(void)
 {
 	char	*p;
 
-	p = malloc(sizeof(char *) * BUFFER_SIZE);
+	p = ft_calloc(sizeof(char *) , BUFFER_SIZE);
 	if (!p)
 		return (NULL);
 	getcwd(p, BUFFER_SIZE);
@@ -66,7 +66,7 @@ char	*get_userhome(void)
 	char	**p_a;
 	char	*userhome_path;
 
-	userhome_path = malloc(sizeof(char) * 6);
+	userhome_path = ft_calloc(sizeof(char) , 6);
 	if (!userhome_path)
 		return (NULL);
 	userhome_path = "/home/";

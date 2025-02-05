@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 16:20:02 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/02/04 16:10:00 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/05 09:32:56 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	write_env(char **env)
 	i = 0;
 	while (env[i])
 		i++;
-	tab = ft_calloc(sizeof(int *), i + 1);
+	tab = ft_calloc(sizeof(int), i + 1);
 	if (!tab)
 		return ;
 	sort_env(env, tab);
@@ -78,6 +78,7 @@ void	write_env(char **env)
 			printf("declare -x %s=\"\"\n", split[0]);
 		free(split);
 	}
+	free(tab);
 }
 
 /**

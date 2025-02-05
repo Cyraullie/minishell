@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 17:10:47 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/02/04 14:36:23 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/04 17:10:39 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ char	*get_path(void)
 {
 	char	*p;
 
-	p = malloc(sizeof(char *) * BUFFER_SIZE);
+	p = ft_calloc(sizeof(char *) , BUFFER_SIZE);
 	if (!p)
 		return (NULL);
 	getcwd(p, BUFFER_SIZE);
@@ -68,7 +68,7 @@ char	*get_userhome(void)
 	char	**p_a;
 	char	*u_p;
 
-	u_p = malloc(sizeof(char) * 6);
+	u_p = ft_calloc(sizeof(char) , 6);
 	if (!u_p)
 		return (NULL);
 	u_p = "/home/";

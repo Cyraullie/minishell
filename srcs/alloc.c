@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   alloc.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 16:23:23 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/01/23 16:31:03 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/05 09:48:31 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ char	**alloc_name(int size, char **env, int *tab)
 		return (NULL);
 	while (i < size)
 	{
+		//TODO pk 20?
 		name[i] = ft_calloc(sizeof(char ), 20);
 		if (!name[i++])
 		{
@@ -61,6 +62,7 @@ char	**alloc_name(int size, char **env, int *tab)
 	i = 0;
 	while (tab[i] != -1)
 	{
+		//TODO free le reste de ce split
 		name[i] = ft_split(env[tab[i]], '=')[0];
 		name[++i] = NULL;
 	}

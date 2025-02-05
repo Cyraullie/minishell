@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sort.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 16:21:19 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/01/24 10:09:46 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/05 09:43:03 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ void	sort_tab(char **env, int *tab, int size)
 {
 	char	**name;
 	int		*pos;
-
 	name = alloc_name(size, env, tab);
 	pos = alloc_pos(size);
 	get_pos(pos, name);
@@ -43,7 +42,7 @@ void	sort_tab(char **env, int *tab, int size)
 void	get_by_letter(char c, char **env, int *tab)
 {
 	int			i;
-	static int	j;
+	static int	j = 1;
 
 	i = 0;
 	if (c == 'A')

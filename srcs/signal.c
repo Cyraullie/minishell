@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 15:47:36 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/01/30 13:33:08 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/04 17:21:09 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	handle_sigint(int sig)
 	{
 		g_stop = 1;
 		write(STDOUT_FILENO, "\nminishell> ", 12);
+		//TODO ca marche pas, la commande ligne suivante n'est pas prise
 	}
 }
 
