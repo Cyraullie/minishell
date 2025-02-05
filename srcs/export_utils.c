@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 16:32:33 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/02/05 11:46:34 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/05 13:57:03 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	add_envline(char **env, char **nenv, char *title, char **name)
 			check_tabenv(nenv, j++);
 		}
 	}
-	if (get_envline(env, name[0]) == -1)
+	if (get_envline(nenv, name[0]) == -1)
 	{
 		nenv[j] = ft_strdup(title);
 		check_tabenv(nenv, j++);
@@ -111,9 +111,11 @@ char	**split_equal(char *str)
 		f_str[1] = multiple_equal(a_str);
 		if (!f_str[1])
 		{
+			free(f_str[0]);
 			free(f_str);
 			return (NULL);
 		}
+		free(f_str[0]);
 		free(f_str);
 	}
 	return (a_str);

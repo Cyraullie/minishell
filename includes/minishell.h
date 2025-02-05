@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:38:10 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/04 14:51:31 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/05 14:24:56 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void		toggle_quotes(char *s, int i, int *in_d_quotes, int *in_s_quotes);
 
 // parsing.c
 int			parsing(char *line, t_command **cmd, char **env);
+char		*ft_strjoin_and_free(char *s1, char *s2);
 
 // create_list.c
 void		create_list(char *line, t_command **cmd);
@@ -123,7 +124,7 @@ int			check_normenv(char *n);
 
 //sort.c
 void		sort_tab(char **env, int *tab, int size);
-void		get_by_letter(char c, char **env, int *tab);
+void		get_by_letter(char *c, char **env, int *tab);
 void		sort_env(char **env, int *tab);
 void		get_pos(int *pos, char **name);
 void		move_tab(char **name, int *tab, int *pos);
