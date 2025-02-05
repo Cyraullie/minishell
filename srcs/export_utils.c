@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 16:32:33 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/02/04 15:56:44 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/05 11:46:34 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,9 @@ char	**split_equal(char *str)
 	char	**f_str;
 
 	a_str = ft_split(str, '=');
-	if (a_str[2])
+	if (get_tab_size(a_str) == 2)
+		return (a_str);
+	else
 	{
 		i = 0;
 		f_str = ft_calloc(sizeof(char *), 3);
@@ -112,6 +114,7 @@ char	**split_equal(char *str)
 			free(f_str);
 			return (NULL);
 		}
+		free(f_str);
 	}
 	return (a_str);
 }
