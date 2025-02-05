@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:38:10 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/05 14:24:56 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/05 15:10:27 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,9 @@ void		ft_echo(char **cmd);
 int			find_valid_flag(char *msg, char flag);
 
 //exit.c
-int			ft_exit(char **cmd, char **env);
+int			ft_exit(char **cmd, char ***env, t_command **og_cmd);
+void		free_all(char ***env, t_command **list);
+void		exit_and_free(char ***env, t_command **list, int value);
 
 //env.c
 void		ft_env(char **cmd, char **env);
