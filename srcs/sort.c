@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 16:21:19 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/01/24 10:09:46 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/05 14:24:32 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,17 +40,17 @@ void	sort_tab(char **env, int *tab, int size)
  * @param env array of environment variable
  * @param tab array of env id
  */
-void	get_by_letter(char c, char **env, int *tab)
+void	get_by_letter(char *c, char **env, int *tab)
 {
 	int			i;
-	static int	j;
+	static int	j = 1;
 
 	i = 0;
-	if (c == 'A')
+	if (*c == 'A')
 		j = 0;
 	while (env[i] != NULL)
 	{
-		if (!ft_strncmp(env[i], &c, 1))
+		if (!ft_strncmp(env[i], c, 1))
 			tab[j++] = i;
 		i++;
 	}
@@ -72,7 +72,7 @@ void	sort_env(char **env, int *tab)
 	i = 0;
 	while (c != 123)
 	{
-		get_by_letter(c, env, tab);
+		get_by_letter(&c, env, tab);
 		if (c == 'Z')
 			c = 'a';
 		else

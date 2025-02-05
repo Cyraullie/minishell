@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:38:10 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/04 14:51:31 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/05 15:10:27 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void		toggle_quotes(char *s, int i, int *in_d_quotes, int *in_s_quotes);
 
 // parsing.c
 int			parsing(char *line, t_command **cmd, char **env);
+char		*ft_strjoin_and_free(char *s1, char *s2);
 
 // create_list.c
 void		create_list(char *line, t_command **cmd);
@@ -64,7 +65,9 @@ void		ft_echo(char **cmd);
 int			find_valid_flag(char *msg, char flag);
 
 //exit.c
-int			ft_exit(char **cmd, char **env);
+int			ft_exit(char **cmd, char ***env, t_command **og_cmd);
+void		free_all(char ***env, t_command **list);
+void		exit_and_free(char ***env, t_command **list, int value);
 
 //env.c
 void		ft_env(char **cmd, char **env);
@@ -123,7 +126,7 @@ int			check_normenv(char *n);
 
 //sort.c
 void		sort_tab(char **env, int *tab, int size);
-void		get_by_letter(char c, char **env, int *tab);
+void		get_by_letter(char *c, char **env, int *tab);
 void		sort_env(char **env, int *tab);
 void		get_pos(int *pos, char **name);
 void		move_tab(char **name, int *tab, int *pos);

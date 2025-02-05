@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 16:16:57 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/02/03 17:19:09 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/05 13:57:15 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	concat_nexistvar(char ***nenv, char **name, int j)
 	char	*title;
 
 	title = ft_strjoin(name[0], "=");
-	title = ft_strjoin(title, name[1]);
+	title = ft_strjoin_and_free(title, name[1]);
 	if (!title)
 	{
 		free(title);

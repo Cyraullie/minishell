@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 16:23:23 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/01/23 16:31:03 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/05 12:05:01 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,25 +44,20 @@ char	**alloc_name(int size, char **env, int *tab)
 {
 	char	**name;
 	int		i;
+	char	**tmp;
 
-	i = 0;
 	name = ft_calloc(sizeof(char *), size + 3);
 	if (!name)
 		return (NULL);
-	while (i < size)
-	{
-		name[i] = ft_calloc(sizeof(char ), 20);
-		if (!name[i++])
-		{
-			free(name);
-			return (NULL);
-		}
-	}
 	i = 0;
 	while (tab[i] != -1)
 	{
-		name[i] = ft_split(env[tab[i]], '=')[0];
+		tmp = ft_split(env[tab[i]], '=');
+		name[i] = ft_strdup(tmp[0]);
+		if (!name[i])
+			return (clean_tab(name), NULL);
 		name[++i] = NULL;
+		clean_tab(tmp);
 	}
 	return (name);
 }

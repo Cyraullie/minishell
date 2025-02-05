@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 16:20:02 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/02/04 16:10:00 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/05 14:03:48 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	write_env(char **env)
 	i = 0;
 	while (env[i])
 		i++;
-	tab = ft_calloc(sizeof(int *), i + 1);
+	tab = ft_calloc(sizeof(int), i + 1);
 	if (!tab)
 		return ;
 	sort_env(env, tab);
@@ -76,8 +76,9 @@ void	write_env(char **env)
 				ft_strchr(env[tab[i]], '=') + 1);
 		else
 			printf("declare -x %s=\"\"\n", split[0]);
-		free(split);
+		clean_tab(split);
 	}
+	free(tab);
 }
 
 /**
@@ -97,22 +98,17 @@ char	**handle_export(char *arg, char **env, char ***nenv)
 		return (NULL);
 	if (name[0][ft_strlen(name[0]) - 1] != '+')
 	{
-		if (check_normenv(name[0]))
+		if (get_tab_size(name) == 1)
 		{
+			if (check_normenv(name[0]))
+				add_envline_without_content(env, *nenv, name);
+		}
+		else if (check_normenv(name[0]))
 			add_envline(env, *nenv, arg, name);
-			clean_tab(env);
-		}
-	}
-	else if (!name[1])
-	{
-		if (check_normenv(name[0]))
-		{
-			add_envline_without_content(env, *nenv, name);
-			clean_tab(env);
-		}
 	}
 	else
 		handle_concat(env, nenv, name);
+	clean_tab(env);
 	return (*nenv);
 }
 

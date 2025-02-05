@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 10:49:01 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/02/04 15:25:35 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/05 14:46:03 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
  * @param cmd_tmp command write to call builtins
  * @param env array with the environment variable
  */
-void	builtins(t_command *cmd_tmp, char ***env)
+void	builtins(t_command *cmd_tmp, char ***env, t_command **cmd)
 {
 	if (cmd_tmp->cmd)
 	{
@@ -35,7 +35,7 @@ void	builtins(t_command *cmd_tmp, char ***env)
 		else if (!ft_strncmp(cmd_tmp->cmd, "env", 4))
 			ft_env(cmd_tmp->cmd_tab, *env);
 		else if (!ft_strncmp(cmd_tmp->cmd, "exit", 5))
-			ft_exit(cmd_tmp->cmd_tab, *env);
+			ft_exit(cmd_tmp->cmd_tab, env, cmd);
 	}
 }
 
@@ -53,53 +53,6 @@ void	handle_redir(t_command *cmd_tmp)
 		close(fd);
 	}
 }
-
-void	handle_pipe(t_command *cmd_tmp, char ***env)
-{
-	int		pipefd[2];
-	pid_t	pid;
-
-	if (cmd_tmp->next)
-		pipe(pipefd);
-
-	pid = fork();
-	if (pid == -1)
-	{
-		perror("fork");
-		exit(EXIT_FAILURE);
-	}
-
-	if (pid == 0) // Processus enfant
-	{
-		if (cmd_tmp->pipe_out)
-		{
-			close(pipefd[0]); // Fermer la lecture du pipe
-			dup2(pipefd[1], STDOUT_FILENO); // Rediriger stdout vers le pipe
-			close(pipefd[1]);
-		}
-		if (is_builtin(cmd_tmp->cmd))
-		{
-			builtins(cmd_tmp, env); // Exécuter le builtin
-			exit(EXIT_SUCCESS); // Sortir uniquement du processus enfant
-		}
-		else
-		{
-			exec_bash(cmd_tmp, env); // Exécuter une commande externe
-			exit(EXIT_FAILURE); // Si exec échoue, quitter l'enfant
-		}
-	}
-	else // Processus parent
-	{
-		if (cmd_tmp->next)
-		{
-			close(pipefd[1]); // Fermer l'écriture du pipe
-			dup2(pipefd[0], STDIN_FILENO); // Lire à partir du pipe
-			close(pipefd[0]);
-		}
-		waitpid(pid, NULL, 0); // Attendre que l'enfant termine
-	}
-}
-
 
 static	char	*get_full_path(char *path, char *cmd)
 {
@@ -210,7 +163,7 @@ void	exec_built(t_command **cmd, char ***env)
 		else
 		{*/
 			if (is_builtin(cmd_tmp->cmd))
-				builtins(cmd_tmp, env);
+				builtins(cmd_tmp, env, cmd);
 			else
 				exec_bash(cmd_tmp, env);
 		//}

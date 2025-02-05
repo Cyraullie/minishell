@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 15:54:59 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/02/04 13:57:42 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/05 15:26:22 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	contain_equal(char *str)
 	i = -1;
 	while (str[++i])
 	{
-		if (str[i] == '=')
+		if (str[i] == '=' && str[0] != '?')
 			return (1);
 	}
 	return (0);
