@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 16:00:10 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/02/03 16:06:37 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/05 11:38:11 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ char	**ft_unset(char **cmd, char **env)
 
 	nenv = NULL;
 	j = 1;
+	if (!cmd[1])
+		return (env);
 	while (cmd[j])
 	{
 		i = 0;
@@ -75,5 +77,4 @@ void	del_envline(char **env, char **nenv, char *title)
 		}
 		i++;
 	}
-	nenv[i] = NULL;
 }
