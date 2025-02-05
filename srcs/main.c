@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:35:36 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/05 11:04:13 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/05 15:58:15 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,8 @@ int	main(int ac, char **av, char **envp)
 	}
 	return (0);
 }
-// TODO export conditional move, export x invalid read, unset x invalid write, exit leaks, unset X segfault after unset vide, leaks cd
-
-// OK echo, pwd, env
+//TODO exit leaks, leaks cd
+//TODO mettre tout les builtins en int avec un return 0 de con  ????????
+//TODO l'historique n'est plus save ou mis dans l'history au bout d'un nombre de ligne dans le fichier
+// OK echo, pwd, env, unset
+// TOCHECK export, exit, cd
