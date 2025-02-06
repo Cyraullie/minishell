@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:38:10 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/06 11:53:29 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/06 16:25:16 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int			ft_isspace(int c);
 void		toggle_quotes(char *s, int i, int *in_d_quotes, int *in_s_quotes);
 
 // parsing.c
-int			parsing(char *line, t_command **cmd, char **env);
+int			parsing(char *line, t_command **cmd, char ***env);
 char		*ft_strjoin_and_free(char *s1, char *s2);
 
 // create_list.c
@@ -61,7 +61,7 @@ void		init_sig(void);
 void		handle_eof(char *line, char **env);
 
 //echo.c
-void		ft_echo(char **cmd);
+int			ft_echo(char **cmd);
 int			find_valid_flag(char *msg, char flag);
 
 //exit.c
@@ -74,7 +74,7 @@ int			ft_env(char **cmd, char **env);
 int			contain_equal(char *str);
 
 //pwd.c
-void		ft_pwd(char **cmd);
+int			ft_pwd(char **cmd);
 
 //cd.c
 int			ft_cd(char **cmd, char ***env);
@@ -165,7 +165,7 @@ int			get_tab_size(char **tab);
 void		exec_built(t_command **cmd, char ***env);
 
 // syntax.c
-int			check_syntax(char *line);
+int			check_syntax(char *line, char ***env);
 
 // expansion.c
 char		**expansion(char **tab, char **env);
@@ -173,6 +173,9 @@ char		**expansion(char **tab, char **env);
 // remove_quotes.c
 char		*remove_quotes(char *token);
 
+//TODO a trier
 void		exec_bash(t_command *cmd_tmp, char ***env);
+void		update_exitvalue(int eval, char ***env);
+int			get_exitvalue(char **env);
 
 #endif

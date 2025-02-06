@@ -6,11 +6,39 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 10:49:01 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/02/06 11:24:02 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/06 14:58:37 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+int	get_exitvalue(char **env)
+{
+	char	*content;
+	int		eval;
+
+	content = get_env_content("?", env);
+	eval = ft_atoi(content);
+	printf("%d\n", eval);
+	return (eval);
+}
+
+void	update_exitvalue(int eval, char ***env)
+{
+	char	*line;
+	char	*content;
+	int		i;
+
+	line = NULL;
+	i = get_envline(*env, "?");
+	content = ft_itoa(eval);
+	line = ft_strjoin("?=", content);
+	free(env[0][i]);
+	*env[i] = ft_strdup(line);
+	//content = get_env_content("?", env);
+	//eval = ft_atoi(content);
+	printf("%s line:%d value:%d\n", env[0][i], i, eval);
+}
 
 /**
  * @brief function to select the right builtins
@@ -20,23 +48,33 @@
  */
 void	builtins(t_command *cmd_tmp, char ***env, t_command **cmd)
 {
-	if (cmd_tmp->cmd)
+	int	rvalue;
+
+	rvalue = get_exitvalue(*env);
+	if (!ft_strncmp(cmd_tmp->cmd, "echo", 5))
 	{
-		if (!ft_strncmp(cmd_tmp->cmd, "echo", 5))
-			ft_echo(cmd_tmp->cmd_tab);
-		else if (!ft_strncmp(cmd_tmp->cmd, "cd", 3))
-			ft_cd(cmd_tmp->cmd_tab, env);
-		else if (!ft_strncmp(cmd_tmp->cmd, "pwd", 4))
-			ft_pwd(cmd_tmp->cmd_tab);
-		else if (!ft_strncmp(cmd_tmp->cmd, "export", 7))
-			ft_export(cmd_tmp->cmd_tab, env);
-		else if (!ft_strncmp(cmd_tmp->cmd, "unset", 6))
-			*env = ft_unset(cmd_tmp->cmd_tab, *env);
-		else if (!ft_strncmp(cmd_tmp->cmd, "env", 4))
-			ft_env(cmd_tmp->cmd_tab, *env);
-		else if (!ft_strncmp(cmd_tmp->cmd, "exit", 5))
-			ft_exit(cmd_tmp->cmd_tab, env, cmd);
+		ft_echo(cmd_tmp->cmd_tab);
+		rvalue = 0;
 	}
+	else if (!ft_strncmp(cmd_tmp->cmd, "cd", 3))
+		rvalue = ft_cd(cmd_tmp->cmd_tab, env);
+	else if (!ft_strncmp(cmd_tmp->cmd, "pwd", 4))
+	{
+		ft_pwd(cmd_tmp->cmd_tab);
+		rvalue = 0;
+	}
+	else if (!ft_strncmp(cmd_tmp->cmd, "export", 7))
+		rvalue = ft_export(cmd_tmp->cmd_tab, env);
+	else if (!ft_strncmp(cmd_tmp->cmd, "unset", 6))
+	{
+		*env = ft_unset(cmd_tmp->cmd_tab, *env);
+		rvalue = 0;
+	}
+	else if (!ft_strncmp(cmd_tmp->cmd, "env", 4))
+		rvalue = ft_env(cmd_tmp->cmd_tab, *env);
+	else if (!ft_strncmp(cmd_tmp->cmd, "exit", 5))
+		ft_exit(cmd_tmp->cmd_tab, env, cmd);
+	update_exitvalue(rvalue, env);
 }
 
 

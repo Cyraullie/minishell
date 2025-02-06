@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:35:36 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/06 11:53:47 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/06 15:39:16 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	main(int ac, char **av, char **envp)
 		line = readline("minishell> ");
 		handle_eof(line, env);
 		handle_history(line, env);
-		parsing(line, &cmd, env);
+		parsing(line, &cmd, &env);
 		exec_built(&cmd, &env);
 		ft_listdelete(cmd);
 	}
