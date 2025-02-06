@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:38:10 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/06 10:47:57 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/06 11:53:29 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,14 +70,14 @@ void		free_all(char ***env, t_command **list);
 void		exit_and_free(char ***env, t_command **list, int value);
 
 //env.c
-void		ft_env(char **cmd, char **env);
+int			ft_env(char **cmd, char **env);
 int			contain_equal(char *str);
 
 //pwd.c
 void		ft_pwd(char **cmd);
 
 //cd.c
-void		ft_cd(char **cmd, char ***env);
+int			ft_cd(char **cmd, char ***env);
 char		*get_path(void);
 char		*get_userhome(void);
 void		ft_chdir(char **cmd, char ***env);
@@ -96,7 +96,7 @@ char		*get_env_content(char *var_name, char **env);
 char		**create_env_array(char **envp);
 
 //export.c
-char		**ft_export(char **cmd, char **env);
+int			ft_export(char **cmd, char ***env);
 void		write_env(char **env);
 char		**handle_export(char *arg, char **env, char ***nenv);
 char		**create_nenv(char **env, char **name);

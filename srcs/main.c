@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:35:36 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/06 10:47:50 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/06 11:53:47 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	increment_shlvl(char ***env)
 	index = ft_itoa(content);
 	cmd[1] = ft_strjoin(cmd[1], index);
 	free(index);
-	*env = ft_export(cmd, *env);
+	ft_export(cmd, env);
 	free(cmd[1]);
 }
 
@@ -79,5 +79,4 @@ int	main(int ac, char **av, char **envp)
 	}
 	return (0);
 }
-//TODO mettre tout les builtins en int avec un return 0 de con ????????
 //TODO l'historique n'est plus save ou mis dans l'history au bout d'un nombre de ligne dans le fichier add buffer size :)

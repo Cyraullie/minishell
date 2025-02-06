@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 10:49:01 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/02/05 14:46:03 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/06 11:24:02 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	builtins(t_command *cmd_tmp, char ***env, t_command **cmd)
 		else if (!ft_strncmp(cmd_tmp->cmd, "pwd", 4))
 			ft_pwd(cmd_tmp->cmd_tab);
 		else if (!ft_strncmp(cmd_tmp->cmd, "export", 7))
-			*env = ft_export(cmd_tmp->cmd_tab, *env);
+			ft_export(cmd_tmp->cmd_tab, env);
 		else if (!ft_strncmp(cmd_tmp->cmd, "unset", 6))
 			*env = ft_unset(cmd_tmp->cmd_tab, *env);
 		else if (!ft_strncmp(cmd_tmp->cmd, "env", 4))
