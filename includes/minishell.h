@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:38:10 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/05 15:10:27 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/06 10:47:57 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define MINISHELL_H
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1000
+#  define BUFFER_SIZE 100000
 # endif
 # ifndef HISTORY_FILE
 #  define HISTORY_FILE ".ms_history"
@@ -175,5 +175,4 @@ char		*remove_quotes(char *token);
 
 void		exec_bash(t_command *cmd_tmp, char ***env);
 
-extern sig_atomic_t	g_stop;
 #endif
