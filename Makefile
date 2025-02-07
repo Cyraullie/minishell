@@ -47,6 +47,7 @@ $(LIBFT):
 
 clean:
 	@rm -rf $(OBJDIR)
+	@rm  ~/.ms_history*
 	@$(MAKE) clean -C $(LIBFT_PATH)
 
 fclean: clean

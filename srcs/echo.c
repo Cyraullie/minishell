@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 15:49:45 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/02/03 15:50:42 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/06 15:20:34 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,9 @@ int	find_valid_flag(char *msg, char flag)
  * @brief function to write a text and handle -n option
  * 
  * @param cmd get command line array
+ * @return char** the state of the actual environment variable
  */
-void	ft_echo(char **cmd)
+int	ft_echo(char **cmd)
 {
 	int	i;
 	int	n;
@@ -67,4 +68,5 @@ void	ft_echo(char **cmd)
 	}
 	else
 		printf("\n");
+	return (0);
 }

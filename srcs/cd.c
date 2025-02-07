@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 15:57:59 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/02/05 15:56:00 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/06 11:22:39 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,9 @@
  * @brief function to move in different directory
  * 
  * @param cmd command line array
+ * @return int return success or failed
  */
-void	ft_cd(char **cmd, char ***env)
+int	ft_cd(char **cmd, char ***env)
 {
 	char	*userhome;
 
@@ -25,16 +26,17 @@ void	ft_cd(char **cmd, char ***env)
 	if (cmd[2])
 	{
 		ft_putstr_fd("cd: too many arguments\n", 2);
-		return (free(userhome));
+		return (free(userhome), 1);
 	}
 	if (cmd[1] && !ft_strncmp(cmd[1], "~/", 2))
 	{
 		cmd[1] = ft_strjoin(userhome, ft_strchr(cmd[1], '/'));
 		if (!cmd[1])
-			return (free(userhome));
+			return (free(userhome), 1);
 	}
 	free(userhome);
 	ft_chdir(cmd, env);
+	return (0);
 }
 
 /**

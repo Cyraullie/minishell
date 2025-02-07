@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:38:10 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/05 15:10:27 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/07 11:15:54 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,13 @@
 # define MINISHELL_H
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1000
+#  define BUFFER_SIZE 100000
 # endif
 # ifndef HISTORY_FILE
-#  define HISTORY_FILE ".ms_history"
+#  define HISTORY_FILE "/.ms_history"
+# endif
+# ifndef HEREDOC_FILE
+#  define HEREDOC_FILE "/.here_doc"
 # endif
 # include <stdio.h>
 # include <unistd.h>
@@ -49,7 +52,7 @@ int			ft_isspace(int c);
 void		toggle_quotes(char *s, int i, int *in_d_quotes, int *in_s_quotes);
 
 // parsing.c
-int			parsing(char *line, t_command **cmd, char **env);
+int			parsing(char *line, t_command **cmd, char ***env);
 char		*ft_strjoin_and_free(char *s1, char *s2);
 
 // create_list.c
@@ -61,7 +64,7 @@ void		init_sig(void);
 void		handle_eof(char *line, char **env);
 
 //echo.c
-void		ft_echo(char **cmd);
+int			ft_echo(char **cmd);
 int			find_valid_flag(char *msg, char flag);
 
 //exit.c
@@ -70,14 +73,14 @@ void		free_all(char ***env, t_command **list);
 void		exit_and_free(char ***env, t_command **list, int value);
 
 //env.c
-void		ft_env(char **cmd, char **env);
+int			ft_env(char **cmd, char **env);
 int			contain_equal(char *str);
 
 //pwd.c
-void		ft_pwd(char **cmd);
+int			ft_pwd(char **cmd);
 
 //cd.c
-void		ft_cd(char **cmd, char ***env);
+int			ft_cd(char **cmd, char ***env);
 char		*get_path(void);
 char		*get_userhome(void);
 void		ft_chdir(char **cmd, char ***env);
@@ -96,7 +99,7 @@ char		*get_env_content(char *var_name, char **env);
 char		**create_env_array(char **envp);
 
 //export.c
-char		**ft_export(char **cmd, char **env);
+int			ft_export(char **cmd, char ***env);
 void		write_env(char **env);
 char		**handle_export(char *arg, char **env, char ***nenv);
 char		**create_nenv(char **env, char **name);
@@ -165,7 +168,7 @@ int			get_tab_size(char **tab);
 void		exec_built(t_command **cmd, char ***env);
 
 // syntax.c
-int			check_syntax(char *line);
+int			check_syntax(char *line, char ***env);
 
 // expansion.c
 char		**expansion(char **tab, char **env);
@@ -173,7 +176,12 @@ char		**expansion(char **tab, char **env);
 // remove_quotes.c
 char		*remove_quotes(char *token);
 
+//TODO a trier
 void		exec_bash(t_command *cmd_tmp, char ***env);
+void		update_exitvalue(int eval, char ***env);
+int			get_exitvalue(char **env);
 
-extern sig_atomic_t	g_stop;
+//heredoc.c
+void		heredoc(int ac, char **av, char **env);
+
 #endif

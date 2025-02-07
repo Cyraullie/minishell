@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:35:36 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/05 16:22:58 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/07 11:15:39 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	increment_shlvl(char ***env)
 	index = ft_itoa(content);
 	cmd[1] = ft_strjoin(cmd[1], index);
 	free(index);
-	*env = ft_export(cmd, *env);
+	ft_export(cmd, env);
 	free(cmd[1]);
 }
 
@@ -72,19 +72,10 @@ int	main(int ac, char **av, char **envp)
 		cmd = NULL;
 		line = readline("minishell> ");
 		handle_eof(line, env);
-		if (g_stop)
-		{
-			free(line);
-			line = NULL;
-			g_stop = 0;
-			continue ;
-		}
 		handle_history(line, env);
-		parsing(line, &cmd, env);
+		parsing(line, &cmd, &env);
 		exec_built(&cmd, &env);
 		ft_listdelete(cmd);
 	}
 	return (0);
 }
-//TODO mettre tout les builtins en int avec un return 0 de con ????????
-//TODO l'historique n'est plus save ou mis dans l'history au bout d'un nombre de ligne dans le fichier

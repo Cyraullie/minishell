@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 16:20:02 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/02/05 14:03:48 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/06 11:26:15 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
  * @param env get environment var
  * @return char** the state of the actual environment variable
  */
-char	**ft_export(char **cmd, char **env)
+int	ft_export(char **cmd, char ***env)
 {
 	char	**nenv;
 	int		j;
@@ -27,7 +27,7 @@ char	**ft_export(char **cmd, char **env)
 
 	j = 1;
 	if (!cmd[j])
-		write_env(env);
+		write_env(*env);
 	else
 	{
 		nenv = NULL;
@@ -35,16 +35,17 @@ char	**ft_export(char **cmd, char **env)
 		{
 			name = split_equal(cmd[j]);
 			if (!name)
-				return (NULL);
-			nenv = create_nenv(env, name);
+				return (1);
+			nenv = create_nenv(*env, name);
 			if (!nenv)
-				return (NULL);
+				return (1);
 			clean_tab(name);
-			handle_export(cmd[j++], env, &nenv);
+			handle_export(cmd[j++], *env, &nenv);
 		}
-		return (nenv);
+		*env = nenv;
+		return (0);
 	}
-	return (env);
+	return (0);
 }
 
 /**
