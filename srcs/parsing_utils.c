@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 13:51:33 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/04 14:38:41 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/05 15:31:40 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,17 @@
  */
 int	open_previous_file(t_command *cmd)
 {
+	int fd;
 	if (!cmd->write || !cmd->write_type)
 		return (1);
 	//TODO remove quotes from cmd->write
-	if (open(cmd->write, cmd->write_type, 755) == -1)
+	fd = open(cmd->write, cmd->write_type, 755);
+	if ( fd == -1)
 	{
+		close(fd);
 		return (0);
 	}
+	close(fd);
 	return (1);
 }
 //TODO add heredoc to this
