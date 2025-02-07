@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 10:49:01 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/02/06 14:58:37 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/07 11:32:27 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	get_exitvalue(char **env)
 
 	content = get_env_content("?", env);
 	eval = ft_atoi(content);
+	free(content);
 	printf("%d\n", eval);
 	return (eval);
 }
@@ -33,10 +34,9 @@ void	update_exitvalue(int eval, char ***env)
 	i = get_envline(*env, "?");
 	content = ft_itoa(eval);
 	line = ft_strjoin("?=", content);
-	free(env[0][i]);
-	*env[i] = ft_strdup(line);
-	//content = get_env_content("?", env);
-	//eval = ft_atoi(content);
+	free(content);
+	*env[i] = line;
+	free(line);
 	printf("%s line:%d value:%d\n", env[0][i], i, eval);
 }
 

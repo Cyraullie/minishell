@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 16:01:27 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/02/05 15:24:53 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/07 11:28:47 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ char	**create_env_array(char **envp)
 	env = NULL;
 	while (envp[i])
 		i++;
-	env = ft_calloc(sizeof(char *), (i + 2));
+	env = ft_calloc(sizeof(char *), (i + 5));
 	if (!env)
 		return (NULL);
 	i = 0;
