@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:38:10 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/07 10:45:03 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/07 11:15:54 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 #  define HISTORY_FILE "/.ms_history"
 # endif
 # ifndef HEREDOC_FILE
-#  define HEREDOC_FILE "~/.here_doc"
+#  define HEREDOC_FILE "/.here_doc"
 # endif
 # include <stdio.h>
 # include <unistd.h>
@@ -180,5 +180,8 @@ char		*remove_quotes(char *token);
 void		exec_bash(t_command *cmd_tmp, char ***env);
 void		update_exitvalue(int eval, char ***env);
 int			get_exitvalue(char **env);
+
+//heredoc.c
+void		heredoc(int ac, char **av, char **env);
 
 #endif

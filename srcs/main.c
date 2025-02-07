@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:35:36 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/06 15:39:16 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/07 11:15:39 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,4 +79,3 @@ int	main(int ac, char **av, char **envp)
 	}
 	return (0);
 }
-//TODO l'historique n'est plus save ou mis dans l'history au bout d'un nombre de ligne dans le fichier add buffer size :)
