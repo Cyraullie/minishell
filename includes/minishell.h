@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:38:10 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/06 16:25:16 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/07 10:45:03 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,10 @@
 #  define BUFFER_SIZE 100000
 # endif
 # ifndef HISTORY_FILE
-#  define HISTORY_FILE ".ms_history"
+#  define HISTORY_FILE "/.ms_history"
+# endif
+# ifndef HEREDOC_FILE
+#  define HEREDOC_FILE "~/.here_doc"
 # endif
 # include <stdio.h>
 # include <unistd.h>
