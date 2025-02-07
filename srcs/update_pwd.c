@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 16:28:07 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/02/03 16:28:33 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/06 11:27:52 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	update_pwd(char *path, char ***env)
 	cmd[2] = NULL;
 	line = get_envline(*env, "PWD");
 	if (line != -1)
-		*env = ft_export(cmd, *env);
+		ft_export(cmd, env);
 	free(pwd);
 }
 
@@ -54,6 +54,6 @@ void	update_oldpwd(char *path, char ***env)
 	cmd[2] = NULL;
 	line = get_envline(*env, "OLDPWD");
 	if (line != -1)
-		*env = ft_export(cmd, *env);
+		ft_export(cmd, env);
 	free(pwd);
 }

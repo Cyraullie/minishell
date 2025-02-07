@@ -6,11 +6,39 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 10:49:01 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/02/06 10:37:14 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/07 14:25:41 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+int	get_exitvalue(char **env)
+{
+	char	*content;
+	int		eval;
+
+	content = get_env_content("?", env);
+	eval = ft_atoi(content);
+	free(content);
+	printf("%d\n", eval);
+	return (eval);
+}
+
+void	update_exitvalue(int eval, char ***env)
+{
+	char	*line;
+	char	*content;
+	int		i;
+
+	line = NULL;
+	i = get_envline(*env, "?");
+	content = ft_itoa(eval);
+	line = ft_strjoin("?=", content);
+	free(content);
+	*env[i] = line;
+	free(line);
+	printf("%s line:%d value:%d\n", env[0][i], i, eval);
+}
 
 /**
  * @brief function to select the right builtins
@@ -18,25 +46,35 @@
  * @param cmd_tmp command write to call builtins
  * @param env array with the environment variable
  */
-void	builtins(t_command *cmd_tmp, char ***env)
+void	builtins(t_command *cmd_tmp, char ***env, t_command **cmd)
 {
-	if (cmd_tmp->cmd)
+	int	rvalue;
+
+	rvalue = get_exitvalue(*env);
+	if (!ft_strncmp(cmd_tmp->cmd, "echo", 5))
 	{
-		if (!ft_strncmp(cmd_tmp->cmd, "echo", 5))
-			ft_echo(cmd_tmp->cmd_tab);
-		else if (!ft_strncmp(cmd_tmp->cmd, "cd", 3))
-			ft_cd(cmd_tmp->cmd_tab, env);
-		else if (!ft_strncmp(cmd_tmp->cmd, "pwd", 4))
-			ft_pwd(cmd_tmp->cmd_tab);
-		else if (!ft_strncmp(cmd_tmp->cmd, "export", 7))
-			*env = ft_export(cmd_tmp->cmd_tab, *env);
-		else if (!ft_strncmp(cmd_tmp->cmd, "unset", 6))
-			*env = ft_unset(cmd_tmp->cmd_tab, *env);
-		else if (!ft_strncmp(cmd_tmp->cmd, "env", 4))
-			ft_env(cmd_tmp->cmd_tab, *env);
-		else if (!ft_strncmp(cmd_tmp->cmd, "exit", 5))
-			ft_exit(cmd_tmp->cmd_tab, *env);
+		ft_echo(cmd_tmp->cmd_tab);
+		rvalue = 0;
 	}
+	else if (!ft_strncmp(cmd_tmp->cmd, "cd", 3))
+		rvalue = ft_cd(cmd_tmp->cmd_tab, env);
+	else if (!ft_strncmp(cmd_tmp->cmd, "pwd", 4))
+	{
+		ft_pwd(cmd_tmp->cmd_tab);
+		rvalue = 0;
+	}
+	else if (!ft_strncmp(cmd_tmp->cmd, "export", 7))
+		rvalue = ft_export(cmd_tmp->cmd_tab, env);
+	else if (!ft_strncmp(cmd_tmp->cmd, "unset", 6))
+	{
+		*env = ft_unset(cmd_tmp->cmd_tab, *env);
+		rvalue = 0;
+	}
+	else if (!ft_strncmp(cmd_tmp->cmd, "env", 4))
+		rvalue = ft_env(cmd_tmp->cmd_tab, *env);
+	else if (!ft_strncmp(cmd_tmp->cmd, "exit", 5))
+		ft_exit(cmd_tmp->cmd_tab, env, cmd);
+	update_exitvalue(rvalue, env);
 }
 
 
@@ -53,53 +91,6 @@ void	handle_redir(t_command *cmd_tmp)
 		close(fd);
 	}
 }
-
-void	handle_pipe(t_command *cmd_tmp, char ***env)
-{
-	int		pipefd[2];
-	pid_t	pid;
-
-	if (cmd_tmp->next)
-		pipe(pipefd);
-
-	pid = fork();
-	if (pid == -1)
-	{
-		perror("fork");
-		exit(EXIT_FAILURE);
-	}
-
-	if (pid == 0) // Processus enfant
-	{
-		if (cmd_tmp->pipe_out)
-		{
-			close(pipefd[0]); // Fermer la lecture du pipe
-			dup2(pipefd[1], STDOUT_FILENO); // Rediriger stdout vers le pipe
-			close(pipefd[1]);
-		}
-		if (is_builtin(cmd_tmp->cmd))
-		{
-			builtins(cmd_tmp, env); // Exécuter le builtin
-			exit(EXIT_SUCCESS); // Sortir uniquement du processus enfant
-		}
-		else
-		{
-			exec_bash(cmd_tmp, env); // Exécuter une commande externe
-			exit(EXIT_FAILURE); // Si exec échoue, quitter l'enfant
-		}
-	}
-	else // Processus parent
-	{
-		if (cmd_tmp->next)
-		{
-			close(pipefd[1]); // Fermer l'écriture du pipe
-			dup2(pipefd[0], STDIN_FILENO); // Lire à partir du pipe
-			close(pipefd[0]);
-		}
-		waitpid(pid, NULL, 0); // Attendre que l'enfant termine
-	}
-}
-
 
 static	char	*get_full_path(char *path, char *cmd)
 {
@@ -210,7 +201,7 @@ void	exec_built(t_command **cmd, char ***env)
 		else
 		{*/
 			if (is_builtin(cmd_tmp->cmd))
-				builtins(cmd_tmp, env);
+				builtins(cmd_tmp, env, cmd);
 			else
 				exec_bash(cmd_tmp, env);
 		//}

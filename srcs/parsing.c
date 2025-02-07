@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 15:02:10 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/05 13:47:27 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/07 14:26:42 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ char	*ft_strjoin_and_free(char *s1, char *s2)
 	int		len;
 
 	len = ft_strlen(s1) + ft_strlen(s2) + 1;
-	join = malloc(sizeof(char) * len);
+	join = ft_calloc(sizeof(char), len);
 	if (join == NULL)
 		return (NULL);
 	ft_strlcpy(join, s1, ft_strlen(s1) + 1);
@@ -72,13 +72,13 @@ char	*ft_strjoin_and_free(char *s1, char *s2)
  * @param env environnement variables table
  * @return int 
  */
-int	parsing(char *line, t_command **cmd, char **env)
+int	parsing(char *line, t_command **cmd, char ***env)
 {
 	char		**tab;
 	t_command	*head;
 	int			i;
 
-	if (!check_syntax(line))
+	if (!check_syntax(line, env))
 	{
 		free(line);
 		return (1);
@@ -92,7 +92,7 @@ int	parsing(char *line, t_command **cmd, char **env)
 		i++;
 	}
 	head = *cmd;
-	assign_token(cmd, env);
+	assign_token(cmd, *env);
 	*cmd = head;
 	clean_tab(tab);
 	return (0);

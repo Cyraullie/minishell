@@ -89,7 +89,7 @@ char	**split_quotes(char *line)
 	if (!line)
 		return (NULL);
 	num_words = count_words(line, 0, 0);
-	tab = malloc(sizeof(char *) * (num_words + 1));
+	tab = ft_calloc(sizeof(char *) , (num_words + 1));
 	if (!tab)
 		return (NULL);
 	tab = fill_tab(line, tab, num_words);

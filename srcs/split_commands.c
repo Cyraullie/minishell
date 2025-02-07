@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 15:32:36 by lpittet           #+#    #+#             */
-/*   Updated: 2025/01/28 11:43:30 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/04 17:12:01 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ char	**mini_split(char *s)
 	unsigned int	num_cmds;
 
 	num_cmds = count_cmds(s);
-	tab = malloc((1 + num_cmds) * sizeof(char *));
+	tab = ft_calloc((1 + num_cmds) , sizeof(char *));
 	if (!tab)
 		return (NULL);
 	split_commands(s, tab, num_cmds);

@@ -6,15 +6,12 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:35:36 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/07 10:25:51 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/07 14:27:00 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-//TODO check leaks to all buitlins
-//TODO fix norme
-//TODO sort file and function for better visibility
 /**
  * @brief function to increment the shell level
  * 
@@ -37,7 +34,7 @@ void	increment_shlvl(char ***env)
 	index = ft_itoa(content);
 	cmd[1] = ft_strjoin(cmd[1], index);
 	free(index);
-	*env = ft_export(cmd, *env);
+	ft_export(cmd, env);
 	free(cmd[1]);
 }
 
@@ -75,16 +72,9 @@ int	main(int ac, char **av, char **envp)
 		cmd = NULL;
 		line = readline("minishell> ");
 		handle_eof(line, env);
-		if (g_stop)
-		{
-			free(line);
-			line = NULL;
-			g_stop = 0;
-			continue ;
-		}
 		handle_history(line, env);
 		parsing(line, &cmd, env);
-		exec_main(&cmd, &env);
+		exec_built(&cmd, &env);
 		ft_listdelete(cmd);
 	}
 	return (0);

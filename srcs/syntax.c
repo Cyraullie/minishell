@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 10:12:51 by lpittet           #+#    #+#             */
-/*   Updated: 2025/01/28 11:52:45 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/06 16:14:19 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ int	check_pipe_syntax(char *line, int *i)
  * @param line the input on minishell prompt
  * @return int 0 if syntax error detected, 1 otherwise
  */
-int	check_syntax(char *line)
+int	check_syntax(char *line, char ***env)
 {
 	int	i;
 	int	in_d_quotes;
@@ -111,7 +111,7 @@ int	check_syntax(char *line)
 	if (line[0] == '|')
 	{
 		print_syntax_error('|');
-		return (0);
+		return (update_exitvalue(2, env), 0);
 	}
 	in_d_quotes = 0;
 	in_s_quotes = 0;
@@ -122,10 +122,10 @@ int	check_syntax(char *line)
 			toggle_quotes(line, i, &in_d_quotes, &in_s_quotes);
 		if (ft_isredir(line[i]) && !in_d_quotes && !in_s_quotes)
 			if (!check_redir_syntax(line, &i))
-				return (0);
+				return (update_exitvalue(2, env), 0);
 		if (line[i] == '|' && !in_d_quotes && !in_s_quotes)
 			if (!check_pipe_syntax(line, &i))
-				return (0);
+				return (update_exitvalue(2, env), 0);
 	}
 	return (1);
 }
