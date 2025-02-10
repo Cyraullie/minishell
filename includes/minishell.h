@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:38:10 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/07 11:15:54 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/10 11:56:03 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,7 +176,7 @@ char		**expansion(char **tab, char **env);
 // remove_quotes.c
 char		*remove_quotes(char *token);
 
-//TODO a trier
+//exec_builtins
 void		exec_bash(t_command *cmd_tmp, char ***env);
 void		update_exitvalue(int eval, char ***env);
 int			get_exitvalue(char **env);

@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 16:01:27 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/02/07 11:28:47 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/10 11:11:03 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	get_envline(char **env, char *title)
 	while (env[i])
 	{
 		name = ft_split(env[i], '=');
-		if ((!ft_strncmp(name[0], title, ft_strlen(title))))
+		if ((!ft_strncmp(name[0], title, ft_strlen(title) + 1)))
 			id = i;
 		i++;
 		clean_tab(name);
@@ -47,6 +47,7 @@ char	**create_env_array(char **envp)
 {
 	int		i;
 	char	**env;
+	char	*shell_content;
 
 	i = 0;
 	env = NULL;
@@ -55,17 +56,19 @@ char	**create_env_array(char **envp)
 	env = ft_calloc(sizeof(char *), (i + 5));
 	if (!env)
 		return (NULL);
-	i = 0;
-	while (envp[i])
+	i = -1;
+	while (envp[++i])
 	{
 		env[i] = ft_strdup(envp[i]);
 		if (!env[i])
 			return (clean_tab(env), NULL);
-		i++;
 	}
-	env[i] = ft_strdup("?=0");
-	env[++i] = NULL;
-	return (env);
+	env[i++] = ft_strdup("?=0");
+	shell_content = get_env_content("SHLVL", env);
+	if (!shell_content)
+		env[i++] = ft_strdup("SHLVL=1");
+	env[i] = NULL;
+	return (free(shell_content), env);
 }
 
 /**

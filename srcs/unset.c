@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 16:00:10 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/02/05 11:38:11 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/07 15:32:28 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	**ft_unset(char **cmd, char **env)
 
 	nenv = NULL;
 	j = 1;
-	if (!cmd[1])
+	if (!cmd[1] || !ft_strncmp(cmd[1], "?", 2))
 		return (env);
 	while (cmd[j])
 	{

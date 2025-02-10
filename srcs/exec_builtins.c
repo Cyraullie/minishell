@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 10:49:01 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/02/07 11:32:27 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/10 11:55:45 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ int	get_exitvalue(char **env)
 	int		eval;
 
 	content = get_env_content("?", env);
+	printf("get_%s\n", content);
 	eval = ft_atoi(content);
 	free(content);
-	printf("%d\n", eval);
 	return (eval);
 }
 
@@ -31,13 +31,14 @@ void	update_exitvalue(int eval, char ***env)
 	int		i;
 
 	line = NULL;
-	i = get_envline(*env, "?");
+	i = get_envline((*env), "?");
 	content = ft_itoa(eval);
 	line = ft_strjoin("?=", content);
 	free(content);
-	*env[i] = line;
+	free((*env)[i]);
+	(*env)[i] = ft_strdup(line);
+	printf("%s line:%d value:%d\n", (*env)[i], i, eval);
 	free(line);
-	printf("%s line:%d value:%d\n", env[0][i], i, eval);
 }
 
 /**
@@ -52,17 +53,11 @@ void	builtins(t_command *cmd_tmp, char ***env, t_command **cmd)
 
 	rvalue = get_exitvalue(*env);
 	if (!ft_strncmp(cmd_tmp->cmd, "echo", 5))
-	{
-		ft_echo(cmd_tmp->cmd_tab);
-		rvalue = 0;
-	}
+		rvalue = ft_echo(cmd_tmp->cmd_tab);
 	else if (!ft_strncmp(cmd_tmp->cmd, "cd", 3))
 		rvalue = ft_cd(cmd_tmp->cmd_tab, env);
 	else if (!ft_strncmp(cmd_tmp->cmd, "pwd", 4))
-	{
-		ft_pwd(cmd_tmp->cmd_tab);
-		rvalue = 0;
-	}
+		rvalue = ft_pwd(cmd_tmp->cmd_tab);
 	else if (!ft_strncmp(cmd_tmp->cmd, "export", 7))
 		rvalue = ft_export(cmd_tmp->cmd_tab, env);
 	else if (!ft_strncmp(cmd_tmp->cmd, "unset", 6))
