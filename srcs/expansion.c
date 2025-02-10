@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 16:31:24 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/10 15:50:08 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/10 16:00:17 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,4 +170,3 @@ char	**expansion(char **tab, char **env)
 	clean_tab(tab);
 	return (new_tab);
 }
-//TODO make place and deal with $?
