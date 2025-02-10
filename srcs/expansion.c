@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 16:31:24 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/04 14:43:52 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/10 15:50:08 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ int	get_new_len(char *str, char **env, int in_d_quotes, int in_s_quotes)
 	}
 	return (len);
 }
+
 /**
  * @brief get the value corresponding to an env variable and replace it in the new_token string
  * 
@@ -158,7 +159,9 @@ char	**expansion(char **tab, char **env)
 	new_tab = ft_calloc(get_tab_size(tab) + 1, sizeof(char *));
 	while (tab[++i])
 	{
-		if (ft_strchr(tab[i], '$'))
+		if (!ft_strncmp(tab[i], "$?", 3))
+			new_tab[i] = ft_itoa(get_exitvalue(env));
+		else if (ft_strchr(tab[i], '$'))
 			new_tab[i] = expand_var(tab[i], env, 0, 0);
 		else
 			new_tab[i] = ft_strdup(tab[i]);
