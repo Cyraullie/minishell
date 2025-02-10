@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 16:20:02 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/02/06 11:26:15 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/10 11:51:18 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ int	ft_export(char **cmd, char ***env)
 		while (cmd[j])
 		{
 			name = split_equal(cmd[j]);
-			if (!name)
-				return (1);
+			if (!name || !check_normenv(name[0]))
+				return (clean_tab(name), 1);
 			nenv = create_nenv(*env, name);
 			if (!nenv)
 				return (1);
