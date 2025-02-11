@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:38:10 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/07 14:25:01 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/07 15:02:51 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,6 +182,7 @@ char		*remove_quotes(char *token);
 void		exec_bash(t_command *cmd_tmp, char ***env);
 void		update_exitvalue(int eval, char ***env);
 int			get_exitvalue(char **env);
+void		exec_single_builtin(t_command *cmd_tmp, char ***env, t_command **cmd);
 
 //heredoc.c
 void		heredoc(int ac, char **av, char **env);
