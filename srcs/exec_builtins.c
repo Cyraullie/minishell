@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 10:49:01 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/02/11 10:49:02 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/11 11:39:54 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,5 @@ void	update_exitvalue(int eval, char ***env)
 	free(content);
 	free((*env)[i]);
 	(*env)[i] = ft_strdup(line);
-	printf("%s line:%d value:%d\n", (*env)[i], i, eval);
 	free(line);
 }
