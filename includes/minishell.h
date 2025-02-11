@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:38:10 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/07 15:02:51 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/11 10:47:47 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,6 +150,7 @@ void		ft_listdelete(t_command *list);
 void		handle_sigint(int sig);
 void		init_sig(void);
 void		handle_eof(char *line, char **env);
+int			is_child(int status);
 
 // token.c
 void		assign_token(t_command **cmd, char **env);
@@ -178,7 +179,7 @@ char		**expansion(char **tab, char **env);
 // remove_quotes.c
 char		*remove_quotes(char *token);
 
-//TODO a trier
+//exec_builtins
 void		exec_bash(t_command *cmd_tmp, char ***env);
 void		update_exitvalue(int eval, char ***env);
 int			get_exitvalue(char **env);
