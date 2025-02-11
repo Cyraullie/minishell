@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:38:10 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/10 11:56:03 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/10 16:14:59 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,6 +148,7 @@ void		ft_listdelete(t_command *list);
 void		handle_sigint(int sig);
 void		init_sig(void);
 void		handle_eof(char *line, char **env);
+int			is_child(int status);
 
 // token.c
 void		assign_token(t_command **cmd, char **env);

@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 15:47:36 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/02/06 11:52:26 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/11 10:38:00 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,12 @@ void	handle_sigint(int sig)
 	if (sig == SIGINT)
 	{
 		write(1, "\n", 1);
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
+		if (is_child(-1) == 0)
+		{
+			rl_on_new_line();
+			rl_replace_line("", 0);
+			rl_redisplay();
+		}
 	}
 }
 
@@ -64,4 +67,15 @@ void	init_sig(void)
 	sigemptyset(&sq.sa_mask);
 	sigaction(SIGINT, &sa, NULL);
 	sigaction(SIGQUIT, &sq, NULL);
+}
+
+int	is_child(int status)
+{
+	static int bool = 0;
+
+	if (status == -1)
+		return (bool);
+	else
+		bool = status;
+	return (bool);
 }
