@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 11:35:35 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/11 10:44:00 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/11 11:15:14 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,11 +143,14 @@ void	exec_pipe(t_command *cmd, char ***env)
 		exec_redir(cmd, pipefd);
 		execute(cmd, env);
 	}
-	wait (NULL);
+	is_child(pid);
+	waitpid(pid, NULL, 0);
+	is_child(0);
 	if (cmd->pipe_in)
 		dup2(pipefd[0], STDIN_FILENO);
 	close(pipefd[0]);
 	close(pipefd[1]);
+	exit (0);
 }
 
 void	standard_exec(t_command **cmd, char ***env)
@@ -221,8 +224,11 @@ void	exec_main(t_command **cmd, char ***env)
 		}
 		if (pid == 0)
 			standard_exec(cmd, env);
-		waitpid(pid, &status, 0);
-		wait(NULL);
+		else
+		{
+			waitpid(pid, &status, 0);
+			update_exitvalue(WEXITSTATUS(status), env);
+		}
 	}
-	update_exitvalue(WEXITSTATUS(status), env);	
+	
 }
