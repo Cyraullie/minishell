@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 11:35:35 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/07 11:24:53 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/11 10:44:00 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void	exec_redir(t_command *cmd, int pipefd[2])
 	fdin = STDIN_FILENO;
 	fdout = STDOUT_FILENO;
 	if (cmd->pipe_out)
-		fdout = dup(pipefd[1]);
+		fdout = pipefd[1];
 	if (cmd->read)
 		fdin = open(cmd->read, O_RDONLY);
 	if (cmd->write)
@@ -108,9 +108,26 @@ void	exec_redir(t_command *cmd, int pipefd[2])
 	close(pipefd[1]);
 }
 
-void	exec_pipe(t_command *cmd, char ***env)
+void	execute(t_command *cmd, char ***env)
 {
 	char	*path;
+
+	if (is_builtin(cmd->cmd))
+	{
+		exec_single_builtin(cmd, env, &cmd);
+		return ;
+	}
+	path = get_executable_path(cmd, env);
+	if(!path)
+	{
+		perror(cmd->cmd);
+		return ;
+	}
+	execve(path, cmd->cmd_tab, *env);
+}
+
+void	exec_pipe(t_command *cmd, char ***env)
+{
 	int 	pipefd[2];
 	pid_t	pid;
 
@@ -123,37 +140,25 @@ void	exec_pipe(t_command *cmd, char ***env)
 	}
 	if (pid == 0)
 	{
-		path = get_executable_path(cmd, env);
-		if (!path)
-		{
-			perror(cmd->cmd);
-			return ;
-		}
 		exec_redir(cmd, pipefd);
-		//TODO check if builtins or not new function exectute I guess
-		execve(path, cmd->cmd_tab, *env);
+		execute(cmd, env);
 	}
+	wait (NULL);
 	if (cmd->pipe_in)
 		dup2(pipefd[0], STDIN_FILENO);
 	close(pipefd[0]);
 	close(pipefd[1]);
-	waitpid(pid, NULL, 0);
 }
 
 void	standard_exec(t_command **cmd, char ***env)
 {
 	t_command	*cmd_tmp;
-	int			cpy_in;
-	int			cpy_out;
 	
 	cmd_tmp = *cmd;
+	
 	while (cmd_tmp)
 	{
-		cpy_in = STDIN_FILENO;
-		cpy_out = STDOUT_FILENO;
 		exec_pipe(cmd_tmp, env);
-		dup2(STDIN_FILENO, cpy_in);
-		dup2(STDOUT_FILENO, cpy_out);
 		cmd_tmp = cmd_tmp->next;
 	}
 }
@@ -164,25 +169,29 @@ void	standard_exec(t_command **cmd, char ***env)
  * @param cmd the linked list of commands
  * @param env 
  */
-void	exec_single_builtin(t_command **cmd, char ***env)
+void	exec_single_builtin(t_command *cmd_tmp, char ***env, t_command **cmd)
 {
+	int	rvalue;
 
-	if (!ft_strncmp((*cmd)->cmd, "echo", 5))
-		ft_echo((*cmd)->cmd_tab);
-	else if (!ft_strncmp((*cmd)->cmd, "cd", 3))
-		ft_cd((*cmd)->cmd_tab, env);
-	else if (!ft_strncmp((*cmd)->cmd, "pwd", 4))
-		ft_pwd((*cmd)->cmd_tab);
-	else if (!ft_strncmp((*cmd)->cmd, "export", 7))
-		*env = ft_export((*cmd)->cmd_tab, *env);
-	else if (!ft_strncmp((*cmd)->cmd, "unset", 6))
-		*env = ft_unset((*cmd)->cmd_tab, *env);
-	else if (!ft_strncmp((*cmd)->cmd, "env", 4))
-		ft_env((*cmd)->cmd_tab, *env);
-	else if (!ft_strncmp((*cmd)->cmd, "exit", 5))
-		ft_exit((*cmd)->cmd_tab, *env);
-	
-	//TODO change the $ value (idk where/how yet)
+	rvalue = get_exitvalue(*env);
+	if (!ft_strncmp(cmd_tmp->cmd, "echo", 5))
+		rvalue = ft_echo(cmd_tmp->cmd_tab);
+	else if (!ft_strncmp(cmd_tmp->cmd, "cd", 3))
+		rvalue = ft_cd(cmd_tmp->cmd_tab, env);
+	else if (!ft_strncmp(cmd_tmp->cmd, "pwd", 4))
+		rvalue = ft_pwd(cmd_tmp->cmd_tab);
+	else if (!ft_strncmp(cmd_tmp->cmd, "export", 7))
+		rvalue = ft_export(cmd_tmp->cmd_tab, env);
+	else if (!ft_strncmp(cmd_tmp->cmd, "unset", 6))
+	{
+		*env = ft_unset(cmd_tmp->cmd_tab, *env);
+		rvalue = 0;
+	}
+	else if (!ft_strncmp(cmd_tmp->cmd, "env", 4))
+		rvalue = ft_env(cmd_tmp->cmd_tab, *env);
+	else if (!ft_strncmp(cmd_tmp->cmd, "exit", 5))
+		ft_exit(cmd_tmp->cmd_tab, env, cmd);
+	update_exitvalue(rvalue, env);
 }
 
 /**
@@ -195,10 +204,25 @@ void	exec_single_builtin(t_command **cmd, char ***env)
  */
 void	exec_main(t_command **cmd, char ***env)
 {
+	pid_t	pid;
+	int status;
+	
 	if (!(*cmd)->cmd)
 		return ;
 	if (!(*cmd)->next && is_builtin((*cmd)->cmd))
-		exec_single_builtin(cmd, env);
+		exec_single_builtin(*cmd, env, cmd);
 	else
-		standard_exec(cmd, env);
+	{
+		pid = fork();
+		if (pid == -1)
+		{
+			perror("fork");
+			return ;
+		}
+		if (pid == 0)
+			standard_exec(cmd, env);
+		waitpid(pid, &status, 0);
+		wait(NULL);
+	}
+	update_exitvalue(WEXITSTATUS(status), env);	
 }
