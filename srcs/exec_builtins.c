@@ -18,7 +18,6 @@ int	get_exitvalue(char **env)
 	int		eval;
 
 	content = get_env_content("?", env);
-	printf("get_%s\n", content);
 	eval = ft_atoi(content);
 	free(content);
 	return (eval);
