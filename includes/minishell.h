@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:38:10 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/10 16:14:59 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/12 15:52:30 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,6 +183,6 @@ void		update_exitvalue(int eval, char ***env);
 int			get_exitvalue(char **env);
 
 //heredoc.c
-void		heredoc(int ac, char **av, char **env);
+void		heredoc(t_command *cmd);
 
 #endif
