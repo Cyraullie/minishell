@@ -6,12 +6,12 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 16:20:02 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/02/10 11:51:18 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/12 16:32:35 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
+//TODO export USER=test ssfd / export ssfd USER=test (arg > 1 == segfault :))
 /**
  * @brief function to add an environment variable
  * 

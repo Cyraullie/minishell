@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 10:49:01 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/02/12 15:51:40 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/12 16:13:22 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,7 +150,7 @@ void	exec_bash(t_command *cmd_tmp, char ***env)
 	char	*path;
 	pid_t	pid;
 
-//TODO regler le problem de ctrl+c quand on est bloquer dans un processus
+//TODO regler le problem de ctrl+c quand on est bloquer dans un processus X
 	pid = fork();
 	if (pid == -1)
 	{
