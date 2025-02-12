@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 11:35:35 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/12 13:42:13 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/12 14:29:57 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ void	exec_redir(t_command *cmd, int pipefd[2])
 void	execute(t_command *cmd, char ***env)
 {
 	char	*path;
-
+	
 	if (is_builtin(cmd->cmd))
 	{
 		exec_single_builtin(cmd, env, &cmd);
@@ -178,7 +178,6 @@ int	exec_single_builtin(t_command *cmd_tmp, char ***env, t_command **cmd)
 {
 	int	rvalue;
 
-	rvalue = get_exitvalue(*env);
 	if (!ft_strncmp(cmd_tmp->cmd, "echo", 5))
 		rvalue = ft_echo(cmd_tmp->cmd_tab);
 	else if (!ft_strncmp(cmd_tmp->cmd, "cd", 3))
@@ -195,7 +194,7 @@ int	exec_single_builtin(t_command *cmd_tmp, char ***env, t_command **cmd)
 	else if (!ft_strncmp(cmd_tmp->cmd, "env", 4))
 		rvalue = ft_env(cmd_tmp->cmd_tab, *env);
 	else if (!ft_strncmp(cmd_tmp->cmd, "exit", 5))
-		ft_exit(cmd_tmp->cmd_tab, env, cmd);
+		rvalue = ft_exit(cmd_tmp->cmd_tab, env, cmd);
 	return (rvalue);
 }
 
@@ -231,3 +230,6 @@ void	exec_main(t_command **cmd, char ***env)
 	}
 	update_exitvalue(WEXITSTATUS(status), env);
 }
+
+//TODO redir for single builtins !! reset after use !!
+//TODO builtins in pipes strange behaviour echo not writing in pipe , pipe after cd
