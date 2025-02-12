@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 11:35:35 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/12 14:29:57 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/12 16:35:40 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,6 @@ void	exec_redir(t_command *cmd, int pipefd[2])
 		fdout = open(cmd->write, cmd->write_type, 0755);
 	if (!cmd->pipe_in)
 		dup2(fdin, STDIN_FILENO);
-	
 	dup2(fdout, STDOUT_FILENO);
 	if (fdin != STDIN_FILENO)
 		close(fdin);
@@ -113,11 +112,12 @@ void	exec_redir(t_command *cmd, int pipefd[2])
 void	execute(t_command *cmd, char ***env)
 {
 	char	*path;
+	int 	rvalue;
 	
 	if (is_builtin(cmd->cmd))
 	{
-		exec_single_builtin(cmd, env, &cmd);
-		return ;
+		rvalue = exec_builtin(cmd, env, &cmd);
+		exit(rvalue);
 	}
 	path = get_executable_path(cmd, env);
 	if(!path)
@@ -174,7 +174,7 @@ void	standard_exec(t_command **cmd, char ***env)
  * @param cmd the linked list of commands
  * @param env 
  */
-int	exec_single_builtin(t_command *cmd_tmp, char ***env, t_command **cmd)
+int	exec_builtin(t_command *cmd_tmp, char ***env, t_command **cmd)
 {
 	int	rvalue;
 
@@ -198,10 +198,35 @@ int	exec_single_builtin(t_command *cmd_tmp, char ***env, t_command **cmd)
 	return (rvalue);
 }
 
+int exec_single_builtins(t_command **cmd, char ***env)
+{
+	// int fdin_cpy;
+	// int fdout_cpy;
+	int	rvalue;
+	int	fd;
+	
+	// fdin_cpy = dup(STDIN_FILENO);
+	// fdout_cpy = dup(STDOUT_FILENO);
+	if ((*cmd)->read)
+	{
+		fd = open((*cmd)->read, O_RDONLY);
+		dup2(fd, STDIN_FILENO);
+	}
+	if ((*cmd)->write)
+	{
+		fd = open((*cmd)->write, (*cmd)->write_type, 0755);
+		dup2(fd, STDOUT_FILENO);
+	}
+	rvalue = exec_builtin(*cmd, env, cmd);
+	dup2(STDIN_FILENO, 0);
+	dup2(STDOUT_FILENO, 1);
+	return (rvalue);
+}
+
 /**
  * @brief chooses if we use the standard way of doing the builtins with a child
  * 		  process for every command or if we just stay in the same process
- * 		  (when there is only one command that we needed to recreate)
+ * 		  (when there is only one command we needed to recreate)
  * 
  * @param cmd the linked list of commands
  * @param env 
@@ -214,7 +239,7 @@ void	exec_main(t_command **cmd, char ***env)
 	if (!(*cmd)->cmd)
 		return ;
 	if (!(*cmd)->next && is_builtin((*cmd)->cmd))
-		status = exec_single_builtin(*cmd, env, cmd);
+		status = exec_single_builtins(cmd, env);
 	else
 	{
 		pid = fork();
@@ -232,4 +257,3 @@ void	exec_main(t_command **cmd, char ***env)
 }
 
 //TODO redir for single builtins !! reset after use !!
-//TODO builtins in pipes strange behaviour echo not writing in pipe , pipe after cd
