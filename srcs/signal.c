@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 15:47:36 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/02/11 10:38:00 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/12 15:49:57 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	init_sig(void)
 
 int	is_child(int status)
 {
-	static int bool = 0;
+	static int	bool = 0;
 
 	if (status == -1)
 		return (bool);
