@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_builtins.c                                    :+:      :+:    :+:   */
+/*   exit_value.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 10:49:01 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/02/11 10:38:46 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/12 15:51:40 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	update_exitvalue(int eval, char ***env)
 	printf("%s line:%d value:%d\n", (*env)[i], i, eval);
 	free(line);
 }
-
+//TODO delete below function
 /**
  * @brief function to select the right builtins
  * 
