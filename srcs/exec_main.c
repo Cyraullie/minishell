@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 11:35:35 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/11 11:15:14 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/12 13:42:13 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,9 @@ void	exec_redir(t_command *cmd, int pipefd[2])
 		fdin = open(cmd->read, O_RDONLY);
 	if (cmd->write)
 		fdout = open(cmd->write, cmd->write_type, 0755);
-	dup2(fdin, STDIN_FILENO);
+	if (!cmd->pipe_in)
+		dup2(fdin, STDIN_FILENO);
+	
 	dup2(fdout, STDOUT_FILENO);
 	if (fdin != STDIN_FILENO)
 		close(fdin);
@@ -146,11 +148,11 @@ void	exec_pipe(t_command *cmd, char ***env)
 	is_child(pid);
 	waitpid(pid, NULL, 0);
 	is_child(0);
-	if (cmd->pipe_in)
+	if (cmd->next->pipe_in)
 		dup2(pipefd[0], STDIN_FILENO);
 	close(pipefd[0]);
 	close(pipefd[1]);
-	exit (0);
+	return ;
 }
 
 void	standard_exec(t_command **cmd, char ***env)
@@ -172,7 +174,7 @@ void	standard_exec(t_command **cmd, char ***env)
  * @param cmd the linked list of commands
  * @param env 
  */
-void	exec_single_builtin(t_command *cmd_tmp, char ***env, t_command **cmd)
+int	exec_single_builtin(t_command *cmd_tmp, char ***env, t_command **cmd)
 {
 	int	rvalue;
 
@@ -194,7 +196,7 @@ void	exec_single_builtin(t_command *cmd_tmp, char ***env, t_command **cmd)
 		rvalue = ft_env(cmd_tmp->cmd_tab, *env);
 	else if (!ft_strncmp(cmd_tmp->cmd, "exit", 5))
 		ft_exit(cmd_tmp->cmd_tab, env, cmd);
-	update_exitvalue(rvalue, env);
+	return (rvalue);
 }
 
 /**
@@ -208,12 +210,12 @@ void	exec_single_builtin(t_command *cmd_tmp, char ***env, t_command **cmd)
 void	exec_main(t_command **cmd, char ***env)
 {
 	pid_t	pid;
-	int status;
+	int 	status;
 	
 	if (!(*cmd)->cmd)
 		return ;
 	if (!(*cmd)->next && is_builtin((*cmd)->cmd))
-		exec_single_builtin(*cmd, env, cmd);
+		status = exec_single_builtin(*cmd, env, cmd);
 	else
 	{
 		pid = fork();
@@ -225,10 +227,7 @@ void	exec_main(t_command **cmd, char ***env)
 		if (pid == 0)
 			standard_exec(cmd, env);
 		else
-		{
 			waitpid(pid, &status, 0);
-			update_exitvalue(WEXITSTATUS(status), env);
-		}
 	}
-	
+	update_exitvalue(WEXITSTATUS(status), env);
 }

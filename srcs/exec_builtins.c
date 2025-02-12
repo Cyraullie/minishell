@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 10:49:01 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/02/11 11:39:54 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/12 13:27:56 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ int	get_exitvalue(char **env)
 	int		eval;
 
 	content = get_env_content("?", env);
-	printf("get_%s\n", content);
 	eval = ft_atoi(content);
 	free(content);
 	return (eval);
