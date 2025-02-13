@@ -198,28 +198,48 @@ int	exec_builtin(t_command *cmd_tmp, char ***env, t_command **cmd)
 	return (rvalue);
 }
 
+void	redir_single_builtin(t_command *cmd)
+{
+	int	fd;
+
+	if (cmd->read)
+	{
+		fd = open(cmd->read, O_RDONLY);
+		if (fd == -1)
+		{
+			perror("open");
+			return ;
+		}
+		dup2(fd, STDIN_FILENO);
+		close(fd);
+	}
+	if (cmd->write)
+	{
+		fd = open(cmd->write, cmd->write_type, 0755);
+		if (fd == -1)
+		{
+			perror("open");
+			return ;
+		}
+		dup2(fd, STDOUT_FILENO);
+		close(fd);
+	}
+}
+
 int exec_single_builtins(t_command **cmd, char ***env)
 {
-	// int fdin_cpy;
-	// int fdout_cpy;
+	int fdin_cpy;
+	int fdout_cpy;
 	int	rvalue;
-	int	fd;
 	
-	// fdin_cpy = dup(STDIN_FILENO);
-	// fdout_cpy = dup(STDOUT_FILENO);
-	if ((*cmd)->read)
-	{
-		fd = open((*cmd)->read, O_RDONLY);
-		dup2(fd, STDIN_FILENO);
-	}
-	if ((*cmd)->write)
-	{
-		fd = open((*cmd)->write, (*cmd)->write_type, 0755);
-		dup2(fd, STDOUT_FILENO);
-	}
+	fdin_cpy = dup(STDIN_FILENO);
+	fdout_cpy = dup(STDOUT_FILENO);
+	redir_single_builtin(*cmd);
 	rvalue = exec_builtin(*cmd, env, cmd);
-	dup2(STDIN_FILENO, 0);
-	dup2(STDOUT_FILENO, 1);
+	dup2(fdin_cpy, STDIN_FILENO);
+	dup2(fdout_cpy, STDOUT_FILENO);
+	close(fdin_cpy);
+	close(fdout_cpy);
 	return (rvalue);
 }
 
