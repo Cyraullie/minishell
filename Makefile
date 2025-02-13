@@ -8,8 +8,8 @@ SRCDIR = srcs/
 OBJDIR = objs/
 
 SRCS =  $(addprefix $(SRCDIR), main.c parsing.c split_commands.c create_list.c list.c parsing_utils.c signal.c token.c \
-								separate_token.c check.c sort.c alloc.c \
-								clean.c history.c exit_value.c echo.c heredoc.c \
+								separate_token.c check.c sort.c alloc.c exec_main.c\
+								clean.c history.c echo.c exit_value.c exec_path.c exec_utils.c heredoc.c \
 								syntax.c expansion.c remove_quotes.c \
 								exit.c env.c pwd.c cd.c unset.c env_utils.c update_pwd.c export.c concat.c export_utils.c)
 

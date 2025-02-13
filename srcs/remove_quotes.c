@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 10:10:12 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/04 13:41:09 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/06 16:58:48 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ char	*delete_quotes(char *token, char *new_token, int i, int j)
 	return (new_token);
 }
 
-
 /**
  * @brief calculate the len of a string after removing quotes
  * 
@@ -82,7 +81,8 @@ int	quotes_new_len(char *token)
  * @brief takes a sring and returns it wihout quotes that were closed inside
  * 
  * @param token a string
- * @return char* a new string with removed quotes if necessary or the input string if no quotes to remove
+ * @return char* a new string with removed quotes if necessary or 
+ * 		   the input string if no quotes to remove
  */
 char	*remove_quotes(char *token)
 {

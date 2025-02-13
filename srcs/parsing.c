@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 15:02:10 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/06 15:39:30 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/07 14:26:42 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,11 @@ char	*ft_strtrim_and_free(char *s1, char *set)
 	start = 0;
 	end = ft_strlen(s1) - 1;
 	if (end == -1)
-		return (ft_calloc(1, 1));
-	while (ft_strchr(set, s1[start]))
+		return (free(s1), ft_calloc(1, 1));
+	while (s1[start] && ft_strchr(set, s1[start]))
 		start++;
 	if (start > end)
-		return (ft_calloc(1, 1));
+		return (free(s1), ft_calloc(1, 1));
 	while (ft_strchr(set, s1[end]))
 		end--;
 	trimmed = ft_substr(s1, start, end - start + 1);
@@ -66,7 +66,8 @@ char	*ft_strjoin_and_free(char *s1, char *s2)
 
 /**
  * @brief parse the input at each iterations and format it
- * 		  so that it can be executed easily and put every command in a linked list
+ * 		  so that it can be executed easily and put every 
+ * 		  command in a linked list
  * @param line the input written in the prompt
  * @param cmd the address of the first element of a linked list
  * @param env environnement variables table
@@ -84,7 +85,6 @@ int	parsing(char *line, t_command **cmd, char ***env)
 		return (1);
 	}
 	line = ft_strtrim_and_free(line, " ");
-	(void)env;
 	tab = mini_split(line);
 	i = 0;
 	while (tab[i])

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:38:10 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/12 15:52:30 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/13 14:17:49 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@
 # include <readline/history.h>
 # include "../libft/includes/libft.h"
 # include <sys/wait.h>
+# include <sys/types.h>
+# include <dirent.h>
 
 typedef struct s_command
 {
@@ -181,8 +183,27 @@ char		*remove_quotes(char *token);
 void		exec_bash(t_command *cmd_tmp, char ***env);
 void		update_exitvalue(int eval, char ***env);
 int			get_exitvalue(char **env);
+int			exec_builtin(t_command *cmd_tmp, char ***env, t_command **cmd);
 
 //heredoc.c
 void		heredoc(t_command *cmd);
+
+// exec_main.c
+void		exec_main(t_command **cmd, char ***env);
+int			exec_single_builtins(t_command **cmd, char ***env);
+int			exec_builtin(t_command *cmd_tmp, char ***env, t_command **cmd);
+void		tandard_exec(t_command **cmd, char ***env);
+void		exec_pipe(t_command *cmd, char ***env);
+
+// exec_path.c
+char		*get_executable_path(t_command *cmd, char ***env);
+char		*find_path(char *cmd, char ***env);
+char		*search_env(char **env);
+char		*get_full_path(char *path, char *cmd);
+
+// exec_utils.c
+void		redir_single_builtin(t_command *cmd);
+void		execute(t_command *cmd, char ***env);
+void		exec_redir(t_command *cmd, int pipefd[2]);
 
 #endif

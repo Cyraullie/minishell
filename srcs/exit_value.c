@@ -3,38 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   exit_value.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 10:49:01 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/02/13 11:28:42 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/13 14:18:07 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-/**
- * @brief Get the $? value in env
- * 
- * @param env get environment var
- * @return int return the $? value
- */
 int	get_exitvalue(char **env)
 {
 	char	*content;
 	int		eval;
 
 	content = get_env_content("?", env);
+	printf("get_%s\n", content);
 	eval = ft_atoi(content);
 	free(content);
 	return (eval);
 }
 
-/**
- * @brief Update the $? value in env
- * 
- * @param eval get exit value
- * @param env get environment var
- */
 void	update_exitvalue(int eval, char ***env)
 {
 	char	*line;
@@ -48,9 +37,10 @@ void	update_exitvalue(int eval, char ***env)
 	free(content);
 	free((*env)[i]);
 	(*env)[i] = ft_strdup(line);
+	printf("%s line:%d value:%d\n", (*env)[i], i, eval);
 	free(line);
 }
-//TODO delete below function
+
 /**
  * @brief function to select the right builtins
  * 
@@ -160,7 +150,7 @@ void	exec_bash(t_command *cmd_tmp, char ***env)
 	char	*path;
 	pid_t	pid;
 
-//TODO regler le problem de ctrl+c quand on est bloquer dans un processus X
+//TODO regler le problem de ctrl+c quand on est bloquer dans un processus
 	pid = fork();
 	if (pid == -1)
 	{
