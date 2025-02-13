@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:35:36 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/12 15:23:27 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/13 14:18:22 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void	init_minishell(char ***env, char **envp)
 	increment_shlvl(env);
 	init_sig();
 	start_history(*env);
+	is_child(0);
 }
 
 /**
@@ -79,3 +80,5 @@ int	main(int ac, char **av, char **envp)
 	}
 	return (0);
 }
+//TODO if ctrl+D in other minishell no new line with minishell>
+//TODO ctrl+c in mineshell child = ko

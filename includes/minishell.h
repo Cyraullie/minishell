@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:38:10 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/13 14:13:04 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/13 14:17:49 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,8 +186,7 @@ int			get_exitvalue(char **env);
 int			exec_builtin(t_command *cmd_tmp, char ***env, t_command **cmd);
 
 //heredoc.c
-void		heredoc(int ac, char **av, char **env);
-void		exec_main(t_command **cmd, char ***env);
+void		heredoc(t_command *cmd);
 
 // exec_main.c
 void		exec_main(t_command **cmd, char ***env);
