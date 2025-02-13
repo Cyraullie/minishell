@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:38:10 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/12 15:41:40 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/13 14:13:04 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,5 +188,23 @@ int			exec_builtin(t_command *cmd_tmp, char ***env, t_command **cmd);
 //heredoc.c
 void		heredoc(int ac, char **av, char **env);
 void		exec_main(t_command **cmd, char ***env);
+
+// exec_main.c
+void		exec_main(t_command **cmd, char ***env);
+int			exec_single_builtins(t_command **cmd, char ***env);
+int			exec_builtin(t_command *cmd_tmp, char ***env, t_command **cmd);
+void		tandard_exec(t_command **cmd, char ***env);
+void		exec_pipe(t_command *cmd, char ***env);
+
+// exec_path.c
+char		*get_executable_path(t_command *cmd, char ***env);
+char		*find_path(char *cmd, char ***env);
+char		*search_env(char **env);
+char		*get_full_path(char *path, char *cmd);
+
+// exec_utils.c
+void		redir_single_builtin(t_command *cmd);
+void		execute(t_command *cmd, char ***env);
+void		exec_redir(t_command *cmd, int pipefd[2]);
 
 #endif

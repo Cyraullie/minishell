@@ -6,131 +6,15 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 11:35:35 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/12 16:35:40 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/13 14:07:52 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static	char	*get_full_path(char *path, char *cmd)
-{
-	path = ft_strjoin(path, "/");
-	if (!path)
-		return (NULL);
-	path = ft_strjoin(path, cmd);
-	if (!path)
-		return (NULL);
-	return (path);
-}
-
-static	char	*search_env(char **env)
-{
-	int		i;
-	char	*path_list;
-
-	i = 0;
-	while (env[i])
-	{
-		if (ft_strnstr(env[i], "PATH=", 5))
-		{
-			path_list = env[i];
-			return (path_list + 5);
-		}
-		i++;
-	}
-	ft_putendl_fd("PATH not found", 2);
-	return (NULL);
-}
-
-char	*find_path(char *cmd, char ***env)
-{
-	char	*path_list;
-	char	**src;
-	int		i;
-	char	*path;
-
-	path_list = search_env(*env);
-	if (!path_list)
-		exit(1);
-	src = ft_split(path_list, ':');
-	i = 0;
-	while (src[i])
-	{
-		path = get_full_path(src[i], cmd);
-		if (!access(path, F_OK))
-		{
-			clean_tab(src);
-			return (path);
-		}
-		free(path);
-		i++;
-	}
-	free(src);
-	return (NULL);
-}
-
-char	*get_executable_path(t_command *cmd, char ***env)
-{
-	char	*path;
-	
-	//TODO check directory
-	path = find_path(cmd->cmd, env);
-	if (!access(path, X_OK))
-		return (path);
-	if (!access(cmd->cmd, F_OK))
-	{
-		if (!access(cmd->cmd, X_OK))
-			return (cmd->cmd);
-	}
-	return (NULL);
-}
-
-void	exec_redir(t_command *cmd, int pipefd[2])
-{
-	int	fdin;
-	int	fdout;
-
-	fdin = STDIN_FILENO;
-	fdout = STDOUT_FILENO;
-	if (cmd->pipe_out)
-		fdout = pipefd[1];
-	if (cmd->read)
-		fdin = open(cmd->read, O_RDONLY);
-	if (cmd->write)
-		fdout = open(cmd->write, cmd->write_type, 0755);
-	if (!cmd->pipe_in)
-		dup2(fdin, STDIN_FILENO);
-	dup2(fdout, STDOUT_FILENO);
-	if (fdin != STDIN_FILENO)
-		close(fdin);
-	if ((fdout != STDOUT_FILENO))
-		close(fdout);
-	close(pipefd[0]);
-	close(pipefd[1]);
-}
-
-void	execute(t_command *cmd, char ***env)
-{
-	char	*path;
-	int 	rvalue;
-	
-	if (is_builtin(cmd->cmd))
-	{
-		rvalue = exec_builtin(cmd, env, &cmd);
-		exit(rvalue);
-	}
-	path = get_executable_path(cmd, env);
-	if(!path)
-	{
-		perror(cmd->cmd);
-		return ;
-	}
-	execve(path, cmd->cmd_tab, *env);
-}
-
 void	exec_pipe(t_command *cmd, char ***env)
 {
-	int 	pipefd[2];
+	int		pipefd[2];
 	pid_t	pid;
 
 	pipe(pipefd);
@@ -158,9 +42,8 @@ void	exec_pipe(t_command *cmd, char ***env)
 void	standard_exec(t_command **cmd, char ***env)
 {
 	t_command	*cmd_tmp;
-	
+
 	cmd_tmp = *cmd;
-	
 	while (cmd_tmp)
 	{
 		exec_pipe(cmd_tmp, env);
@@ -198,40 +81,12 @@ int	exec_builtin(t_command *cmd_tmp, char ***env, t_command **cmd)
 	return (rvalue);
 }
 
-void	redir_single_builtin(t_command *cmd)
+int	exec_single_builtins(t_command **cmd, char ***env)
 {
-	int	fd;
-
-	if (cmd->read)
-	{
-		fd = open(cmd->read, O_RDONLY);
-		if (fd == -1)
-		{
-			perror("open");
-			return ;
-		}
-		dup2(fd, STDIN_FILENO);
-		close(fd);
-	}
-	if (cmd->write)
-	{
-		fd = open(cmd->write, cmd->write_type, 0755);
-		if (fd == -1)
-		{
-			perror("open");
-			return ;
-		}
-		dup2(fd, STDOUT_FILENO);
-		close(fd);
-	}
-}
-
-int exec_single_builtins(t_command **cmd, char ***env)
-{
-	int fdin_cpy;
-	int fdout_cpy;
+	int	fdin_cpy;
+	int	fdout_cpy;
 	int	rvalue;
-	
+
 	fdin_cpy = dup(STDIN_FILENO);
 	fdout_cpy = dup(STDOUT_FILENO);
 	redir_single_builtin(*cmd);
@@ -254,8 +109,8 @@ int exec_single_builtins(t_command **cmd, char ***env)
 void	exec_main(t_command **cmd, char ***env)
 {
 	pid_t	pid;
-	int 	status;
-	
+	int		status;
+
 	if (!(*cmd)->cmd)
 		return ;
 	if (!(*cmd)->next && is_builtin((*cmd)->cmd))
