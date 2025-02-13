@@ -71,7 +71,7 @@ void	init_sig(void)
 
 int	is_child(int status)
 {
-	static int bool = 0;
+	static int	bool = 0;
 
 	if (status == -1)
 		return (bool);

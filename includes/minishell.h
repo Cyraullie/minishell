@@ -31,8 +31,8 @@
 # include <readline/history.h>
 # include "../libft/includes/libft.h"
 # include <sys/wait.h>
-#include <sys/types.h>
-#include <dirent.h>
+# include <sys/types.h>
+# include <dirent.h>
 
 typedef struct s_command
 {

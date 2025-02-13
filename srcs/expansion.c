@@ -41,8 +41,8 @@ char	*get_var_name(char *str, int i)
  * 
  * @param str 
  * @param env 
- * @param in_d_quotes a marker to know if where we are in a string is inside double quotes
- * @param in_s_quotes a marker to know if where we are in a string is inside single quotes
+ * @param in_d_quotes a marker to know if we are inside double quotes
+ * @param in_s_quotes a marker to know if we are inside single quotes
  * @return int the len after expansion
  */
 int	get_new_len(char *str, char **env, int in_d_quotes, int in_s_quotes)
@@ -75,7 +75,8 @@ int	get_new_len(char *str, char **env, int in_d_quotes, int in_s_quotes)
 }
 
 /**
- * @brief get the value corresponding to an env variable and replace it in the new_token string
+ * @brief get the value corresponding to an env variable 
+ * 		  and replace it in the new_token string
  * 
  * @param token a string
  * @param new_token a string (modified from tokne)
@@ -108,12 +109,13 @@ void	replace_var(char *token, char *new_token, int *index, char **env)
 }
 
 /**
- * @brief receive a string with one or more env variable and expand them to take their values
+ * @brief receive a string with one or more env variable and
+ * 		  expand them to take their values
  * 
  * @param token 
  * @param env 
- * @param in_d_quotes a marker to know if where we are in a string is inside double quotes
- * @param in_s_quotes a marker to know if where we are in a string is inside single quotes
+ * @param in_d_quotes a marker to know if we are inside double quotes
+ * @param in_s_quotes a marker to know if we are inside single quotes
  * @return char* the token input with env variables expanded
  */
 char	*expand_var(char *token, char **env, int in_d_quotes, int in_s_quotes)

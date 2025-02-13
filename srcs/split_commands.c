@@ -124,7 +124,7 @@ char	**mini_split(char *s)
 	unsigned int	num_cmds;
 
 	num_cmds = count_cmds(s);
-	tab = ft_calloc((1 + num_cmds) , sizeof(char *));
+	tab = ft_calloc((1 + num_cmds), sizeof(char *));
 	if (!tab)
 		return (NULL);
 	split_commands(s, tab, num_cmds);

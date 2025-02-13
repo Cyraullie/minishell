@@ -20,12 +20,13 @@
  */
 int	open_previous_file(t_command *cmd)
 {
-	int fd;
+	int	fd;
+
 	if (!cmd->write || !cmd->write_type)
 		return (1);
 	//TODO remove quotes from cmd->write
 	fd = open(cmd->write, cmd->write_type, 755);
-	if ( fd == -1)
+	if (fd == -1)
 	{
 		close(fd);
 		return (0);

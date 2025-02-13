@@ -66,7 +66,8 @@ char	*ft_strjoin_and_free(char *s1, char *s2)
 
 /**
  * @brief parse the input at each iterations and format it
- * 		  so that it can be executed easily and put every command in a linked list
+ * 		  so that it can be executed easily and put every 
+ * 		  command in a linked list
  * @param line the input written in the prompt
  * @param cmd the address of the first element of a linked list
  * @param env environnement variables table
