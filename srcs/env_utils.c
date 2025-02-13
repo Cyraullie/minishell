@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 16:01:27 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/02/10 11:11:03 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/13 11:22:55 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,20 +22,20 @@
 int	get_envline(char **env, char *title)
 {
 	int		i;
-	int		id;
 	char	**name;
 
-	i = 0;
-	id = -1;
-	while (env[i])
+	i = -1;
+	while (env[++i])
 	{
 		name = ft_split(env[i], '=');
 		if ((!ft_strncmp(name[0], title, ft_strlen(title) + 1)))
-			id = i;
-		i++;
+		{
+			clean_tab(name);
+			return (i);
+		}
 		clean_tab(name);
 	}
-	return (id);
+	return (-1);
 }
 
 /**
