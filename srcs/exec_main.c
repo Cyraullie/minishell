@@ -276,4 +276,4 @@ void	exec_main(t_command **cmd, char ***env)
 	update_exitvalue(WEXITSTATUS(status), env);
 }
 
-//TODO redir for single builtins !! reset after use !!
+// TODO norm and correct exit value
