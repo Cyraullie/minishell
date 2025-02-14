@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:38:10 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/13 14:17:49 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/14 13:34:24 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,6 +175,10 @@ int			check_syntax(char *line, char ***env);
 
 // expansion.c
 char		**expansion(char **tab, char **env);
+int			get_new_len(char *str, char **env, int in_d_quotes, \
+			int in_s_quotes);
+char		*get_var_name(char *str, int i);
+void	replace_var(char *token, char *new_token, int *index, char **env);
 
 // remove_quotes.c
 char		*remove_quotes(char *token);
@@ -186,7 +190,7 @@ int			get_exitvalue(char **env);
 int			exec_builtin(t_command *cmd_tmp, char ***env, t_command **cmd);
 
 //heredoc.c
-void		heredoc(t_command *cmd);
+void		heredoc(t_command *cmd, char **env);
 
 // exec_main.c
 void		exec_main(t_command **cmd, char ***env);
@@ -205,5 +209,8 @@ char		*get_full_path(char *path, char *cmd);
 void		redir_single_builtin(t_command *cmd);
 void		execute(t_command *cmd, char ***env);
 void		exec_redir(t_command *cmd, int pipefd[2]);
+
+// redir.c
+t_command	*setup_redir_read(t_command *cmd, int i, char **env);
 
 #endif
