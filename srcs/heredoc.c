@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 11:04:16 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/02/14 11:57:11 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/14 16:22:13 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void	heredoc(t_command *cmd, char **env)
 	if (!access(path, F_OK))
 		unlink(path);
 	len = ft_strlen(cmd->read);
-	fdin = open(path, O_CREAT | O_APPEND | O_WRONLY, 0666);
+	fdin = open(path, O_CREAT | O_APPEND | O_WRONLY, 0777);
 	free(path);
 	line = get_next_line(0);
 	while (line)

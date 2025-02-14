@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 11:35:35 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/14 14:52:37 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/14 16:19:17 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	exec_pipe(t_command *cmd, char ***env)
 	}
 	if (pid == 0)
 	{
-		exec_redir(cmd, pipefd);
+		exec_redir(cmd, pipefd, *env);
 		execute(cmd, env);
 	}
 	wait_pid(pid, &status);
@@ -91,7 +91,7 @@ int	exec_single_builtins(t_command **cmd, char ***env)
 
 	fdin_cpy = dup(STDIN_FILENO);
 	fdout_cpy = dup(STDOUT_FILENO);
-	redir_single_builtin(*cmd);
+	redir_single_builtin(*cmd, *env);
 	rvalue = exec_builtin(*cmd, env, cmd);
 	dup2(fdin_cpy, STDIN_FILENO);
 	dup2(fdout_cpy, STDOUT_FILENO);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:56:40 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/14 14:30:27 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/14 16:30:51 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,20 @@
  * @param cmd 
  * @return int 
  */
-int	redir_single_builtin(t_command *cmd)
+int	redir_single_builtin(t_command *cmd, char **env)
 {
 	int	fd;
 
 	if (cmd->read)
 	{
-		fd = open(cmd->read, O_RDONLY);
+		if (cmd->heredoc)
+		{
+			//TODO real path
+			heredoc(cmd, env);
+			fd = open(HEREDOC_FILE, O_RDONLY);
+		}
+		else
+			fd = open(cmd->read, O_RDONLY);
 		if (fd == -1)
 			return (perror("open"), 126);
 		dup2(fd, STDIN_FILENO);
@@ -74,7 +81,7 @@ void	execute(t_command *cmd, char ***env)
  * @param cmd 
  * @param pipefd 
  */
-void	exec_redir(t_command *cmd, int pipefd[2])
+void	exec_redir(t_command *cmd, int pipefd[2], char **env)
 {
 	int	fdin;
 	int	fdout;
@@ -84,7 +91,16 @@ void	exec_redir(t_command *cmd, int pipefd[2])
 	if (cmd->pipe_out)
 		fdout = pipefd[1];
 	if (cmd->read)
-		fdin = open(cmd->read, O_RDONLY);
+	{
+		if (cmd->heredoc)
+		{
+			//TODO real path
+			heredoc(cmd, env);
+			fdin = open(HEREDOC_FILE, O_RDONLY);
+		}
+		else
+			fdin = open(cmd->read, O_RDONLY);
+	}
 	if (cmd->write)
 		fdout = open(cmd->write, cmd->write_type, 0755);
 	if (!cmd->pipe_in)

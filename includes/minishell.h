@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:38:10 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/14 14:52:31 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/14 16:18:46 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,9 +208,9 @@ char		*get_full_path(char *path, char *cmd);
 int			check_slash(char *path);
 
 // exec_utils.c
-int			redir_single_builtin(t_command *cmd);
+int			redir_single_builtin(t_command *cmd, char **env);
 void		execute(t_command *cmd, char ***env);
-void		exec_redir(t_command *cmd, int pipefd[2]);
+void		exec_redir(t_command *cmd, int pipefd[2], char **env);
 
 // redir.c
 t_command	*setup_redir_read(t_command *cmd, int i, char **env);
