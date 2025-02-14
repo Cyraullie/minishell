@@ -6,16 +6,17 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 11:35:35 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/14 10:59:55 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/14 14:52:37 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	exec_pipe(t_command *cmd, char ***env)
+int	exec_pipe(t_command *cmd, char ***env)
 {
 	int		pipefd[2];
 	pid_t	pid;
+	int		status;
 
 	pipe(pipefd);
 	pid = fork();
@@ -29,26 +30,27 @@ void	exec_pipe(t_command *cmd, char ***env)
 		exec_redir(cmd, pipefd);
 		execute(cmd, env);
 	}
-	is_child(1);
-	waitpid(pid, NULL, 0);
-	is_child(0);
-	if (cmd->next->pipe_in)
-		dup2(pipefd[0], STDIN_FILENO);
+	wait_pid(pid, &status);
+	if (cmd->next)
+		if (cmd->next->pipe_in)
+			dup2(pipefd[0], STDIN_FILENO);
 	close(pipefd[0]);
 	close(pipefd[1]);
-	return ;
+	return (status);
 }
 
-void	standard_exec(t_command **cmd, char ***env)
+int	standard_exec(t_command **cmd, char ***env)
 {
 	t_command	*cmd_tmp;
+	int			status;
 
 	cmd_tmp = *cmd;
 	while (cmd_tmp)
 	{
-		exec_pipe(cmd_tmp, env);
+		status = exec_pipe(cmd_tmp, env);
 		cmd_tmp = cmd_tmp->next;
 	}
+	return (status);
 }
 
 /**
@@ -114,25 +116,22 @@ void	exec_main(t_command **cmd, char ***env)
 	if (!(*cmd)->cmd)
 		return ;
 	if (!(*cmd)->next && is_builtin((*cmd)->cmd))
+	{
 		status = exec_single_builtins(cmd, env);
+		update_exitvalue(status, env);
+	}
 	else
 	{
 		pid = fork();
 		if (pid == -1)
-		{
-			perror("fork");
-			return ;
-		}
+			return (perror("fork"));
 		if (pid == 0)
-			standard_exec(cmd, env);
-		else
 		{
-			is_child(1);
-			waitpid(pid, &status, 0);
-			is_child(0);
+			status = standard_exec(cmd, env);
+			exit(WEXITSTATUS(status));
 		}
+		else
+			wait_pid(pid, &status);
+		update_exitvalue(WEXITSTATUS(status), env);
 	}
-	update_exitvalue(WEXITSTATUS(status), env);
 }
-
-// TODO correct exit value

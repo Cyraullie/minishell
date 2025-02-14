@@ -3,16 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:56:40 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/13 14:05:20 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/14 14:30:27 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	redir_single_builtin(t_command *cmd)
+/**
+ * @brief 
+ * 
+ * @param cmd 
+ * @return int 
+ */
+int	redir_single_builtin(t_command *cmd)
 {
 	int	fd;
 
@@ -20,10 +26,7 @@ void	redir_single_builtin(t_command *cmd)
 	{
 		fd = open(cmd->read, O_RDONLY);
 		if (fd == -1)
-		{
-			perror("open");
-			return ;
-		}
+			return (perror("open"), 126);
 		dup2(fd, STDIN_FILENO);
 		close(fd);
 	}
@@ -31,15 +34,19 @@ void	redir_single_builtin(t_command *cmd)
 	{
 		fd = open(cmd->write, cmd->write_type, 0755);
 		if (fd == -1)
-		{
-			perror("open");
-			return ;
-		}
+			return (perror("open"), 126);
 		dup2(fd, STDOUT_FILENO);
 		close(fd);
 	}
+	return (0);
 }
 
+/**
+ * @brief 
+ * 
+ * @param cmd 
+ * @param env 
+ */
 void	execute(t_command *cmd, char ***env)
 {
 	char	*path;
@@ -52,13 +59,21 @@ void	execute(t_command *cmd, char ***env)
 	}
 	path = get_executable_path(cmd, env);
 	if (!path)
+		create_error_msg(": command not found\n", cmd->cmd, 127);
+	if (execve(path, cmd->cmd_tab, *env) == -1)
 	{
-		perror(cmd->cmd);
-		return ;
+		perror("execve failed");
+		exit(1);
 	}
-	execve(path, cmd->cmd_tab, *env);
+	exit(0);
 }
 
+/**
+ * @brief 
+ * 
+ * @param cmd 
+ * @param pipefd 
+ */
 void	exec_redir(t_command *cmd, int pipefd[2])
 {
 	int	fdin;
@@ -81,4 +96,18 @@ void	exec_redir(t_command *cmd, int pipefd[2])
 		close(fdout);
 	close(pipefd[0]);
 	close(pipefd[1]);
+}
+
+void	create_error_msg(char *msg, char *string, int error_status)
+{
+	string = ft_strjoin_and_free(string, msg);
+	ft_putstr_fd(string, 2);
+	exit(error_status);
+}
+
+void	wait_pid(pid_t pid, int *status)
+{
+	is_child(1);
+	waitpid(pid, status, 0);
+	is_child(0);
 }
