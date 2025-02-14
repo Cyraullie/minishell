@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 11:35:35 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/14 14:15:23 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/14 16:24:07 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,16 @@ int	exec_pipe(t_command *cmd, char ***env)
 	}
 	if (pid == 0)
 	{
+		setup_signals_child();
 		exec_redir(cmd, pipefd);
 		execute(cmd, env);
 	}
-	wait_pid(pid, &status);
+	else // Parent
+	{
+		is_child(0);
+		wait_pid(pid, &status);
+	}
+	//wait_pid(pid, &status);
 	if (cmd->next)
 		if (cmd->next->pipe_in)
 			dup2(pipefd[0], STDIN_FILENO);

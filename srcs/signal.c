@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 15:47:36 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/02/12 15:49:57 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/14 16:26:03 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,23 @@ void	handle_sigint(int sig)
 			rl_replace_line("", 0);
 			rl_redisplay();
 		}
+		else if (is_child(-1) == 1)
+			write(1, "minishell> ", 11);
 	}
 }
+
+void	setup_signals_child(void)
+{
+	struct sigaction	sa;
+
+	ft_bzero(&sa, sizeof(sa));
+	sa.sa_handler = handle_sigint;
+	sa.sa_flags = 0;
+	sigemptyset(&sa.sa_mask);
+	sigaction(SIGINT, &sa, NULL);
+	signal(SIGQUIT, SIG_IGN);
+}
+
 
 /**
  * @brief handle "signal" for EOF (Ctrl+D)
