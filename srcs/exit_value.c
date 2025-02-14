@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_value.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 10:49:01 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/02/13 14:22:00 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/14 14:14:28 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ int	get_exitvalue(char **env)
 	int		eval;
 
 	content = get_env_content("?", env);
-	printf("get_%s\n", content);
 	eval = ft_atoi(content);
 	free(content);
 	return (eval);
