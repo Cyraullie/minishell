@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 10:21:58 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/14 12:07:04 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/14 15:00:42 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,9 @@ t_command	*setup_redir_read(t_command *cmd, int i, char **env)
 	{
 		if (cmd->heredoc)
 		{
+			is_child(1);
 			heredoc(cmd, env);
+			is_child(0);
 			cmd->heredoc = 0;
 		}
 		else
