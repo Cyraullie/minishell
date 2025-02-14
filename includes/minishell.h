@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:38:10 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/14 14:13:25 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/14 16:16:27 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,6 @@ char		*ft_strjoin_and_free(char *s1, char *s2);
 
 // create_list.c
 void		create_list(char *line, t_command **cmd);
-
-// signal.c
-void		handle_sigint(int sig);
-void		init_sig(void);
-void		handle_eof(char *line, char **env);
 
 //echo.c
 int			ft_echo(char **cmd);
@@ -152,6 +147,7 @@ void		handle_sigint(int sig);
 void		init_sig(void);
 void		handle_eof(char *line, char **env);
 int			is_child(int status);
+void		setup_signals_child(void);
 
 // token.c
 void		assign_token(t_command **cmd, char **env);
