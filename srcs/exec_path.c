@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:58:22 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/14 14:21:43 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/14 14:43:56 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ char	*get_executable_path(t_command *cmd, char ***env)
 		else
 			exit (1);
 	}
+	if (!S_ISDIR(buf.st_mode) && check_slash(cmd->cmd))
+		create_error_msg(": No such file or directory\n", cmd->cmd, 127);
 	return (NULL);
 }
 
