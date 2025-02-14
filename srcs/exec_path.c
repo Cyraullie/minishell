@@ -3,27 +3,46 @@
 /*                                                        :::      ::::::::   */
 /*   exec_path.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:58:22 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/13 14:06:40 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/14 14:21:43 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+int	check_slash(char *path)
+{
+	if (!path)
+		return (0);
+	if (!ft_strncmp(path, "./", 2) || !ft_strncmp(path, "/", 1))
+		return (1);
+	return (0);
+}
+
 char	*get_executable_path(t_command *cmd, char ***env)
 {
-	char	*path;
+	char		*path;
+	struct stat	buf;
 
-	//TODO check directory
 	path = find_path(cmd->cmd, env);
-	if (!access(path, X_OK))
-		return (path);
-	if (!access(cmd->cmd, F_OK))
+	if (path)
+		if (!access(path, X_OK))
+			return (path);
+	if (!access(cmd->cmd, F_OK) && check_slash(cmd->cmd))
 	{
-		if (!access(cmd->cmd, X_OK))
-			return (cmd->cmd);
+		if (lstat(cmd->cmd, &buf) == 0)
+		{
+			if (S_ISDIR(buf.st_mode))
+				create_error_msg(": Is a directory\n", cmd->cmd, 126);
+			if (!access(cmd->cmd, X_OK))
+				return (cmd->cmd);
+			else
+				exit(126);
+		}
+		else
+			exit (1);
 	}
 	return (NULL);
 }
@@ -51,7 +70,7 @@ char	*find_path(char *cmd, char ***env)
 		free(path);
 		i++;
 	}
-	free(src);
+	clean_tab(src);
 	return (NULL);
 }
 
@@ -79,7 +98,7 @@ char	*get_full_path(char *path, char *cmd)
 	path = ft_strjoin(path, "/");
 	if (!path)
 		return (NULL);
-	path = ft_strjoin(path, cmd);
+	path = ft_strjoin_and_free(path, cmd);
 	if (!path)
 		return (NULL);
 	return (path);
