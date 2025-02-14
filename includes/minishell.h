@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:38:10 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/14 16:16:27 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/14 16:45:51 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,6 +204,6 @@ int			redir_single_builtin(t_command *cmd);
 void		execute(t_command *cmd, char ***env);
 void		exec_redir(t_command *cmd, int pipefd[2]);
 void		create_error_msg(char *msg, char *string, int error_status);
-void		wait_pid(pid_t pid, int *status);
+void		wait_pid(pid_t pid, int *status, t_command *cmd);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:35:36 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/14 14:29:28 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/14 16:43:51 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,3 +82,4 @@ int	main(int ac, char **av, char **envp)
 }
 //TODO if ctrl+D in other minishell no new line with minishell> ??????
 //TODO ctrl+c in mineshell child = ko
+//TODO avoir un sig_int different pour les enfants

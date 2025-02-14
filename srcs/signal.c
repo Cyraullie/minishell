@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 15:47:36 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/02/14 16:26:03 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/14 16:55:52 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,15 @@ void	handle_sigint(int sig)
 	if (sig == SIGINT)
 	{
 		write(1, "\n", 1);
-		if (is_child(-1) == 0)
+		if (is_child(-1) == 0 || is_child(-1) == 2)
 		{
 			rl_on_new_line();
 			rl_replace_line("", 0);
 			rl_redisplay();
 		}
-		else if (is_child(-1) == 1)
-			write(1, "minishell> ", 11);
 	}
 }
+
 
 void	setup_signals_child(void)
 {
