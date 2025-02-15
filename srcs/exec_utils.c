@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:56:40 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/15 10:57:14 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/15 11:19:53 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	redir_single_builtin(t_command *cmd, char **env)
 		else
 			fd = open(cmd->read, O_RDONLY);
 		if (fd == -1)
-			return (perror("open"), 126);
+			return (perror(cmd->read), 126);
 		dup2(fd, STDIN_FILENO);
 		close(fd);
 	}
@@ -37,7 +37,7 @@ int	redir_single_builtin(t_command *cmd, char **env)
 	{
 		fd = open(cmd->write, cmd->write_type, 0755);
 		if (fd == -1)
-			return (perror("open"), 126);
+			return (perror(cmd->write), 126);
 		dup2(fd, STDOUT_FILENO);
 		close(fd);
 	}
@@ -88,14 +88,14 @@ void	exec_redir(t_command *cmd, int pipefd[2], char **env)
 	if (cmd->pipe_out)
 		fdout = pipefd[1];
 	if (cmd->read)
-	{
-		if (cmd->heredoc)
-			fdin = heredoc_redir(cmd, env);
-		else
-			fdin = open(cmd->read, O_RDONLY);
-	}
+		fdin = setup_redir_in(cmd, env);
 	if (cmd->write)
 		fdout = open(cmd->write, cmd->write_type, 0755);
+	if (fdout == -1)
+	{
+		perror(cmd->write);
+		exit(1);
+	}
 	if (!cmd->pipe_in)
 		dup2(fdin, STDIN_FILENO);
 	dup2(fdout, STDOUT_FILENO);
