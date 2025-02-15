@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 10:21:58 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/15 09:51:10 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/15 10:30:09 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 t_command	*setup_redir_read(t_command *cmd, int i, char **env)
 {
-	int fd;
-	
+	int	fd;
+
 	if (cmd->read)
 	{
 		if (cmd->heredoc)

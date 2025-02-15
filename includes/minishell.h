@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:38:10 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/15 09:48:18 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/15 10:31:35 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,7 +179,7 @@ char		**expansion(char **tab, char **env);
 int			get_new_len(char *str, char **env, int in_d_quotes, \
 			int in_s_quotes);
 char		*get_var_name(char *str, int i);
-void	replace_var(char *token, char *new_token, int *index, char **env);
+void		replace_var(char *token, char *new_token, int *index, char **env);
 
 // remove_quotes.c
 char		*remove_quotes(char *token);
