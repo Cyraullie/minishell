@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 10:08:14 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/04 13:26:03 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/15 10:44:00 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_command	*ft_listnew(char **content)
 {
 	t_command	*new;
 
-	new = calloc(sizeof(t_command), 1);
+	new = ft_calloc(sizeof(t_command), 1);
 	if (!new)
 		return (NULL);
 	new->raw = content;
