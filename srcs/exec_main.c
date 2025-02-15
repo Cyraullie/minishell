@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 11:35:35 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/15 11:10:13 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/15 16:57:17 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,10 +136,9 @@ int	exec_single_builtins(t_command **cmd, char ***env)
  * @param cmd the linked list of commands
  * @param env 
  */
-void	exec_main(t_command **cmd, char ***env)
+void	exec_main(t_command **cmd, char ***env, int status)
 {
 	pid_t	pid;
-	int		status;
 
 	if (!(*cmd)->cmd)
 		return ;
@@ -156,6 +155,8 @@ void	exec_main(t_command **cmd, char ***env)
 		if (pid == 0)
 		{
 			status = standard_exec(cmd, env);
+			ft_listdelete(*cmd);
+			clean_tab(*env);
 			exit(WEXITSTATUS(status));
 		}
 		else

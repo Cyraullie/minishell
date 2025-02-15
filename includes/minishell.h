@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:38:10 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/15 11:22:18 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/15 16:57:42 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,7 +196,7 @@ int			max(int first, int second);
 char		*heredoc_expansion(char *line, char **env);
 
 // exec_main.c
-void		exec_main(t_command **cmd, char ***env);
+void		exec_main(t_command **cmd, char ***env, int status);
 int			exec_single_builtins(t_command **cmd, char ***env);
 int			exec_builtin(t_command *cmd_tmp, char ***env, t_command **cmd);
 int			standard_exec(t_command **cmd, char ***env);
