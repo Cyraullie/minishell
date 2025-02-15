@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 10:21:58 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/14 15:00:42 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/15 09:51:10 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,29 @@ t_command	*setup_redir_read(t_command *cmd, int i, char **env)
 		cmd->heredoc = 1;
 	cmd->read = cmd->raw[i + 1];
 	return (cmd);
+}
+
+int	heredoc_redir(t_command *cmd, char **env)
+{
+	int		heredocfd[2];
+	char	*line;
+	int		len;
+
+	is_child(1);
+	len = ft_strlen(cmd->read);
+	pipe(heredocfd);
+	line = get_next_line(0);
+	while (line)
+	{
+		if (!ft_strncmp(line, cmd->read, max(len, ft_strlen(line) - 1)))
+			break ;
+		line = heredoc_expansion(line, env);
+		ft_putstr_fd(line, heredocfd[1]);
+		free(line);
+		line = get_next_line(0);
+	}
+	is_child(0);
+	free(line);
+	close(heredocfd[1]);
+	return (heredocfd[0]);
 }

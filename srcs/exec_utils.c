@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:56:40 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/14 16:30:51 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/15 09:47:56 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,7 @@ int	redir_single_builtin(t_command *cmd, char **env)
 	if (cmd->read)
 	{
 		if (cmd->heredoc)
-		{
-			//TODO real path
-			heredoc(cmd, env);
-			fd = open(HEREDOC_FILE, O_RDONLY);
-		}
+			fd = heredoc_redir(cmd, env);
 		else
 			fd = open(cmd->read, O_RDONLY);
 		if (fd == -1)
@@ -93,11 +89,7 @@ void	exec_redir(t_command *cmd, int pipefd[2], char **env)
 	if (cmd->read)
 	{
 		if (cmd->heredoc)
-		{
-			//TODO real path
-			heredoc(cmd, env);
-			fdin = open(HEREDOC_FILE, O_RDONLY);
-		}
+			fdin = heredoc_redir(cmd, env);
 		else
 			fdin = open(cmd->read, O_RDONLY);
 	}
