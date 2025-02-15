@@ -6,12 +6,19 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 11:35:35 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/15 09:53:49 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/15 10:52:48 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+/**
+ * @brief create a child process and execute the command given as argument
+ * 
+ * @param cmd a element of the list of command
+ * @param env the environnement variable
+ * @return int the status of the executed command
+ */
 int	exec_pipe(t_command *cmd, char ***env)
 {
 	int		pipefd[2];
@@ -38,7 +45,13 @@ int	exec_pipe(t_command *cmd, char ***env)
 	close(pipefd[1]);
 	return (status);
 }
-
+/**
+ * @brief loop over every command in the list to execute them 
+ * 
+ * @param cmd the linked list of command
+ * @param env the environnement variable
+ * @return int the status of the last executed command
+ */
 int	standard_exec(t_command **cmd, char ***env)
 {
 	t_command	*cmd_tmp;
@@ -57,7 +70,8 @@ int	standard_exec(t_command **cmd, char ***env)
  * @brief execute the correct builtin we created
  * 
  * @param cmd the linked list of commands
- * @param env 
+ * @param env the environnement variable
+ * @return int the status of the executed builtin
  */
 int	exec_builtin(t_command *cmd_tmp, char ***env, t_command **cmd)
 {
@@ -83,6 +97,14 @@ int	exec_builtin(t_command *cmd_tmp, char ***env, t_command **cmd)
 	return (rvalue);
 }
 
+/**
+ * @brief a function that setup minishell to execute a single builtin from
+ * 		  the list we had to recreate (special exec because of no child process)
+ * 
+ * @param cmd the linked list of command
+ * @param env the environnement variable
+ * @return int the status of the executed command
+ */
 int	exec_single_builtins(t_command **cmd, char ***env)
 {
 	int	fdin_cpy;

@@ -6,17 +6,17 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:56:40 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/15 09:47:56 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/15 10:57:14 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
 /**
- * @brief 
+ * @brief setup the correct redirection in case of a single builtin
  * 
  * @param cmd 
- * @return int 
+ * @return int 0 on succes, 126 on failure (UNIX permission denied)
  */
 int	redir_single_builtin(t_command *cmd, char **env)
 {
@@ -45,10 +45,10 @@ int	redir_single_builtin(t_command *cmd, char **env)
 }
 
 /**
- * @brief 
+ * @brief execute the command given as argument
  * 
- * @param cmd 
- * @param env 
+ * @param cmd the command to be executed
+ * @param env the environnement variable
  */
 void	execute(t_command *cmd, char ***env)
 {
@@ -72,10 +72,11 @@ void	execute(t_command *cmd, char ***env)
 }
 
 /**
- * @brief 
+ * @brief setup redirections for the given command
  * 
- * @param cmd 
- * @param pipefd 
+ * @param cmd a command in the linked list
+ * @param pipefd the 2 fds from a pipe
+ * @param env the environnement variable
  */
 void	exec_redir(t_command *cmd, int pipefd[2], char **env)
 {
