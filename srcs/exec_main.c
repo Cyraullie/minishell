@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 11:35:35 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/15 10:52:48 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/15 11:01:51 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ int	exec_pipe(t_command *cmd, char ***env)
 	close(pipefd[1]);
 	return (status);
 }
+
 /**
  * @brief loop over every command in the list to execute them 
  * 
