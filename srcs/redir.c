@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 10:21:58 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/15 11:19:58 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/15 11:22:05 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,10 @@ int	heredoc_redir(t_command *cmd, char **env)
 	return (heredocfd[0]);
 }
 
-int setup_redir_in(t_command *cmd, char **env)
+int	setup_redir_in(t_command *cmd, char **env)
 {
 	int	fdin;
-	
+
 	if (cmd->heredoc)
 		fdin = heredoc_redir(cmd, env);
 	else
@@ -75,7 +75,7 @@ int setup_redir_in(t_command *cmd, char **env)
 	if (fdin == -1)
 	{
 		perror(cmd->read);
-		exit(1);	
+		exit(1);
 	}
 	return (fdin);
 }

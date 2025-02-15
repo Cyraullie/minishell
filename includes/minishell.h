@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:38:10 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/15 11:19:42 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/15 11:22:18 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -219,6 +219,6 @@ t_command	*setup_redir_read(t_command *cmd, int i, char **env);
 void		create_error_msg(char *msg, char *string, int error_status);
 void		wait_pid(pid_t pid, int *status);
 int			heredoc_redir(t_command *cmd, char **env);
-int 		setup_redir_in(t_command *cmd, char **env);
+int			setup_redir_in(t_command *cmd, char **env);
 
 #endif
