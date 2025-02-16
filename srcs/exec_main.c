@@ -307,16 +307,16 @@ static void	init_exec_data(t_exec_data *data, t_command *cmd)
 static int	wait_for_processes(pid_t *pids, int cmd_count)
 {
 	int	i;
-	int	status;
+	int	status[cmd_count];
 
 	i = cmd_count - 1;
 	while (i >= 0)
 	{
-		wait_pid(pids[i], &status);
+		wait_pid(pids[i], &status[i]);
 		i--;
 	}
 	free(pids);
-	return (status);
+	return (status[cmd_count - 1]);
 }
 
 static int	execute_commands(t_exec_data *data, t_command *first_cmd)
