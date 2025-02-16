@@ -19,7 +19,7 @@
  * @param env the environnement variable
  * @return int the status of the executed command
  */
-int	exec_pipe(t_command *cmd, char ***env)
+/*int	exec_pipe(t_command *cmd, char ***env)
 {
 	int		pipefd[2];
 	pid_t	pid;
@@ -44,7 +44,7 @@ int	exec_pipe(t_command *cmd, char ***env)
 	close(pipefd[0]);
 	close(pipefd[1]);
 	return (status);
-}
+}*/
 
 /**
  * @brief loop over every command in the list to execute them 
@@ -53,7 +53,7 @@ int	exec_pipe(t_command *cmd, char ***env)
  * @param env the environnement variable
  * @return int the status of the last executed command
  */
-int	standard_exec(t_command **cmd, char ***env)
+/*int	standard_exec(t_command **cmd, char ***env)
 {
 	t_command	*cmd_tmp;
 	int			status;
@@ -65,7 +65,7 @@ int	standard_exec(t_command **cmd, char ***env)
 		cmd_tmp = cmd_tmp->next;
 	}
 	return (status);
-}
+}*/
 
 /**
  * @brief execute the correct builtin we created
@@ -136,7 +136,7 @@ int	exec_single_builtins(t_command **cmd, char ***env)
  * @param cmd the linked list of commands
  * @param env 
  */
-void	exec_main(t_command **cmd, char ***env, int status)
+/*void	exec_main(t_command **cmd, char ***env, int status)
 {
 	pid_t	pid;
 
@@ -155,6 +155,232 @@ void	exec_main(t_command **cmd, char ***env, int status)
 		if (pid == 0)
 		{
 			status = standard_exec(cmd, env);
+			ft_listdelete(*cmd);
+			clean_tab(*env);
+			exit(WEXITSTATUS(status));
+		}
+		else
+			wait_pid(pid, &status);
+		update_exitvalue(WEXITSTATUS(status), env);
+	}
+}*/
+
+static int	**create_pipes(int cmd_count)
+{
+	int	**pipes;
+	int	i;
+
+	if (cmd_count <= 1)
+		return (NULL);
+	pipes = malloc(sizeof(int *) * (cmd_count - 1));
+	if (!pipes)
+		return (NULL);
+	i = 0;
+	while (i < cmd_count - 1)
+	{
+		pipes[i] = malloc(sizeof(int) * 2);
+		if (pipe(pipes[i]) == -1)
+		{
+			while (--i >= 0)
+				free(pipes[i]);
+			free(pipes);
+			return (NULL);
+		}
+		i++;
+	}
+	return (pipes);
+}
+
+static void	close_pipes(int **pipes, int count)
+{
+	int	i;
+
+	i = 0;
+	while (i < count - 1)
+	{
+		close(pipes[i][0]);
+		close(pipes[i][1]);
+		free(pipes[i]);
+		i++;
+	}
+	free(pipes);
+}
+
+static void	setup_input_redirection(t_command *cmd, char **env)
+{
+	int	fd;
+
+	if (cmd->read)
+	{
+		if (cmd->heredoc)
+			fd = heredoc_redir(cmd, env);
+		else
+			fd = open(cmd->read, O_RDONLY);
+		if (fd == -1)
+		{
+			perror(cmd->read);
+			exit(1);
+		}
+		dup2(fd, STDIN_FILENO);
+		close(fd);
+	}
+}
+
+static void	setup_output_redirection(t_command *cmd)
+{
+	int	fd;
+
+	if (cmd->write)
+	{
+		fd = open(cmd->write, cmd->write_type, 0644);
+		if (fd == -1)
+		{
+			perror(cmd->write);
+			exit(1);
+		}
+		dup2(fd, STDOUT_FILENO);
+		close(fd);
+	}
+}
+
+static void	setup_child_pipes(int **pipes, int i, int cmd_count, t_command *cmd)
+{
+	if (i < cmd_count - 1 && cmd->pipe_out)
+		dup2(pipes[i][1], STDOUT_FILENO);
+	if (i > 0 && cmd->pipe_in)
+		dup2(pipes[i - 1][0], STDIN_FILENO);
+}
+
+static void	close_child_pipes(int **pipes, int cmd_count)
+{
+	int	j;
+
+	j = 0;
+	while (j < cmd_count - 1)
+	{
+		close(pipes[j][0]);
+		close(pipes[j][1]);
+		j++;
+	}
+}
+
+static int	handle_child_process(t_command *cmd, int **pipes, int i,
+	t_exec_data *data)
+{
+	setup_child_pipes(pipes, i, data->cmd_count, cmd);
+	close_child_pipes(pipes, data->cmd_count);
+	setup_input_redirection(cmd, *(data->env));
+	setup_output_redirection(cmd);
+	execute(cmd, data->env);
+	return (1);
+}
+
+
+static t_command	*get_cmd_at_index(t_command *start, int target_index)
+{
+	t_command	*current;
+	int			i;
+
+	current = start;
+	i = 0;
+	while (i < target_index && current)
+	{
+		current = current->next;
+		i++;
+	}
+	return (current);
+}
+
+static void	init_exec_data(t_exec_data *data, t_command *cmd)
+{
+	data->cmd_count = 0;
+	data->cmd_tmp = cmd;
+	while (data->cmd_tmp)
+	{
+		data->cmd_count++;
+		data->cmd_tmp = data->cmd_tmp->next;
+	}
+	data->pipes = create_pipes(data->cmd_count);
+	data->pids = malloc(sizeof(pid_t) * data->cmd_count);
+}
+
+static int	wait_for_processes(pid_t *pids, int cmd_count)
+{
+	int	i;
+	int	status;
+
+	i = cmd_count - 1;
+	while (i >= 0)
+	{
+		wait_pid(pids[i], &status);
+		i--;
+	}
+	free(pids);
+	return (status);
+}
+
+static int	execute_commands(t_exec_data *data, t_command *first_cmd)
+{
+	int			i;
+	t_command	*current_cmd;
+
+	i = data->cmd_count - 1;
+	while (i >= 0)
+	{
+		current_cmd = get_cmd_at_index(first_cmd, i);
+		data->pids[i] = fork();
+		if (data->pids[i] == -1)
+			return (1);
+		if (data->pids[i] == 0)
+			handle_child_process(current_cmd, data->pipes, i, data);
+		i--;
+	}
+	if (data->pipes)
+		close_pipes(data->pipes, data->cmd_count);
+	return (0);
+}
+
+int	exec_command_chain(t_command **cmd, char ***env)
+{
+	t_exec_data	data;
+	int			status;
+
+	data.env = env;
+	init_exec_data(&data, *cmd);
+	if (!data.pids)
+	{
+		if (data.pipes)
+			close_pipes(data.pipes, data.cmd_count);
+		return (1);
+	}
+	if (execute_commands(&data, *cmd))
+	{
+		free(data.pids);
+		return (1);
+	}
+	status = wait_for_processes(data.pids, data.cmd_count);
+	return (status);
+}
+
+void	exec_main(t_command **cmd, char ***env, int status)
+{
+	pid_t	pid;
+
+	if (!(*cmd)->cmd)
+		return ;
+	if (!(*cmd)->next && is_builtin((*cmd)->cmd))
+	{
+		status = exec_single_builtins(cmd, env);
+		update_exitvalue(status, env);
+	}
+	else
+	{
+		pid = fork();
+		if (pid == -1)
+			return (perror("fork"));
+		if (pid == 0)
+		{
+			status = exec_command_chain(cmd, env);
 			ft_listdelete(*cmd);
 			clean_tab(*env);
 			exit(WEXITSTATUS(status));

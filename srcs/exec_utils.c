@@ -116,7 +116,7 @@ void	create_error_msg(char *msg, char *string, int error_status)
 
 void	wait_pid(pid_t pid, int *status)
 {
-	is_child(1);
+	is_child(pid);
 	waitpid(pid, status, 0);
 	is_child(0);
 }
