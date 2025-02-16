@@ -77,6 +77,8 @@ int	get_maxlength_env(char **name)
  */
 int	is_builtin(char *cmd)
 {
+	if (!cmd)
+		return (0);
 	if (!ft_strncmp(cmd, "echo", 5))
 		return (1);
 	else if (!ft_strncmp(cmd, "cd", 3))

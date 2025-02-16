@@ -264,6 +264,15 @@ static void	close_child_pipes(int **pipes, int cmd_count)
 	}
 }
 
+void	no_command_exit(t_exec_data *data, int **pipes)
+{
+	ft_listdelete(data->head);
+	clean_tab(*data->env);
+	close_pipes(pipes, data->cmd_count);
+	free(data->pids);
+	exit (0);
+}
+
 static int	handle_child_process(t_command *cmd, int **pipes, int i,
 	t_exec_data *data)
 {
@@ -271,6 +280,8 @@ static int	handle_child_process(t_command *cmd, int **pipes, int i,
 	close_child_pipes(pipes, data->cmd_count);
 	setup_input_redirection(cmd, *(data->env));
 	setup_output_redirection(cmd);
+	if (!cmd->cmd)
+		no_command_exit(data, pipes);
 	execute(cmd, data->env);
 	return (1);
 }
@@ -295,13 +306,14 @@ static void	init_exec_data(t_exec_data *data, t_command *cmd)
 {
 	data->cmd_count = 0;
 	data->cmd_tmp = cmd;
+	data->head = cmd;
 	while (data->cmd_tmp)
 	{
 		data->cmd_count++;
 		data->cmd_tmp = data->cmd_tmp->next;
 	}
 	data->pipes = create_pipes(data->cmd_count);
-	data->pids = malloc(sizeof(pid_t) * data->cmd_count);
+	data->pids = ft_calloc(sizeof(pid_t), data->cmd_count);
 }
 
 static int	wait_for_processes(pid_t *pids, int cmd_count)
@@ -366,8 +378,6 @@ void	exec_main(t_command **cmd, char ***env, int status)
 {
 	pid_t	pid;
 
-	if (!(*cmd)->cmd)
-		return ;
 	if (!(*cmd)->next && is_builtin((*cmd)->cmd))
 	{
 		status = exec_single_builtins(cmd, env);

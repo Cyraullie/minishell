@@ -51,11 +51,12 @@ typedef struct s_command
 
 typedef struct s_exec_data
 {
-int	cmd_count;
+int			cmd_count;
 t_command	*cmd_tmp;
-int	**pipes;
-pid_t	*pids;
-char	***env;
+int			**pipes;
+pid_t		*pids;
+char		***env;
+t_command	*head;
 }	t_exec_data;
 
 // split_commands.c
