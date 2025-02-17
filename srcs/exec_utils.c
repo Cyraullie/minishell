@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:56:40 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/17 10:39:20 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/17 11:10:17 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,9 @@ void	create_error_msg(char *msg, char *string, int error_status)
 void	wait_pid(pid_t pid, int *status, t_command *cmd)
 {
 	is_child(1);
-	if (!ft_strncmp(cmd->cmd, "./minishell", 12))
-		is_child(2);
+	if (cmd->cmd)
+		if (!ft_strncmp(cmd->cmd, "./minishell", 12))
+			is_child(2);
 	waitpid(pid, status, 0);
 	is_child(0);
 }

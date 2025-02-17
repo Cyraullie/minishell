@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   child.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 08:44:49 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/17 08:47:09 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/17 10:49:50 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,15 +46,17 @@ void	setup_child_pipes(int **pipes, int i, int cmd_count, t_command *cmd)
 		dup2(pipes[i - 1][0], STDIN_FILENO);
 }
 
-int	wait_for_processes(pid_t *pids, int cmd_count)
+int	wait_for_processes(pid_t *pids, int cmd_count, t_command *cmd)
 {
 	int	i;
 	int	status[100];
+	t_command *actual_cmd;
 
 	i = cmd_count - 1;
 	while (i >= 0)
 	{
-		wait_pid(pids[i], &status[i]);
+		actual_cmd = get_cmd_at_index(cmd, i);
+		wait_pid(pids[i], &status[i], actual_cmd);
 		i--;
 	}
 	free(pids);

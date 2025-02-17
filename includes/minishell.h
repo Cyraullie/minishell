@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:38:10 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/17 10:38:00 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/17 11:05:49 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -236,7 +236,7 @@ int			handle_child_process(t_command *cmd, int **pipes, int i,
 void		close_child_pipes(int **pipes, int cmd_count);
 void		setup_child_pipes(int **pipes, int i, int cmd_count,
 				t_command *cmd);
-int			wait_for_processes(pid_t *pids, int cmd_count);
+int			wait_for_processes(pid_t *pids, int cmd_count, t_command *cmd);
 
 // single_builtin.c
 int			exec_single_builtins(t_command **cmd, char ***env);

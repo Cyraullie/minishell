@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 11:35:35 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/17 10:38:24 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/17 11:05:35 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	standard_exec(t_command **cmd, char ***env)
 		free(data.pids);
 		return (1);
 	}
-	status = wait_for_processes(data.pids, data.cmd_count);
+	status = wait_for_processes(data.pids, data.cmd_count, *cmd);
 	return (status);
 }
 
