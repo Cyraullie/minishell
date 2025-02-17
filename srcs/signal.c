@@ -6,11 +6,13 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 15:47:36 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/02/17 11:58:19 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/17 14:05:39 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+volatile sig_atomic_t	g_heredoc_interrupted = 0;
 
 /**
  * @brief handle signal for SIGINT (Ctrl+C)
@@ -21,6 +23,7 @@ void	handle_sigint(int sig)
 {
 	if (sig == SIGINT)
 	{
+		g_heredoc_interrupted = 1;
 		write(1, "\n", 1);
 		if (is_child(-1) == 0 || is_child(-1) == 2)
 		{
@@ -71,9 +74,9 @@ int	is_child(int status)
  */
 void	setup_signals_parent(void)
 {
-	struct sigaction sa;
+	struct sigaction	sa;
 
-	sa.sa_handler = SIG_IGN;  // Le parent ignore SIGINT
+	sa.sa_handler = SIG_IGN;
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = 0;
 	sigaction(SIGINT, &sa, NULL);
@@ -85,9 +88,9 @@ void	setup_signals_parent(void)
  */
 void	setup_signals_child(void)
 {
-	struct sigaction sa;
+	struct sigaction	sa;
 
-	sa.sa_handler = handle_sigint;  // L'enfant gère SIGINT normalement
+	sa.sa_handler = handle_sigint;
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = 0;
 	sigaction(SIGINT, &sa, NULL);

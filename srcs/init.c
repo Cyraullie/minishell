@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 11:47:47 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/02/17 11:48:41 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/17 13:26:11 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ void	init_sig(void)
 	sigaction(SIGINT, &sa, NULL);
 	sigaction(SIGQUIT, &sq, NULL);
 }
-
 
 /**
  * @brief  function to init all need at start of minishell

@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:38:10 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/17 11:49:45 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/17 14:07:16 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,6 +160,7 @@ void		handle_eof(char *line, char **env);
 int			is_child(int status);
 void		setup_signals_child(void);
 void		setup_signals_parent(void);
+void		setup_signals_heredoc(void);
 
 // init.c
 void		init_sig(void);
@@ -246,5 +247,7 @@ int			wait_for_processes(pid_t *pids, int cmd_count, t_command *cmd);
 // single_builtin.c
 int			exec_single_builtins(t_command **cmd, char ***env);
 int			exec_builtin(t_command *cmd_tmp, char ***env, t_command **cmd);
+
+extern volatile sig_atomic_t	g_heredoc_interrupted;
 
 #endif
