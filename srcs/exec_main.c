@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 11:35:35 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/17 08:57:47 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/17 09:21:30 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,3 +108,7 @@ void	exec_main(t_command **cmd, char ***env, int status)
 		update_exitvalue(WEXITSTATUS(status), env);
 	}
 }
+
+//TODO child leaks on command not found
+//TODO child leaks if builtins in standard exec
+//TODO unclosed fds if permission denied in single builtin
