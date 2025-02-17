@@ -6,16 +6,21 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:56:40 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/17 11:58:00 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/17 14:07:22 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	create_error_msg(char *msg, char *string, int error_status)
+void	create_error_msg(char *msg, char *string, int error_status,
+		t_exec_data *data)
 {
-	string = ft_strjoin_and_free(string, msg);
+	string = ft_strjoin(string, msg);
 	ft_putstr_fd(string, 2);
+	free(string);
+	ft_listdelete(data->head);
+	clean_tab(*data->env);
+	free(data->pids);
 	exit(error_status);
 }
 

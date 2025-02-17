@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 08:44:49 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/17 14:03:27 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/17 11:28:40 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	handle_child_process(t_command *cmd, int **pipes, int i,
 	setup_output_redirection(cmd);
 	if (!cmd->cmd)
 		no_command_exit(data, pipes);
-	execute(cmd, data->env);
+	execute(cmd, data->env, data);
 	return (1);
 }
 

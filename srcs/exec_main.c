@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 11:35:35 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/17 11:38:07 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/17 14:09:26 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,23 @@
  * @param cmd the command to be executed
  * @param env the environnement variable
  */
-void	execute(t_command *cmd, char ***env)
+void	execute(t_command *cmd, char ***env, t_exec_data *data)
 {
 	char	*path;
 	int		rvalue;
 
 	if (is_builtin(cmd->cmd))
 	{
-		rvalue = exec_builtin(cmd, env, &cmd);
+		rvalue = exec_builtin(cmd, env, &cmd); //TODO free what need be
+		clean_tab(*data->env);
+		ft_listdelete(data->head);
+		free(data->pids);
+		close_pipes(data->pipes, data->cmd_count);
 		exit(rvalue);
 	}
-	path = get_executable_path(cmd, env);
+	path = get_executable_path(cmd, env, data);
 	if (!path)
-		create_error_msg(": command not found\n", cmd->cmd, 127);
+		create_error_msg(": command not found\n", cmd->cmd, 127, data);
 	if (execve(path, cmd->cmd_tab, *env) == -1)
 	{
 		perror("execve failed");
@@ -115,5 +119,4 @@ void	exec_main(t_command **cmd, char ***env, int status)
 	}
 }
 
-//TODO child leaks on command not found
 //TODO child leaks if builtins in standard exec
