@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:38:10 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/17 08:58:21 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/17 11:27:15 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,20 +208,21 @@ int			max(int first, int second);
 char		*heredoc_expansion(char *line, char **env);
 
 // exec_main.c
-void		execute(t_command *cmd, char ***env);
+void		execute(t_command *cmd, char ***env, t_exec_data *data);
 int			execute_commands(t_exec_data *data, t_command *first_cmd);
 void		exec_main(t_command **cmd, char ***env, int status);
 int			standard_exec(t_command **cmd, char ***env);
 
 // exec_path.c
-char		*get_executable_path(t_command *cmd, char ***env);
+char		*get_executable_path(t_command *cmd, char ***env, t_exec_data *data);
 char		*find_path(char *cmd, char ***env);
 char		*search_env(char **env);
 char		*get_full_path(char *path, char *cmd);
 int			check_slash(char *path);
 
 // exec_utils.c
-void		create_error_msg(char *msg, char *string, int error_status);
+void		create_error_msg(char *msg, char *string, int error_status,
+		t_exec_data *data);
 void		wait_pid(pid_t pid, int *status);
 void		no_command_exit(t_exec_data *data, int **pipes);
 t_command	*get_cmd_at_index(t_command *start, int target_index);

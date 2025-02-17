@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 11:35:35 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/17 10:10:17 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/17 11:33:23 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,19 @@
  * @param cmd the command to be executed
  * @param env the environnement variable
  */
-void	execute(t_command *cmd, char ***env)
+void	execute(t_command *cmd, char ***env, t_exec_data *data)
 {
 	char	*path;
 	int		rvalue;
 
 	if (is_builtin(cmd->cmd))
 	{
-		rvalue = exec_builtin(cmd, env, &cmd);
+		rvalue = exec_builtin(cmd, env, &cmd); //TODO free what need be
 		exit(rvalue);
 	}
-	path = get_executable_path(cmd, env);
+	path = get_executable_path(cmd, env, data);
 	if (!path)
-		create_error_msg(": command not found\n", cmd->cmd, 127);
+		create_error_msg(": command not found\n", cmd->cmd, 127, data);
 	if (execve(path, cmd->cmd_tab, *env) == -1)
 	{
 		perror("execve failed");
@@ -109,6 +109,4 @@ void	exec_main(t_command **cmd, char ***env, int status)
 	}
 }
 
-//TODO child leaks on command not found
 //TODO child leaks if builtins in standard exec
-//TODO permission denied leaks
