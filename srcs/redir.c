@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 10:21:58 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/17 09:16:50 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/17 14:06:21 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,21 +45,37 @@ int	heredoc_redir(t_command *cmd, char **env)
 	char	*line;
 	int		len;
 
-	len = ft_strlen(cmd->read);
 	pipe(heredocfd);
-	line = readline(">");
-	while (line)
+	g_heredoc_interrupted = 0;
+	setup_signals_heredoc();
+	len = ft_strlen(cmd->read);
+	line = readline("> ");
+	while (line && !g_heredoc_interrupted)
 	{
 		if (!ft_strncmp(line, cmd->read, max(len, ft_strlen(line) - 1)))
 			break ;
 		line = heredoc_expansion(line, env);
 		ft_putendl_fd(line, heredocfd[1]);
 		free(line);
-		line = readline(">");
+		line = readline("> ");
 	}
 	free(line);
 	close(heredocfd[1]);
+	if (g_heredoc_interrupted)
+		return (close(heredocfd[0]), -1);
 	return (heredocfd[0]);
+}
+
+int	redir_singleout_builtin(t_command *cmd)
+{
+	int	fd;
+
+	fd = open(cmd->write, cmd->write_type, 0755);
+	if (fd == -1)
+		return (perror(cmd->write), 1);
+	dup2(fd, STDOUT_FILENO);
+	close(fd);
+	return (0);
 }
 
 /**
@@ -75,7 +91,11 @@ int	redir_single_builtin(t_command *cmd, char **env)
 	if (cmd->read)
 	{
 		if (cmd->heredoc)
+		{
 			fd = heredoc_redir(cmd, env);
+			if (fd == -1)
+				return (1);
+		}
 		else
 			fd = open(cmd->read, O_RDONLY);
 		if (fd == -1)
@@ -84,13 +104,8 @@ int	redir_single_builtin(t_command *cmd, char **env)
 		close(fd);
 	}
 	if (cmd->write)
-	{
-		fd = open(cmd->write, cmd->write_type, 0755);
-		if (fd == -1)
-			return (perror(cmd->write), 1);
-		dup2(fd, STDOUT_FILENO);
-		close(fd);
-	}
+		if (redir_singleout_builtin(cmd))
+			return (1);
 	return (0);
 }
 
@@ -101,7 +116,11 @@ void	setup_input_redirection(t_command *cmd, char **env)
 	if (cmd->read)
 	{
 		if (cmd->heredoc)
+		{
 			fd = heredoc_redir(cmd, env);
+			if (fd == -1)
+				return ;
+		}
 		else
 			fd = open(cmd->read, O_RDONLY);
 		if (fd == -1)

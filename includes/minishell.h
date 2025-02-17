@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:38:10 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/17 08:58:21 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/17 14:07:16 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,11 +70,6 @@ char		*ft_strjoin_and_free(char *s1, char *s2);
 
 // create_list.c
 void		create_list(char *line, t_command **cmd);
-
-// signal.c
-void		handle_sigint(int sig);
-void		init_sig(void);
-void		handle_eof(char *line, char **env);
 
 //echo.c
 int			ft_echo(char **cmd);
@@ -161,9 +156,16 @@ void		ft_listdelete(t_command *list);
 
 // signal.c
 void		handle_sigint(int sig);
-void		init_sig(void);
 void		handle_eof(char *line, char **env);
 int			is_child(int status);
+void		setup_signals_child(void);
+void		setup_signals_parent(void);
+void		setup_signals_heredoc(void);
+
+// init.c
+void		init_sig(void);
+void		increment_shlvl(char ***env);
+void		init_minishell(char ***env, char **envp);
 
 // token.c
 void		assign_token(t_command **cmd, char **env);
@@ -222,7 +224,7 @@ int			check_slash(char *path);
 
 // exec_utils.c
 void		create_error_msg(char *msg, char *string, int error_status);
-void		wait_pid(pid_t pid, int *status);
+void		wait_pid(pid_t pid, int *status, t_command *cmd);
 void		no_command_exit(t_exec_data *data, int **pipes);
 t_command	*get_cmd_at_index(t_command *start, int target_index);
 void		close_pipes(int **pipes, int count);
@@ -240,10 +242,12 @@ int			handle_child_process(t_command *cmd, int **pipes, int i,
 void		close_child_pipes(int **pipes, int cmd_count);
 void		setup_child_pipes(int **pipes, int i, int cmd_count,
 				t_command *cmd);
-int			wait_for_processes(pid_t *pids, int cmd_count);
+int			wait_for_processes(pid_t *pids, int cmd_count, t_command *cmd);
 
 // single_builtin.c
 int			exec_single_builtins(t_command **cmd, char ***env);
 int			exec_builtin(t_command *cmd_tmp, char ***env, t_command **cmd);
+
+extern volatile sig_atomic_t	g_heredoc_interrupted;
 
 #endif

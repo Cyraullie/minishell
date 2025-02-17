@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 15:47:36 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/02/15 11:05:45 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/17 14:05:39 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+volatile sig_atomic_t	g_heredoc_interrupted = 0;
 
 /**
  * @brief handle signal for SIGINT (Ctrl+C)
@@ -21,8 +23,9 @@ void	handle_sigint(int sig)
 {
 	if (sig == SIGINT)
 	{
+		g_heredoc_interrupted = 1;
 		write(1, "\n", 1);
-		if (is_child(-1) == 0)
+		if (is_child(-1) == 0 || is_child(-1) == 2)
 		{
 			rl_on_new_line();
 			rl_replace_line("", 0);
@@ -49,26 +52,11 @@ void	handle_eof(char *line, char **env)
 }
 
 /**
- * @brief function to init all signal we need
+ * @brief 
  * 
+ * @param status 
+ * @return int 
  */
-void	init_sig(void)
-{
-	struct sigaction	sa;
-	struct sigaction	sq;
-
-	ft_bzero(&sa, sizeof(sa));
-	ft_bzero(&sq, sizeof(sq));
-	sa.sa_handler = handle_sigint;
-	sa.sa_flags = 0;
-	sigemptyset(&sa.sa_mask);
-	sq.sa_handler = SIG_IGN;
-	sq.sa_flags = 0;
-	sigemptyset(&sq.sa_mask);
-	sigaction(SIGINT, &sa, NULL);
-	sigaction(SIGQUIT, &sq, NULL);
-}
-
 int	is_child(int status)
 {
 	static int	bool = 0;
@@ -78,4 +66,32 @@ int	is_child(int status)
 	else
 		bool = status;
 	return (bool);
+}
+
+/**
+ * @brief Set the up signals parent object to ignore
+ * 
+ */
+void	setup_signals_parent(void)
+{
+	struct sigaction	sa;
+
+	sa.sa_handler = SIG_IGN;
+	sigemptyset(&sa.sa_mask);
+	sa.sa_flags = 0;
+	sigaction(SIGINT, &sa, NULL);
+}
+
+/**
+ * @brief Set the up signals child object
+ * 
+ */
+void	setup_signals_child(void)
+{
+	struct sigaction	sa;
+
+	sa.sa_handler = handle_sigint;
+	sigemptyset(&sa.sa_mask);
+	sa.sa_flags = 0;
+	sigaction(SIGINT, &sa, NULL);
 }

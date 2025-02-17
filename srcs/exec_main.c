@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_main.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 11:35:35 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/17 09:25:35 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/17 11:38:07 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ int	execute_commands(t_exec_data *data, t_command *first_cmd)
 	t_command	*current_cmd;
 
 	i = data->cmd_count - 1;
+	setup_signals_parent();
 	while (i >= 0)
 	{
 		current_cmd = get_cmd_at_index(first_cmd, i);
@@ -52,7 +53,10 @@ int	execute_commands(t_exec_data *data, t_command *first_cmd)
 		if (data->pids[i] == -1)
 			return (1);
 		if (data->pids[i] == 0)
+		{
+			setup_signals_child();
 			handle_child_process(current_cmd, data->pipes, i, data);
+		}
 		i--;
 	}
 	if (data->pipes)
@@ -78,7 +82,7 @@ int	standard_exec(t_command **cmd, char ***env)
 		free(data.pids);
 		return (1);
 	}
-	status = wait_for_processes(data.pids, data.cmd_count);
+	status = wait_for_processes(data.pids, data.cmd_count, *cmd);
 	return (status);
 }
 
@@ -93,18 +97,20 @@ void	exec_main(t_command **cmd, char ***env, int status)
 	}
 	else
 	{
+		setup_signals_parent();
 		pid = fork();
 		if (pid == -1)
 			return (perror("fork"));
 		if (pid == 0)
 		{
+			setup_signals_child();
 			status = standard_exec(cmd, env);
 			ft_listdelete(*cmd);
 			clean_tab(*env);
 			exit(WEXITSTATUS(status));
 		}
 		else
-			wait_pid(pid, &status);
+			wait_pid(pid, &status, *cmd);
 		update_exitvalue(WEXITSTATUS(status), env);
 	}
 }

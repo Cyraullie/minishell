@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:56:40 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/17 08:49:37 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/17 11:58:00 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,25 @@ void	create_error_msg(char *msg, char *string, int error_status)
 	exit(error_status);
 }
 
-void	wait_pid(pid_t pid, int *status)
+void	wait_pid(pid_t pid, int *status, t_command *cmd)
 {
-	is_child(pid);
+	is_child(1);
+	if (cmd->cmd)
+		if (!ft_strncmp(cmd->cmd, "./minishell", 12))
+			is_child(2);
 	waitpid(pid, status, 0);
 	is_child(0);
+	if (WIFSIGNALED(*status)) // ✅ Vérifie si le processus enfant a été tué par un signal
+	{
+		int signal = WTERMSIG(*status);
+		if (signal == SIGINT) // Si c'est SIGINT (^C), on affiche une nouvelle ligne et le prompt
+		{
+			write(1, "\n", 1);
+			// rl_on_new_line();
+			// rl_replace_line("", 0);
+			// rl_redisplay();
+		}
+	}
 }
 
 void	no_command_exit(t_exec_data *data, int **pipes)
