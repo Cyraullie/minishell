@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:38:10 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/15 16:57:42 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/17 08:58:21 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,12 @@ typedef struct s_command
 
 typedef struct s_exec_data
 {
-int			cmd_count;
-t_command	*cmd_tmp;
-int			**pipes;
-pid_t		*pids;
-char		***env;
-t_command	*head;
+	int			cmd_count;
+	t_command	*cmd_tmp;
+	int			**pipes;
+	pid_t		*pids;
+	char		***env;
+	t_command	*head;
 }	t_exec_data;
 
 // split_commands.c
@@ -150,6 +150,8 @@ void		move_tab(char **name, int *tab, int *pos);
 //alloc.c
 char		**alloc_name(int size, char **env, int *tab);
 int			*alloc_pos(int size);
+void		init_exec_data(t_exec_data *data, t_command *cmd);
+int			**create_pipes(int cmd_count);
 
 // list.c
 t_command	*ft_listnew(char **content);
@@ -206,11 +208,10 @@ int			max(int first, int second);
 char		*heredoc_expansion(char *line, char **env);
 
 // exec_main.c
+void		execute(t_command *cmd, char ***env);
+int			execute_commands(t_exec_data *data, t_command *first_cmd);
 void		exec_main(t_command **cmd, char ***env, int status);
-int			exec_single_builtins(t_command **cmd, char ***env);
-int			exec_builtin(t_command *cmd_tmp, char ***env, t_command **cmd);
 int			standard_exec(t_command **cmd, char ***env);
-int			exec_pipe(t_command *cmd, char ***env);
 
 // exec_path.c
 char		*get_executable_path(t_command *cmd, char ***env);
@@ -220,15 +221,29 @@ char		*get_full_path(char *path, char *cmd);
 int			check_slash(char *path);
 
 // exec_utils.c
-int			redir_single_builtin(t_command *cmd, char **env);
-void		execute(t_command *cmd, char ***env);
-void		exec_redir(t_command *cmd, int pipefd[2], char **env);
+void		create_error_msg(char *msg, char *string, int error_status);
+void		wait_pid(pid_t pid, int *status);
+void		no_command_exit(t_exec_data *data, int **pipes);
+t_command	*get_cmd_at_index(t_command *start, int target_index);
+void		close_pipes(int **pipes, int count);
 
 // redir.c
 t_command	*setup_redir_read(t_command *cmd, int i, char **env);
-void		create_error_msg(char *msg, char *string, int error_status);
-void		wait_pid(pid_t pid, int *status);
 int			heredoc_redir(t_command *cmd, char **env);
-int			setup_redir_in(t_command *cmd, char **env);
+int			redir_single_builtin(t_command *cmd, char **env);
+void		setup_input_redirection(t_command *cmd, char **env);
+void		setup_output_redirection(t_command *cmd);
+
+// child.c
+int			handle_child_process(t_command *cmd, int **pipes, int i,
+				t_exec_data *data);
+void		close_child_pipes(int **pipes, int cmd_count);
+void		setup_child_pipes(int **pipes, int i, int cmd_count,
+				t_command *cmd);
+int			wait_for_processes(pid_t *pids, int cmd_count);
+
+// single_builtin.c
+int			exec_single_builtins(t_command **cmd, char ***env);
+int			exec_builtin(t_command *cmd_tmp, char ***env, t_command **cmd);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 10:21:58 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/15 16:39:37 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/17 08:42:39 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,18 +62,71 @@ int	heredoc_redir(t_command *cmd, char **env)
 	return (heredocfd[0]);
 }
 
-int	setup_redir_in(t_command *cmd, char **env)
+/**
+ * @brief setup the correct redirection in case of a single builtin
+ * 
+ * @param cmd 
+ * @return int 0 on succes, 126 on failure (UNIX permission denied)
+ */
+int	redir_single_builtin(t_command *cmd, char **env)
 {
-	int	fdin;
+	int	fd;
 
-	if (cmd->heredoc)
-		fdin = heredoc_redir(cmd, env);
-	else
-		fdin = open(cmd->read, O_RDONLY);
-	if (fdin == -1)
+	if (cmd->read)
 	{
-		perror(cmd->read);
-		exit(1);
+		if (cmd->heredoc)
+			fd = heredoc_redir(cmd, env);
+		else
+			fd = open(cmd->read, O_RDONLY);
+		if (fd == -1)
+			return (perror(cmd->read), 126);
+		dup2(fd, STDIN_FILENO);
+		close(fd);
 	}
-	return (fdin);
+	if (cmd->write)
+	{
+		fd = open(cmd->write, cmd->write_type, 0755);
+		if (fd == -1)
+			return (perror(cmd->write), 126);
+		dup2(fd, STDOUT_FILENO);
+		close(fd);
+	}
+	return (0);
+}
+
+void	setup_input_redirection(t_command *cmd, char **env)
+{
+	int	fd;
+
+	if (cmd->read)
+	{
+		if (cmd->heredoc)
+			fd = heredoc_redir(cmd, env);
+		else
+			fd = open(cmd->read, O_RDONLY);
+		if (fd == -1)
+		{
+			perror(cmd->read);
+			exit(1);
+		}
+		dup2(fd, STDIN_FILENO);
+		close(fd);
+	}
+}
+
+void	setup_output_redirection(t_command *cmd)
+{
+	int	fd;
+
+	if (cmd->write)
+	{
+		fd = open(cmd->write, cmd->write_type, 0644);
+		if (fd == -1)
+		{
+			perror(cmd->write);
+			exit(1);
+		}
+		dup2(fd, STDOUT_FILENO);
+		close(fd);
+	}
 }
