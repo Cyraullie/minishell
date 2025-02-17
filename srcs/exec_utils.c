@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:56:40 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/17 08:49:37 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/17 10:39:03 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	create_error_msg(char *msg, char *string, int error_status)
 
 void	wait_pid(pid_t pid, int *status)
 {
-	is_child(pid);
+	is_child(1);
 	waitpid(pid, status, 0);
 	is_child(0);
 }
