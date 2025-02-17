@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 15:47:36 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/02/17 10:40:15 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/17 11:58:19 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,20 +31,6 @@ void	handle_sigint(int sig)
 	}
 }
 
-
-void	setup_signals_child(void)
-{
-	struct sigaction	sa;
-
-	ft_bzero(&sa, sizeof(sa));
-	sa.sa_handler = handle_sigint;
-	sa.sa_flags = 0;
-	sigemptyset(&sa.sa_mask);
-	sigaction(SIGINT, &sa, NULL);
-	signal(SIGQUIT, SIG_IGN);
-}
-
-
 /**
  * @brief handle "signal" for EOF (Ctrl+D)
  * 
@@ -63,26 +49,11 @@ void	handle_eof(char *line, char **env)
 }
 
 /**
- * @brief function to init all signal we need
+ * @brief 
  * 
+ * @param status 
+ * @return int 
  */
-void	init_sig(void)
-{
-	struct sigaction	sa;
-	struct sigaction	sq;
-
-	ft_bzero(&sa, sizeof(sa));
-	ft_bzero(&sq, sizeof(sq));
-	sa.sa_handler = handle_sigint;
-	sa.sa_flags = 0;
-	sigemptyset(&sa.sa_mask);
-	sq.sa_handler = SIG_IGN;
-	sq.sa_flags = 0;
-	sigemptyset(&sq.sa_mask);
-	sigaction(SIGINT, &sa, NULL);
-	sigaction(SIGQUIT, &sq, NULL);
-}
-
 int	is_child(int status)
 {
 	static int	bool = 0;
@@ -92,4 +63,32 @@ int	is_child(int status)
 	else
 		bool = status;
 	return (bool);
+}
+
+/**
+ * @brief Set the up signals parent object to ignore
+ * 
+ */
+void	setup_signals_parent(void)
+{
+	struct sigaction sa;
+
+	sa.sa_handler = SIG_IGN;  // Le parent ignore SIGINT
+	sigemptyset(&sa.sa_mask);
+	sa.sa_flags = 0;
+	sigaction(SIGINT, &sa, NULL);
+}
+
+/**
+ * @brief Set the up signals child object
+ * 
+ */
+void	setup_signals_child(void)
+{
+	struct sigaction sa;
+
+	sa.sa_handler = handle_sigint;  // L'enfant gère SIGINT normalement
+	sigemptyset(&sa.sa_mask);
+	sa.sa_flags = 0;
+	sigaction(SIGINT, &sa, NULL);
 }

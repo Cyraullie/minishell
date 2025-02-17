@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 10:21:58 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/17 09:16:50 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/17 11:48:24 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,14 @@ int	heredoc_redir(t_command *cmd, char **env)
 	char	*line;
 	int		len;
 
+
+	setup_signals_parent();
 	len = ft_strlen(cmd->read);
 	pipe(heredocfd);
 	line = readline(">");
 	while (line)
 	{
+		setup_signals_child();
 		if (!ft_strncmp(line, cmd->read, max(len, ft_strlen(line) - 1)))
 			break ;
 		line = heredoc_expansion(line, env);

@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:56:40 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/17 11:10:17 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/17 11:58:00 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,17 @@ void	wait_pid(pid_t pid, int *status, t_command *cmd)
 			is_child(2);
 	waitpid(pid, status, 0);
 	is_child(0);
+	if (WIFSIGNALED(*status)) // ✅ Vérifie si le processus enfant a été tué par un signal
+	{
+		int signal = WTERMSIG(*status);
+		if (signal == SIGINT) // Si c'est SIGINT (^C), on affiche une nouvelle ligne et le prompt
+		{
+			write(1, "\n", 1);
+			// rl_on_new_line();
+			// rl_replace_line("", 0);
+			// rl_redisplay();
+		}
+	}
 }
 
 void	no_command_exit(t_exec_data *data, int **pipes)

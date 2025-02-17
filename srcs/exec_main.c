@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 11:35:35 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/17 11:05:35 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/17 11:38:07 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ int	execute_commands(t_exec_data *data, t_command *first_cmd)
 	t_command	*current_cmd;
 
 	i = data->cmd_count - 1;
+	setup_signals_parent();
 	while (i >= 0)
 	{
 		current_cmd = get_cmd_at_index(first_cmd, i);
@@ -52,7 +53,10 @@ int	execute_commands(t_exec_data *data, t_command *first_cmd)
 		if (data->pids[i] == -1)
 			return (1);
 		if (data->pids[i] == 0)
+		{
+			setup_signals_child();
 			handle_child_process(current_cmd, data->pipes, i, data);
+		}
 		i--;
 	}
 	if (data->pipes)
@@ -93,11 +97,13 @@ void	exec_main(t_command **cmd, char ***env, int status)
 	}
 	else
 	{
+		setup_signals_parent();
 		pid = fork();
 		if (pid == -1)
 			return (perror("fork"));
 		if (pid == 0)
 		{
+			setup_signals_child();
 			status = standard_exec(cmd, env);
 			ft_listdelete(*cmd);
 			clean_tab(*env);

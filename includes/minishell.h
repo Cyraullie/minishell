@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:38:10 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/17 11:05:49 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/17 11:49:45 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,10 +156,15 @@ void		ft_listdelete(t_command *list);
 
 // signal.c
 void		handle_sigint(int sig);
-void		init_sig(void);
 void		handle_eof(char *line, char **env);
 int			is_child(int status);
 void		setup_signals_child(void);
+void		setup_signals_parent(void);
+
+// init.c
+void		init_sig(void);
+void		increment_shlvl(char ***env);
+void		init_minishell(char ***env, char **envp);
 
 // token.c
 void		assign_token(t_command **cmd, char **env);
