@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 16:23:23 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/02/17 09:30:49 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/17 14:23:49 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,4 +100,13 @@ int	**create_pipes(int cmd_count)
 		i++;
 	}
 	return (pipes);
+}
+
+void	interrupt_exit(t_exec_data *data)
+{
+	clean_tab(*data->env);
+	ft_listdelete(data->head);
+	free(data->pids);
+	close_pipes(data->pipes, data->cmd_count);
+	exit (0);
 }

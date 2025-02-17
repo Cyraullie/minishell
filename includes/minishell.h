@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:38:10 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/17 11:27:15 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/17 14:24:04 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,7 @@ char		**alloc_name(int size, char **env, int *tab);
 int			*alloc_pos(int size);
 void		init_exec_data(t_exec_data *data, t_command *cmd);
 int			**create_pipes(int cmd_count);
+void		interrupt_exit(t_exec_data *data);
 
 // list.c
 t_command	*ft_listnew(char **content);
@@ -234,7 +235,7 @@ void		close_pipes(int **pipes, int count);
 t_command	*setup_redir_read(t_command *cmd, int i, char **env);
 int			heredoc_redir(t_command *cmd, char **env);
 int			redir_single_builtin(t_command *cmd, char **env);
-void		setup_input_redirection(t_command *cmd, char **env);
+void		setup_input_redirection(t_command *cmd, char **env, t_exec_data *data);
 void		setup_output_redirection(t_command *cmd);
 
 // child.c

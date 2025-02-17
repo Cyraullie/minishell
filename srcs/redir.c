@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 10:21:58 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/17 11:43:42 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/17 14:23:44 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ int	redir_single_builtin(t_command *cmd, char **env)
 	return (0);
 }
 
-void	setup_input_redirection(t_command *cmd, char **env)
+void	setup_input_redirection(t_command *cmd, char **env, t_exec_data *data)
 {
 	int	fd;
 
@@ -119,7 +119,7 @@ void	setup_input_redirection(t_command *cmd, char **env)
 		{
 			fd = heredoc_redir(cmd, env);
 			if (fd == -1)
-				return ;
+				interrupt_exit(data);
 		}
 		else
 			fd = open(cmd->read, O_RDONLY);
