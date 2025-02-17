@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 08:56:18 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/12 14:54:04 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/14 13:35:41 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
  * @param cmd an element of the linked list
  * @return t_command* the cmd param modified
  */
-t_command	*get_redir(t_command *cmd)
+t_command	*get_redir(t_command *cmd, char **env)
 {
 	int	i;
 
@@ -26,12 +26,7 @@ t_command	*get_redir(t_command *cmd)
 	{
 		if (!ft_strncmp(cmd->raw[i], "<", 2)
 			|| !ft_strncmp(cmd->raw[i], "<<", 3))
-		{
-			//TODO add heredoc to this
-			if (!ft_strncmp(cmd->raw[i], "<<", 3))
-				cmd->heredoc = 1;
-			cmd->read = cmd->raw[i + 1];
-		}
+			setup_redir_read(cmd, i, env);
 		if (!ft_strncmp(cmd->raw[i], ">", 2)
 			|| !ft_strncmp(cmd->raw[i], ">>", 3))
 		{
@@ -141,7 +136,7 @@ void	assign_token(t_command **cmd, char **env)
 	while (*cmd)
 	{
 		(*cmd)->raw = expansion((*cmd)->raw, env);
-		*cmd = get_redir(*cmd);
+		*cmd = get_redir(*cmd, env);
 		*cmd = get_cmd(*cmd);
 		*cmd = get_cmd_args(*cmd);
 		if (i > 0 && !(*cmd)->heredoc && !(*cmd)->read)

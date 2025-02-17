@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 16:31:24 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/10 16:00:17 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/15 17:06:10 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,7 +163,7 @@ char	**expansion(char **tab, char **env)
 	{
 		if (!ft_strncmp(tab[i], "$?", 3))
 			new_tab[i] = ft_itoa(get_exitvalue(env));
-		else if (ft_strchr(tab[i], '$'))
+		else if (ft_strchr(tab[i], '$')) //TODO change strchr to make sure there is something behind $
 			new_tab[i] = expand_var(tab[i], env, 0, 0);
 		else
 			new_tab[i] = ft_strdup(tab[i]);

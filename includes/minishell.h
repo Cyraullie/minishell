@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:38:10 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/14 16:45:51 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/17 10:38:00 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,16 @@ typedef struct s_command
 	char				**raw;
 	struct s_command	*next;
 }	t_command;
+
+typedef struct s_exec_data
+{
+	int			cmd_count;
+	t_command	*cmd_tmp;
+	int			**pipes;
+	pid_t		*pids;
+	char		***env;
+	t_command	*head;
+}	t_exec_data;
 
 // split_commands.c
 char		**mini_split(char *s);
@@ -135,6 +145,8 @@ void		move_tab(char **name, int *tab, int *pos);
 //alloc.c
 char		**alloc_name(int size, char **env, int *tab);
 int			*alloc_pos(int size);
+void		init_exec_data(t_exec_data *data, t_command *cmd);
+int			**create_pipes(int cmd_count);
 
 // list.c
 t_command	*ft_listnew(char **content);
@@ -172,6 +184,10 @@ int			check_syntax(char *line, char ***env);
 
 // expansion.c
 char		**expansion(char **tab, char **env);
+int			get_new_len(char *str, char **env, int in_d_quotes, \
+			int in_s_quotes);
+char		*get_var_name(char *str, int i);
+void		replace_var(char *token, char *new_token, int *index, char **env);
 
 // remove_quotes.c
 char		*remove_quotes(char *token);
@@ -183,14 +199,15 @@ int			get_exitvalue(char **env);
 int			exec_builtin(t_command *cmd_tmp, char ***env, t_command **cmd);
 
 //heredoc.c
-void		heredoc(t_command *cmd);
+void		heredoc(t_command *cmd, char **env);
+int			max(int first, int second);
+char		*heredoc_expansion(char *line, char **env);
 
 // exec_main.c
-void		exec_main(t_command **cmd, char ***env);
-int			exec_single_builtins(t_command **cmd, char ***env);
-int			exec_builtin(t_command *cmd_tmp, char ***env, t_command **cmd);
+void		execute(t_command *cmd, char ***env);
+int			execute_commands(t_exec_data *data, t_command *first_cmd);
+void		exec_main(t_command **cmd, char ***env, int status);
 int			standard_exec(t_command **cmd, char ***env);
-int			exec_pipe(t_command *cmd, char ***env);
 
 // exec_path.c
 char		*get_executable_path(t_command *cmd, char ***env);
@@ -200,10 +217,29 @@ char		*get_full_path(char *path, char *cmd);
 int			check_slash(char *path);
 
 // exec_utils.c
-int			redir_single_builtin(t_command *cmd);
-void		execute(t_command *cmd, char ***env);
-void		exec_redir(t_command *cmd, int pipefd[2]);
 void		create_error_msg(char *msg, char *string, int error_status);
 void		wait_pid(pid_t pid, int *status, t_command *cmd);
+void		no_command_exit(t_exec_data *data, int **pipes);
+t_command	*get_cmd_at_index(t_command *start, int target_index);
+void		close_pipes(int **pipes, int count);
+
+// redir.c
+t_command	*setup_redir_read(t_command *cmd, int i, char **env);
+int			heredoc_redir(t_command *cmd, char **env);
+int			redir_single_builtin(t_command *cmd, char **env);
+void		setup_input_redirection(t_command *cmd, char **env);
+void		setup_output_redirection(t_command *cmd);
+
+// child.c
+int			handle_child_process(t_command *cmd, int **pipes, int i,
+				t_exec_data *data);
+void		close_child_pipes(int **pipes, int cmd_count);
+void		setup_child_pipes(int **pipes, int i, int cmd_count,
+				t_command *cmd);
+int			wait_for_processes(pid_t *pids, int cmd_count);
+
+// single_builtin.c
+int			exec_single_builtins(t_command **cmd, char ***env);
+int			exec_builtin(t_command *cmd_tmp, char ***env, t_command **cmd);
 
 #endif

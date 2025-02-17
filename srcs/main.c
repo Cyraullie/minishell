@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:35:36 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/14 16:43:51 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/17 10:40:04 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	main(int ac, char **av, char **envp)
 		handle_eof(line, env);
 		handle_history(line, env);
 		if (!parsing(line, &cmd, &env))
-			exec_main(&cmd, &env);
+			exec_main(&cmd, &env, 0);
 		ft_listdelete(cmd);
 	}
 	return (0);
