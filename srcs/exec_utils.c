@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:56:40 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/17 11:31:58 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/17 14:07:22 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	create_error_msg(char *msg, char *string, int error_status,
 		t_exec_data *data)
 {
 	string = ft_strjoin(string, msg);
-	ft_putstr_fd(string, 2); //TODO free what need be
+	ft_putstr_fd(string, 2);
 	free(string);
 	ft_listdelete(data->head);
 	clean_tab(*data->env);

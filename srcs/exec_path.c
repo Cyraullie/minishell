@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:58:22 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/17 11:25:40 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/17 11:49:39 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ char	*get_executable_path(t_command *cmd, char ***env, t_exec_data *data)
 	char		*path;
 	struct stat	buf;
 
+	ft_memset(&buf, 0, sizeof(struct stat));
 	path = find_path(cmd->cmd, env);
 	if (path)
 		if (!access(path, X_OK))
