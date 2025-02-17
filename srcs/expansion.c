@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 16:31:24 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/15 17:06:10 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/17 11:05:27 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,7 @@ char	*expand_var(char *token, char **env, int in_d_quotes, int in_s_quotes)
 	{
 		if (token[index[0]] == '\'' || token[index[0]] == '\"')
 			toggle_quotes(token, index[0], &in_d_quotes, &in_s_quotes);
-		if (token[index[0]] == '$' && !in_s_quotes)
+		if (token[index[0]] == '$' && !in_s_quotes) //TODO change condition to make sure there is something behind $
 			replace_var(token, new_token, index, env);
 		else
 		{
@@ -163,7 +163,7 @@ char	**expansion(char **tab, char **env)
 	{
 		if (!ft_strncmp(tab[i], "$?", 3))
 			new_tab[i] = ft_itoa(get_exitvalue(env));
-		else if (ft_strchr(tab[i], '$')) //TODO change strchr to make sure there is something behind $
+		else if (ft_strchr(tab[i], '$'))
 			new_tab[i] = expand_var(tab[i], env, 0, 0);
 		else
 			new_tab[i] = ft_strdup(tab[i]);
