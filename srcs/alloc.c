@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   alloc.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 16:23:23 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/02/05 12:05:01 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/17 09:30:49 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,44 @@ char	**alloc_name(int size, char **env, int *tab)
 		clean_tab(tmp);
 	}
 	return (name);
+}
+
+void	init_exec_data(t_exec_data *data, t_command *cmd)
+{
+	data->cmd_count = 0;
+	data->cmd_tmp = cmd;
+	data->head = cmd;
+	while (data->cmd_tmp)
+	{
+		data->cmd_count++;
+		data->cmd_tmp = data->cmd_tmp->next;
+	}
+	data->pipes = create_pipes(data->cmd_count);
+	data->pids = ft_calloc(sizeof(pid_t), data->cmd_count);
+}
+
+int	**create_pipes(int cmd_count)
+{
+	int	**pipes;
+	int	i;
+
+	if (cmd_count <= 1)
+		return (NULL);
+	pipes = ft_calloc(sizeof(int *), (cmd_count - 1));
+	if (!pipes)
+		return (NULL);
+	i = 0;
+	while (i < cmd_count - 1)
+	{
+		pipes[i] = ft_calloc(sizeof(int), 2);
+		if (pipe(pipes[i]) == -1)
+		{
+			while (--i >= 0)
+				free(pipes[i]);
+			free(pipes);
+			return (NULL);
+		}
+		i++;
+	}
+	return (pipes);
 }
