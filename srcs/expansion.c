@@ -6,34 +6,24 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 16:31:24 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/17 11:05:27 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/17 15:19:31 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-/**
- * @brief Get the variable name  after the $ symbol
- * 
- * @param str 
- * @param i the index where we start looking for the var name in str
- * @return char* the env variable name
- */
-char	*get_var_name(char *str, int i)
+int	check_solo_dollar(char *str, int in_d_quotes, int in_s_quotes)
 {
-	int		len;
-	char	*var_name;
-
-	len = 0;
-	while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
-	{
-		i++;
-		len++;
-	}
-	var_name = ft_substr(str, i - len, len);
-	if (!var_name)
-		return (NULL);
-	return (var_name);
+	
+	if (!str[1])
+		return (1);
+	if (!in_d_quotes && !in_s_quotes && ft_isspace(str[1]))
+		return (1);
+	if (in_d_quotes && str[1] == '\"')
+		return (1);
+	if (in_s_quotes && str[1] == '\'')
+		return (1);
+	return (0);
 }
 
 /**
@@ -58,7 +48,8 @@ int	get_new_len(char *str, char **env, int in_d_quotes, int in_s_quotes)
 	{
 		if (str[i] == '\'' || str[i] == '\"')
 			toggle_quotes(str, i, &in_d_quotes, &in_s_quotes);
-		if (str[i] == '$' && !in_s_quotes)
+		if (str[i] == '$' && !in_s_quotes
+			&& !check_solo_dollar(&str[i], in_d_quotes, in_s_quotes))
 		{
 			var_name = get_var_name(str, i + 1);
 			if (!var_name)
@@ -134,7 +125,8 @@ char	*expand_var(char *token, char **env, int in_d_quotes, int in_s_quotes)
 	{
 		if (token[index[0]] == '\'' || token[index[0]] == '\"')
 			toggle_quotes(token, index[0], &in_d_quotes, &in_s_quotes);
-		if (token[index[0]] == '$' && !in_s_quotes) //TODO change condition to make sure there is something behind $
+		if (token[index[0]] == '$' && !in_s_quotes 
+			&& !check_solo_dollar(&token[index[0]], in_d_quotes, in_s_quotes))
 			replace_var(token, new_token, index, env);
 		else
 		{

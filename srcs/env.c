@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 15:54:59 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/02/06 11:23:06 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/17 15:01:35 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,28 @@ int	contain_equal(char *str)
 			return (1);
 	}
 	return (0);
+}
+
+/**
+ * @brief Get the variable name  after the $ symbol
+ * 
+ * @param str 
+ * @param i the index where we start looking for the var name in str
+ * @return char* the env variable name
+ */
+char	*get_var_name(char *str, int i)
+{
+	int		len;
+	char	*var_name;
+
+	len = 0;
+	while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
+	{
+		i++;
+		len++;
+	}
+	var_name = ft_substr(str, i - len, len);
+	if (!var_name)
+		return (NULL);
+	return (var_name);
 }
