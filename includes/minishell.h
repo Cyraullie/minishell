@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:38:10 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/17 14:24:04 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/17 15:02:22 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ void		exit_and_free(char ***env, t_command **list, int value);
 //env.c
 int			ft_env(char **cmd, char **env);
 int			contain_equal(char *str);
+char		*get_var_name(char *str, int i);
 
 //pwd.c
 int			ft_pwd(char **cmd);
