@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 11:35:35 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/17 09:25:35 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/17 10:10:17 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,3 +111,4 @@ void	exec_main(t_command **cmd, char ***env, int status)
 
 //TODO child leaks on command not found
 //TODO child leaks if builtins in standard exec
+//TODO permission denied leaks

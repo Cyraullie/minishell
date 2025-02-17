@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_path.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:58:22 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/14 14:43:56 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/17 10:09:52 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	*get_executable_path(t_command *cmd, char ***env)
 			if (!access(cmd->cmd, X_OK))
 				return (cmd->cmd);
 			else
-				exit(126);
+				create_error_msg(": permission denied\n", cmd->cmd, 126);
 		}
 		else
 			exit (1);
