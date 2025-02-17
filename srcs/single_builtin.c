@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 08:48:11 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/17 08:50:02 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/17 09:24:43 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,13 @@ int	exec_single_builtins(t_command **cmd, char ***env)
 	}
 	rvalue = redir_single_builtin(*cmd, *env);
 	if (rvalue)
+	{
+		dup2(fdin_cpy, STDIN_FILENO);
+		dup2(fdout_cpy, STDOUT_FILENO);
+		close(fdin_cpy);
+		close(fdout_cpy);
 		return (rvalue);
+	}
 	rvalue = exec_builtin(*cmd, env, cmd);
 	dup2(fdin_cpy, STDIN_FILENO);
 	dup2(fdout_cpy, STDOUT_FILENO);
