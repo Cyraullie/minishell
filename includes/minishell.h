@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:38:10 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/17 15:02:22 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/17 15:59:29 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,7 +207,7 @@ int			get_exitvalue(char **env);
 int			exec_builtin(t_command *cmd_tmp, char ***env, t_command **cmd);
 
 //heredoc.c
-void		heredoc(t_command *cmd, char **env);
+void		heredoc_redir(t_command *cmd, char **env);
 int			max(int first, int second);
 char		*heredoc_expansion(char *line, char **env);
 
@@ -218,7 +218,8 @@ void		exec_main(t_command **cmd, char ***env, int status);
 int			standard_exec(t_command **cmd, char ***env);
 
 // exec_path.c
-char		*get_executable_path(t_command *cmd, char ***env, t_exec_data *data);
+char		*get_executable_path(t_command *cmd, char ***env,
+				t_exec_data *data);
 char		*find_path(char *cmd, char ***env);
 char		*search_env(char **env);
 char		*get_full_path(char *path, char *cmd);
@@ -226,7 +227,7 @@ int			check_slash(char *path);
 
 // exec_utils.c
 void		create_error_msg(char *msg, char *string, int error_status,
-		t_exec_data *data);
+				t_exec_data *data);
 void		wait_pid(pid_t pid, int *status, t_command *cmd);
 void		no_command_exit(t_exec_data *data, int **pipes);
 t_command	*get_cmd_at_index(t_command *start, int target_index);
@@ -234,9 +235,9 @@ void		close_pipes(int **pipes, int count);
 
 // redir.c
 t_command	*setup_redir_read(t_command *cmd, int i, char **env);
-int			heredoc_redir(t_command *cmd, char **env);
 int			redir_single_builtin(t_command *cmd, char **env);
-void		setup_input_redirection(t_command *cmd, char **env, t_exec_data *data);
+void		setup_input_redirection(t_command *cmd, char **env,
+				t_exec_data *data);
 void		setup_output_redirection(t_command *cmd);
 
 // child.c

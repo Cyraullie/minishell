@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 16:31:24 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/17 15:19:31 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/17 16:05:36 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int	check_solo_dollar(char *str, int in_d_quotes, int in_s_quotes)
 {
-	
 	if (!str[1])
 		return (1);
 	if (!in_d_quotes && !in_s_quotes && ft_isspace(str[1]))
@@ -35,7 +34,7 @@ int	check_solo_dollar(char *str, int in_d_quotes, int in_s_quotes)
  * @param in_s_quotes a marker to know if we are inside single quotes
  * @return int the len after expansion
  */
-int	get_new_len(char *str, char **env, int in_d_quotes, int in_s_quotes)
+int	get_new_len(char *str, char **env, int dq, int sq)
 {
 	int		len;
 	char	*var_name;
@@ -47,9 +46,8 @@ int	get_new_len(char *str, char **env, int in_d_quotes, int in_s_quotes)
 	while (str[++i])
 	{
 		if (str[i] == '\'' || str[i] == '\"')
-			toggle_quotes(str, i, &in_d_quotes, &in_s_quotes);
-		if (str[i] == '$' && !in_s_quotes
-			&& !check_solo_dollar(&str[i], in_d_quotes, in_s_quotes))
+			toggle_quotes(str, i, &dq, &sq);
+		if (str[i] == '$' && !sq && !check_solo_dollar(&str[i], dq, sq))
 		{
 			var_name = get_var_name(str, i + 1);
 			if (!var_name)
@@ -125,7 +123,7 @@ char	*expand_var(char *token, char **env, int in_d_quotes, int in_s_quotes)
 	{
 		if (token[index[0]] == '\'' || token[index[0]] == '\"')
 			toggle_quotes(token, index[0], &in_d_quotes, &in_s_quotes);
-		if (token[index[0]] == '$' && !in_s_quotes 
+		if (token[index[0]] == '$' && !in_s_quotes
 			&& !check_solo_dollar(&token[index[0]], in_d_quotes, in_s_quotes))
 			replace_var(token, new_token, index, env);
 		else

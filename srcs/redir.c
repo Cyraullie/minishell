@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 10:21:58 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/17 14:46:29 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/17 15:58:54 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,33 +39,6 @@ t_command	*setup_redir_read(t_command *cmd, int i, char **env)
 		cmd->heredoc = 1;
 	cmd->read = cmd->raw[i + 1];
 	return (cmd);
-}
-
-int	heredoc_redir(t_command *cmd, char **env)
-{
-	int		heredocfd[2];
-	char	*line;
-	int		len;
-
-	pipe(heredocfd);
-	g_heredoc_interrupted = 0;
-	setup_signals_heredoc();
-	len = ft_strlen(cmd->read);
-	line = readline("> ");
-	while (line && !g_heredoc_interrupted)
-	{
-		if (!ft_strncmp(line, cmd->read, max(len, ft_strlen(line) - 1)))
-			break ;
-		line = heredoc_expansion(line, env);
-		ft_putendl_fd(line, heredocfd[1]);
-		free(line);
-		line = readline("> ");
-	}
-	free(line);
-	close(heredocfd[1]);
-	if (g_heredoc_interrupted)
-		return (close(heredocfd[0]), -1);
-	return (heredocfd[0]);
 }
 
 int	redir_singleout_builtin(t_command *cmd)
