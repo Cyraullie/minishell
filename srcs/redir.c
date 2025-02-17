@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 10:21:58 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/17 08:42:39 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/17 09:16:50 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	redir_single_builtin(t_command *cmd, char **env)
 		else
 			fd = open(cmd->read, O_RDONLY);
 		if (fd == -1)
-			return (perror(cmd->read), 126);
+			return (perror(cmd->read), 1);
 		dup2(fd, STDIN_FILENO);
 		close(fd);
 	}
@@ -87,7 +87,7 @@ int	redir_single_builtin(t_command *cmd, char **env)
 	{
 		fd = open(cmd->write, cmd->write_type, 0755);
 		if (fd == -1)
-			return (perror(cmd->write), 126);
+			return (perror(cmd->write), 1);
 		dup2(fd, STDOUT_FILENO);
 		close(fd);
 	}
