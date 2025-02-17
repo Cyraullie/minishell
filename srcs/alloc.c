@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 16:23:23 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/02/17 08:46:58 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/17 09:30:49 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,13 +83,13 @@ int	**create_pipes(int cmd_count)
 
 	if (cmd_count <= 1)
 		return (NULL);
-	pipes = malloc(sizeof(int *) * (cmd_count - 1));
+	pipes = ft_calloc(sizeof(int *), (cmd_count - 1));
 	if (!pipes)
 		return (NULL);
 	i = 0;
 	while (i < cmd_count - 1)
 	{
-		pipes[i] = malloc(sizeof(int) * 2);
+		pipes[i] = ft_calloc(sizeof(int), 2);
 		if (pipe(pipes[i]) == -1)
 		{
 			while (--i >= 0)
