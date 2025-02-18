@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 08:44:49 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/17 14:22:11 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/18 09:29:47 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,16 +49,19 @@ void	setup_child_pipes(int **pipes, int i, int cmd_count, t_command *cmd)
 int	wait_for_processes(pid_t *pids, int cmd_count, t_command *cmd)
 {
 	int			i;
-	int			status[100];
+	int			status;
+	int			return_status;
 	t_command	*actual_cmd;
 
 	i = cmd_count - 1;
 	while (i >= 0)
 	{
 		actual_cmd = get_cmd_at_index(cmd, i);
-		wait_pid(pids[i], &status[i], actual_cmd);
+		wait_pid(pids[i], &status, actual_cmd);
+		if (i == cmd_count -1)
+			return_status = status;
 		i--;
 	}
 	free(pids);
-	return (status[cmd_count - 1]);
+	return (return_status);
 }
