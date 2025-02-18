@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   single_builtin.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 08:48:11 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/17 09:24:43 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/18 16:42:10 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	exec_builtin(t_command *cmd_tmp, char ***env, t_command **cmd)
 	else if (!ft_strncmp(cmd_tmp->cmd, "cd", 3))
 		rvalue = ft_cd(cmd_tmp->cmd_tab, env);
 	else if (!ft_strncmp(cmd_tmp->cmd, "pwd", 4))
-		rvalue = ft_pwd(cmd_tmp->cmd_tab);
+		rvalue = ft_pwd();
 	else if (!ft_strncmp(cmd_tmp->cmd, "export", 7))
 		rvalue = ft_export(cmd_tmp->cmd_tab, env);
 	else if (!ft_strncmp(cmd_tmp->cmd, "unset", 6))

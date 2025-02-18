@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 15:57:59 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/02/18 16:59:09 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/18 16:59:51 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ char	*get_userhome(char **env)
 	char	*userhome_path;
 	char	*user;
 
-	user = get_env_content("USER", env);
+	user = get_env_content("?USER", env);
 	if (!user)
 		return (NULL);
 	userhome_path = ft_strjoin("/home/", user);

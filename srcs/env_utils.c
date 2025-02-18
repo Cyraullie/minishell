@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 16:01:27 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/02/13 11:22:55 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/18 16:40:58 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,8 @@ char	**create_env_array(char **envp)
 	char	**env;
 	char	*shell_content;
 
-	i = 0;
-	env = NULL;
-	while (envp[i])
-		i++;
-	env = ft_calloc(sizeof(char *), (i + 5));
+	i = get_tab_size(envp);
+	env = ft_calloc(sizeof(char *), (i + 6));
 	if (!env)
 		return (NULL);
 	i = -1;
@@ -64,6 +61,9 @@ char	**create_env_array(char **envp)
 			return (clean_tab(env), NULL);
 	}
 	env[i++] = ft_strdup("?=0");
+	shell_content = get_env_content("USER", env);
+	env[i++] = ft_strdup_and_free(ft_strjoin("?USER=", shell_content));
+	free(shell_content);
 	shell_content = get_env_content("SHLVL", env);
 	if (!shell_content)
 		env[i++] = ft_strdup("SHLVL=1");
@@ -92,4 +92,23 @@ char	*get_env_content(char *var_name, char **env)
 		i++;
 	content = ft_substr(env[ienv], i + 1, ft_strlen(env[ienv]));
 	return (content);
+}
+
+char	*ft_strdup_and_free(char *s)
+{
+	char	*cpy;
+	int		i;
+
+	i = 0;
+	cpy = malloc(ft_strlen(s) * sizeof(char) + 1);
+	if (cpy == NULL)
+		return (NULL);
+	while (s[i])
+	{
+		cpy[i] = s[i];
+		i++;
+	}
+	free(s);
+	cpy[i] = 0;
+	return (cpy);
 }

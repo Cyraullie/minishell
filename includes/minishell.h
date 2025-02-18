@@ -86,13 +86,13 @@ int			contain_equal(char *str);
 char		*get_var_name(char *str, int i);
 
 //pwd.c
-int			ft_pwd(char **cmd);
+int			ft_pwd(void);
 
 //cd.c
 int			ft_cd(char **cmd, char ***env);
 char		*get_path(void);
 char		*get_userhome(char **env);
-void		ft_chdir(char **cmd, char ***env);
+void		ft_chdir(char **cmd, char ***env, int cnt);
 
 //update_pwd.c
 void		update_pwd(char *path, char ***env);
@@ -106,6 +106,7 @@ void		del_envline(char **env, char **nenv, char *title);
 int			get_envline(char **env, char *title);
 char		*get_env_content(char *var_name, char **env);
 char		**create_env_array(char **envp);
+char		*ft_strdup_and_free(char *s);
 
 //export.c
 int			ft_export(char **cmd, char ***env);
