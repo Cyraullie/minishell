@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 15:57:59 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/02/06 11:22:39 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/18 16:07:52 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	ft_cd(char **cmd, char ***env)
 {
 	char	*userhome;
 
-	userhome = get_userhome();
+	userhome = get_userhome(*env);
 	if (cmd[2])
 	{
 		ft_putstr_fd("cd: too many arguments\n", 2);
@@ -62,21 +62,18 @@ char	*get_path(void)
  * 
  * @return char* userhome path
  */
-char	*get_userhome(void)
+char	*get_userhome(char **env)
 {
-	char	*path;
-	char	**path_array;
 	char	*userhome_path;
+	char	*user;
 
-	path = get_path();
-	path_array = ft_split(path, '/');
-	free(path);
-	if (!path_array)
+	user = get_env_content("USER", env);
+	if (!user)
 		return (NULL);
-	userhome_path = ft_strjoin("/home/", path_array[1]);
+	userhome_path = ft_strjoin("/home/", user);
 	if (!userhome_path)
 		return (NULL);
-	clean_tab(path_array);
+	free(user);
 	return (userhome_path);
 }
 
@@ -104,7 +101,7 @@ void	ft_chdir(char **cmd, char ***env)
 			perror(cmd[1]);
 		return ;
 	}
-	path = get_userhome();
+	path = get_userhome(*env);
 	update_oldpwd(get_path(), env);
 	chdir(path);
 	update_pwd(get_path(), env);
