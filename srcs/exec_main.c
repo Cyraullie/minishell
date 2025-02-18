@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_main.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 11:35:35 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/17 15:01:01 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/18 13:42:36 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	execute(t_command *cmd, char ***env, t_exec_data *data)
 		exit(rvalue);
 	}
 	path = get_executable_path(cmd, env, data);
-	if (!path)
+	if (!path || !cmd->cmd[0])
 		create_error_msg(": command not found\n", cmd->cmd, 127, data);
 	if (execve(path, cmd->cmd_tab, *env) == -1)
 	{
@@ -58,7 +58,7 @@ int	execute_commands(t_exec_data *data, t_command *first_cmd)
 			return (1);
 		if (data->pids[i] == 0)
 		{
-			setup_signals_child();
+			setup_signals_child(first_cmd);
 			handle_child_process(current_cmd, data->pipes, i, data);
 		}
 		i--;
@@ -107,7 +107,7 @@ void	exec_main(t_command **cmd, char ***env, int status)
 			return (perror("fork"));
 		if (pid == 0)
 		{
-			setup_signals_child();
+			setup_signals_child(*cmd);
 			status = standard_exec(cmd, env);
 			ft_listdelete(*cmd);
 			clean_tab(*env);

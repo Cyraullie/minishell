@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 16:23:23 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/02/17 15:59:41 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/18 10:29:14 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ int	**create_pipes(int cmd_count)
 			while (--i >= 0)
 				free(pipes[i]);
 			free(pipes);
+			perror("pipe");
 			return (NULL);
 		}
 		i++;

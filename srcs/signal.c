@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 15:47:36 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/02/17 14:05:39 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/18 13:54:16 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,20 @@ void	handle_sigint(int sig)
 		}
 	}
 }
+
+void	handle_sigquit(int sig)
+{
+	if (sig == SIGQUIT)
+	{
+		write(1, "\n", 1);
+		if (is_child(-1) == 0 || is_child(-1) == 2)
+		{
+			rl_on_new_line();
+			rl_replace_line("", 0);
+			rl_redisplay();
+		}
+	}
+}	
 
 /**
  * @brief handle "signal" for EOF (Ctrl+D)
@@ -77,20 +91,6 @@ void	setup_signals_parent(void)
 	struct sigaction	sa;
 
 	sa.sa_handler = SIG_IGN;
-	sigemptyset(&sa.sa_mask);
-	sa.sa_flags = 0;
-	sigaction(SIGINT, &sa, NULL);
-}
-
-/**
- * @brief Set the up signals child object
- * 
- */
-void	setup_signals_child(void)
-{
-	struct sigaction	sa;
-
-	sa.sa_handler = handle_sigint;
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = 0;
 	sigaction(SIGINT, &sa, NULL);

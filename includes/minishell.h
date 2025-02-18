@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:38:10 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/17 15:59:29 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/18 13:54:31 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,9 +160,8 @@ void		ft_listdelete(t_command *list);
 void		handle_sigint(int sig);
 void		handle_eof(char *line, char **env);
 int			is_child(int status);
-void		setup_signals_child(void);
 void		setup_signals_parent(void);
-void		setup_signals_heredoc(void);
+void		handle_sigquit(int sig);
 
 // init.c
 void		init_sig(void);
@@ -206,8 +205,11 @@ void		update_exitvalue(int eval, char ***env);
 int			get_exitvalue(char **env);
 int			exec_builtin(t_command *cmd_tmp, char ***env, t_command **cmd);
 
+// heredoc_sig.c
+void		setup_signals_heredoc(void);
+
 //heredoc.c
-void		heredoc_redir(t_command *cmd, char **env);
+int			heredoc_redir(t_command *cmd, char **env);
 int			max(int first, int second);
 char		*heredoc_expansion(char *line, char **env);
 
@@ -247,6 +249,7 @@ void		close_child_pipes(int **pipes, int cmd_count);
 void		setup_child_pipes(int **pipes, int i, int cmd_count,
 				t_command *cmd);
 int			wait_for_processes(pid_t *pids, int cmd_count, t_command *cmd);
+void		setup_signals_child(t_command *cmd);
 
 // single_builtin.c
 int			exec_single_builtins(t_command **cmd, char ***env);
