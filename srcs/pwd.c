@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 15:57:33 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/02/18 11:43:54 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/18 16:41:40 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,10 @@
  * @param cmd command line array
  * @return char** the state of the actual environment variable
  */
-int	ft_pwd(char **cmd)
+int	ft_pwd(void)
 {
 	char	*buf;
 
-	(void)cmd;
 	buf = ft_calloc(sizeof(char *), BUFFER_SIZE);
 	if (!buf)
 		return (1);
