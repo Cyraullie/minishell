@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   child.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 08:44:49 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/18 10:33:58 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/18 13:51:04 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,4 +65,27 @@ int	wait_for_processes(pid_t *pids, int cmd_count, t_command *cmd)
 	}
 	free(pids);
 	return (return_status);
+}
+
+/**
+ * @brief Set the up signals child object
+ * 
+ */
+void	setup_signals_child(t_command *cmd)
+{
+	struct sigaction	sa;
+	struct sigaction	sq;
+
+	sa.sa_handler = handle_sigint;
+	sigemptyset(&sa.sa_mask);
+	sa.sa_flags = 0;
+	sigaction(SIGINT, &sa, NULL);
+	if (!(!ft_strncmp(cmd->cmd, "./minishell", 12)))
+	{
+		ft_bzero(&sq, sizeof(sq));
+		sq.sa_handler = handle_sigquit;
+		sq.sa_flags = 0;
+		sigemptyset(&sq.sa_mask);
+		sigaction(SIGQUIT, &sq, NULL);
+	}
 }
