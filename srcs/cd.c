@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 15:57:59 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/02/18 16:59:51 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/18 17:04:17 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 int	ft_cd(char **cmd, char ***env)
 {
 	char	*userhome;
-	
+
 	userhome = get_userhome(*env);
 	if (!cmd[1])
 		cmd[1] = userhome;
