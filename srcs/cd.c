@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 15:57:59 by cgoldens          #+#    #+#             */
 /*   Updated: 2025/02/18 16:59:51 by cgoldens         ###   ########.fr       */
@@ -21,21 +21,23 @@
 int	ft_cd(char **cmd, char ***env)
 {
 	char	*userhome;
-
+	
 	userhome = get_userhome(*env);
-	if (cmd[2])
-	{
-		ft_putstr_fd("cd: too many arguments\n", 2);
-		return (free(userhome), 1);
-	}
-	if (cmd[1] && !ft_strncmp(cmd[1], "~/", 2))
+	if (!cmd[1])
+		cmd[1] = userhome;
+	else if (cmd[1] && !ft_strncmp(cmd[1], "~/", 2))
 	{
 		cmd[1] = ft_strjoin(userhome, ft_strchr(cmd[1], '/'));
 		if (!cmd[1])
 			return (free(userhome), 1);
 	}
-	free(userhome);
+	else if (cmd[2])
+	{
+		ft_putstr_fd("cd: too many arguments\n", 2);
+		return (free(userhome), 1);
+	}
 	ft_chdir(cmd, env);
+	free(userhome);
 	return (0);
 }
 
