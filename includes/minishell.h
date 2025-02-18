@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:38:10 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/17 15:59:29 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/17 16:12:18 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,7 +207,7 @@ int			get_exitvalue(char **env);
 int			exec_builtin(t_command *cmd_tmp, char ***env, t_command **cmd);
 
 //heredoc.c
-void		heredoc_redir(t_command *cmd, char **env);
+int		heredoc_redir(t_command *cmd, char **env);
 int			max(int first, int second);
 char		*heredoc_expansion(char *line, char **env);
 
