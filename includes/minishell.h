@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:38:10 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/18 16:58:26 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/18 17:02:54 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int			ft_pwd(void);
 int			ft_cd(char **cmd, char ***env);
 char		*get_path(void);
 char		*get_userhome(char **env);
-void		ft_chdir(char **cmd, char ***env, int cnt);
+void		ft_chdir(char **cmd, char ***env);
 
 //update_pwd.c
 void		update_pwd(char *path, char ***env);
