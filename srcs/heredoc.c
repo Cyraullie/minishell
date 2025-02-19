@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 11:04:16 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/02/17 15:59:10 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/19 14:22:55 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,17 +89,19 @@ int	heredoc_redir(t_command *cmd, char **env)
 	g_heredoc_interrupted = 0;
 	setup_signals_heredoc();
 	len = ft_strlen(cmd->read);
-	line = readline("> ");
-	while (line && !g_heredoc_interrupted)
+	while (!g_heredoc_interrupted)
 	{
+		if (!g_heredoc_interrupted)
+			line = readline("> ");
+		printf("%s\n", line);
+		if (!line)
+			break ;
 		if (!ft_strncmp(line, cmd->read, max(len, ft_strlen(line) - 1)))
 			break ;
 		line = heredoc_expansion(line, env);
 		ft_putendl_fd(line, heredocfd[1]);
 		free(line);
-		line = readline("> ");
 	}
-	free(line);
 	close(heredocfd[1]);
 	if (g_heredoc_interrupted)
 		return (close(heredocfd[0]), -1);

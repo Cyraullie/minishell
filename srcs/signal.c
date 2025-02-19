@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 15:47:36 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/02/18 13:54:16 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/19 14:17:47 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	handle_sigint(int sig)
 {
 	if (sig == SIGINT)
 	{
-		g_heredoc_interrupted = 1;
+		g_heredoc_interrupted = sig;
 		write(1, "\n", 1);
 		if (is_child(-1) == 0 || is_child(-1) == 2)
 		{
@@ -38,6 +38,7 @@ void	handle_sigquit(int sig)
 {
 	if (sig == SIGQUIT)
 	{
+		g_heredoc_interrupted = sig;
 		write(1, "\n", 1);
 		if (is_child(-1) == 0 || is_child(-1) == 2)
 		{
@@ -89,9 +90,16 @@ int	is_child(int status)
 void	setup_signals_parent(void)
 {
 	struct sigaction	sa;
+	struct sigaction	sq;
 
+	ft_bzero(&sa, sizeof(sa));
+	ft_bzero(&sq, sizeof(sq));
 	sa.sa_handler = SIG_IGN;
+	sq.sa_handler = SIG_IGN;
 	sigemptyset(&sa.sa_mask);
+	sigemptyset(&sq.sa_mask);
 	sa.sa_flags = 0;
+	sq.sa_flags = 0;
 	sigaction(SIGINT, &sa, NULL);
+	sigaction(SIGQUIT, &sq, NULL);
 }
