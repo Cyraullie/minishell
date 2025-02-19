@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 15:57:59 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/02/18 17:04:17 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/19 14:53:17 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,10 @@ int	ft_cd(char **cmd, char ***env)
 	char	*userhome;
 
 	userhome = get_userhome(*env);
-	if (!cmd[1])
+	if (get_tab_size(cmd) == 1)
 		cmd[1] = userhome;
+	else if (cmd[1][0] == 0)
+		return (free(userhome), 0);
 	else if (cmd[1] && !ft_strncmp(cmd[1], "~/", 2))
 	{
 		cmd[1] = ft_strjoin(userhome, ft_strchr(cmd[1], '/'));
