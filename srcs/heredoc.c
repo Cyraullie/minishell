@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 11:04:16 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/02/19 14:22:55 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/19 14:47:31 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,6 @@ int	heredoc_redir(t_command *cmd, char **env)
 	{
 		if (!g_heredoc_interrupted)
 			line = readline("> ");
-		printf("%s\n", line);
 		if (!line)
 			break ;
 		if (!ft_strncmp(line, cmd->read, max(len, ft_strlen(line) - 1)))
