@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 10:21:58 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/17 15:58:54 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/19 14:08:17 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,16 +99,13 @@ void	setup_input_redirection(t_command *cmd, char **env, t_exec_data *data)
 		else
 			fd = open(cmd->read, O_RDONLY);
 		if (fd == -1)
-		{
-			perror(cmd->read);
-			exit(1);
-		}
+			create_error_msg(": No such file or directory\n", cmd->read, 1, data, NULL);
 		dup2(fd, STDIN_FILENO);
 		close(fd);
 	}
 }
 
-void	setup_output_redirection(t_command *cmd)
+void	setup_output_redirection(t_command *cmd, t_exec_data *data)
 {
 	int	fd;
 
@@ -116,10 +113,7 @@ void	setup_output_redirection(t_command *cmd)
 	{
 		fd = open(cmd->write, cmd->write_type, 0644);
 		if (fd == -1)
-		{
-			perror(cmd->write);
-			exit(1);
-		}
+			create_error_msg(": Permission denied\n", cmd->write, 1, data, NULL);
 		dup2(fd, STDOUT_FILENO);
 		close(fd);
 	}

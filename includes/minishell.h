@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:38:10 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/19 13:20:38 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/19 14:08:33 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -241,7 +241,7 @@ t_command	*setup_redir_read(t_command *cmd, int i, char **env);
 int			redir_single_builtin(t_command *cmd, char **env);
 void		setup_input_redirection(t_command *cmd, char **env,
 				t_exec_data *data);
-void		setup_output_redirection(t_command *cmd);
+void		setup_output_redirection(t_command *cmd, t_exec_data *data);
 
 // child.c
 int			handle_child_process(t_command *cmd, int **pipes, int i,

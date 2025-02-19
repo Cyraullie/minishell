@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   child.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 08:44:49 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/18 13:51:04 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/19 14:45:59 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	handle_child_process(t_command *cmd, int **pipes, int i,
 	if (!is_builtin(cmd->cmd))
 		close_child_pipes(pipes, data->cmd_count);
 	setup_input_redirection(cmd, *(data->env), data);
-	setup_output_redirection(cmd);
+	setup_output_redirection(cmd, data);
 	if (!cmd->cmd)
 		no_command_exit(data, pipes);
 	execute(cmd, data->env, data);
