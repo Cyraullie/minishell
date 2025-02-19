@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 16:31:24 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/19 13:45:13 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/19 13:50:34 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 
 int	check_solo_dollar(char *str, int in_d_quotes, int in_s_quotes)
 {
-	int	i;
-
-	i = 1;
 	if (!str[1])
 		return (1);
 	if (!in_d_quotes && !in_s_quotes && ft_isspace(str[1]))
@@ -25,12 +22,6 @@ int	check_solo_dollar(char *str, int in_d_quotes, int in_s_quotes)
 		return (1);
 	if (in_s_quotes && str[1] == '\'')
 		return (1);
-	while (str [i] && !ft_isspace(str[i]))
-	{
-		if (ft_isalnum(str[i]))
-			return (1);
-		i++;
-	}
 	return (0);
 }
 
