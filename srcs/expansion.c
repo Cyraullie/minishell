@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 16:31:24 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/17 16:05:36 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/19 13:45:13 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 
 int	check_solo_dollar(char *str, int in_d_quotes, int in_s_quotes)
 {
+	int	i;
+
+	i = 1;
 	if (!str[1])
 		return (1);
 	if (!in_d_quotes && !in_s_quotes && ft_isspace(str[1]))
@@ -22,6 +25,12 @@ int	check_solo_dollar(char *str, int in_d_quotes, int in_s_quotes)
 		return (1);
 	if (in_s_quotes && str[1] == '\'')
 		return (1);
+	while (str [i] && !ft_isspace(str[i]))
+	{
+		if (ft_isalnum(str[i]))
+			return (1);
+		i++;
+	}
 	return (0);
 }
 
@@ -85,7 +94,10 @@ void	replace_var(char *token, char *new_token, int *index, char **env)
 	index[0] += len;
 	var_value = get_env_content(var_name, env);
 	if (!var_value)
+	{
+		free(var_name);
 		return ;
+	}
 	len = 0;
 	while (var_value[len])
 	{
