@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_main.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 11:35:35 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/18 13:42:36 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/19 10:15:10 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,9 @@ int	execute_commands(t_exec_data *data, t_command *first_cmd)
 	int			i;
 	t_command	*current_cmd;
 
-	i = data->cmd_count - 1;
+	i = 0;
 	setup_signals_parent();
-	while (i >= 0)
+	while (i < data->cmd_count)
 	{
 		current_cmd = get_cmd_at_index(first_cmd, i);
 		data->pids[i] = fork();
@@ -61,7 +61,7 @@ int	execute_commands(t_exec_data *data, t_command *first_cmd)
 			setup_signals_child(first_cmd);
 			handle_child_process(current_cmd, data->pipes, i, data);
 		}
-		i--;
+		i++;
 	}
 	if (data->pipes)
 		close_pipes(data->pipes, data->cmd_count);
