@@ -6,16 +6,18 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:56:40 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/17 15:58:30 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/19 13:21:38 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
 void	create_error_msg(char *msg, char *string, int error_status,
-		t_exec_data *data)
+		t_exec_data *data, char *path)
 {
 	string = ft_strjoin(string, msg);
+	if (path)
+		free(path);
 	ft_putstr_fd(string, 2);
 	free(string);
 	ft_listdelete(data->head);

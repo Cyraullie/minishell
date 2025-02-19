@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:58:22 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/17 11:49:39 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/19 13:21:01 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,17 +36,17 @@ char	*get_executable_path(t_command *cmd, char ***env, t_exec_data *data)
 		if (lstat(cmd->cmd, &buf) == 0)
 		{
 			if (S_ISDIR(buf.st_mode))
-				create_error_msg(": Is a directory\n", cmd->cmd, 126, data);
+				create_error_msg(": Is a directory\n", cmd->cmd, 126, data, NULL);
 			if (!access(cmd->cmd, X_OK))
 				return (cmd->cmd);
 			else
-				create_error_msg(": permission denied\n", cmd->cmd, 126, data);
+				create_error_msg(": permission denied\n", cmd->cmd, 126, data, NULL);
 		}
 		else
 			exit (1);
 	}
 	if (!S_ISDIR(buf.st_mode) && check_slash(cmd->cmd))
-		create_error_msg(": No such file or directory\n", cmd->cmd, 127, data);
+		create_error_msg(": No such file or directory\n", cmd->cmd, 127, data, NULL);
 	return (NULL);
 }
 

@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 11:35:35 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/19 10:15:10 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/19 13:19:53 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	execute(t_command *cmd, char ***env, t_exec_data *data)
 	}
 	path = get_executable_path(cmd, env, data);
 	if (!path || !cmd->cmd[0])
-		create_error_msg(": command not found\n", cmd->cmd, 127, data);
+		create_error_msg(": command not found\n", cmd->cmd, 127, data, path);
 	if (execve(path, cmd->cmd_tab, *env) == -1)
 	{
 		perror("execve failed");

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:38:10 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/18 17:02:54 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/19 13:20:38 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,7 +230,7 @@ int			check_slash(char *path);
 
 // exec_utils.c
 void		create_error_msg(char *msg, char *string, int error_status,
-				t_exec_data *data);
+				t_exec_data *data, char *path);
 void		wait_pid(pid_t pid, int *status, t_command *cmd);
 void		no_command_exit(t_exec_data *data, int **pipes);
 t_command	*get_cmd_at_index(t_command *start, int target_index);
