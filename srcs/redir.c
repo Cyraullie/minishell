@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 10:21:58 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/20 10:14:22 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/20 10:26:45 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,10 +97,15 @@ void	setup_input_redirection(t_command *cmd, char **env, t_exec_data *data)
 				interrupt_exit(data);
 		}
 		else
+		{
+			if (access(cmd->read, F_OK))
+				create_error_msg(": No such file or directory\n", cmd->read,
+					data, NULL);
 			fd = open(cmd->read, O_RDONLY);
-		if (fd == -1)
-			create_error_msg(": No such file or directory\n", cmd->read, data,
-				NULL);
+			if (fd == -1)
+				create_error_msg(": Permission denied\n",
+					cmd->read, data, NULL);
+		}
 		dup2(fd, STDIN_FILENO);
 		close(fd);
 	}

@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:58:22 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/20 10:14:11 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/20 10:19:40 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	*get_executable_path(t_command *cmd, char ***env, t_exec_data *data)
 			if (!access(cmd->cmd, X_OK))
 				return (cmd->cmd);
 			else
-				create_error_msg(": permission denied\n", cmd->cmd, data, NULL);
+				create_error_msg(": Permission denied\n", cmd->cmd, data, NULL);
 		}
 		else
 			exit (1);
