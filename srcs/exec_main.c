@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_main.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 11:35:35 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/18 13:42:36 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/20 10:16:44 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	execute(t_command *cmd, char ***env, t_exec_data *data)
 	}
 	path = get_executable_path(cmd, env, data);
 	if (!path || !cmd->cmd[0])
-		create_error_msg(": command not found\n", cmd->cmd, 127, data);
+		create_error_msg(": command not found\n", cmd->cmd, data, path);
 	if (execve(path, cmd->cmd_tab, *env) == -1)
 	{
 		perror("execve failed");
@@ -48,11 +48,12 @@ int	execute_commands(t_exec_data *data, t_command *first_cmd)
 	int			i;
 	t_command	*current_cmd;
 
-	i = data->cmd_count - 1;
+	i = 0;
 	setup_signals_parent();
-	while (i >= 0)
+	while (i < data->cmd_count)
 	{
 		current_cmd = get_cmd_at_index(first_cmd, i);
+		data->cmd_tmp = current_cmd;
 		data->pids[i] = fork();
 		if (data->pids[i] == -1)
 			return (1);
@@ -61,7 +62,7 @@ int	execute_commands(t_exec_data *data, t_command *first_cmd)
 			setup_signals_child(first_cmd);
 			handle_child_process(current_cmd, data->pipes, i, data);
 		}
-		i--;
+		i++;
 	}
 	if (data->pipes)
 		close_pipes(data->pipes, data->cmd_count);

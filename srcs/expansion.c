@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 16:31:24 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/17 16:05:36 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/19 13:50:34 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,10 @@ void	replace_var(char *token, char *new_token, int *index, char **env)
 	index[0] += len;
 	var_value = get_env_content(var_name, env);
 	if (!var_value)
+	{
+		free(var_name);
 		return ;
+	}
 	len = 0;
 	while (var_value[len])
 	{

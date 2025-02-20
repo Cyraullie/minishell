@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:38:10 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/18 17:02:54 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/20 10:13:56 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,8 +229,8 @@ char		*get_full_path(char *path, char *cmd);
 int			check_slash(char *path);
 
 // exec_utils.c
-void		create_error_msg(char *msg, char *string, int error_status,
-				t_exec_data *data);
+void		create_error_msg(char *msg, char *string, t_exec_data *data,
+				char *path);
 void		wait_pid(pid_t pid, int *status, t_command *cmd);
 void		no_command_exit(t_exec_data *data, int **pipes);
 t_command	*get_cmd_at_index(t_command *start, int target_index);
@@ -241,7 +241,7 @@ t_command	*setup_redir_read(t_command *cmd, int i, char **env);
 int			redir_single_builtin(t_command *cmd, char **env);
 void		setup_input_redirection(t_command *cmd, char **env,
 				t_exec_data *data);
-void		setup_output_redirection(t_command *cmd);
+void		setup_output_redirection(t_command *cmd, t_exec_data *data);
 
 // child.c
 int			handle_child_process(t_command *cmd, int **pipes, int i,
