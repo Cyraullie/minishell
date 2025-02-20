@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:38:10 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/18 17:02:54 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/20 14:07:09 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int			ft_pwd(void);
 int			ft_cd(char **cmd, char ***env);
 char		*get_path(void);
 char		*get_userhome(char **env);
-void		ft_chdir(char **cmd, char ***env);
+int			ft_chdir(char *path, char ***env, char *userhome);
 
 //update_pwd.c
 void		update_pwd(char *path, char ***env);

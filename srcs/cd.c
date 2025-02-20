@@ -6,12 +6,13 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 15:57:59 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/02/19 14:53:17 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/20 14:18:48 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+//TODO cd "file: Not a directory" if file and not dir
 /**
  * @brief function to move in different directory
  * 
@@ -21,16 +22,20 @@
 int	ft_cd(char **cmd, char ***env)
 {
 	char	*userhome;
+	char	*path;
+	int		exitv;
 
+	path = ft_strdup(cmd[1]);
 	userhome = get_userhome(*env);
 	if (get_tab_size(cmd) == 1)
-		cmd[1] = userhome;
+		path = ft_strdup(userhome);
 	else if (cmd[1][0] == 0)
 		return (free(userhome), 0);
 	else if (cmd[1] && !ft_strncmp(cmd[1], "~/", 2))
 	{
-		cmd[1] = ft_strjoin(userhome, ft_strchr(cmd[1], '/'));
-		if (!cmd[1])
+		free(path);
+		path = ft_strjoin(userhome, ft_strchr(cmd[1], '/'));
+		if (!path)
 			return (free(userhome), 1);
 	}
 	else if (cmd[2])
@@ -38,9 +43,9 @@ int	ft_cd(char **cmd, char ***env)
 		ft_putstr_fd("cd: too many arguments\n", 2);
 		return (free(userhome), 1);
 	}
-	ft_chdir(cmd, env);
-	free(userhome);
-	return (0);
+	exitv = ft_chdir(path, env, userhome);
+	free(path);
+	return (exitv);
 }
 
 /**
@@ -87,27 +92,31 @@ char	*get_userhome(char **env)
  * @param cmd array of command
  * @param env array of environment variable
  */
-void	ft_chdir(char **cmd, char ***env)
+int	ft_chdir(char *path, char ***env, char *userhome)
 {
-	char	*path;
-
-	if (cmd[1] && ft_strncmp(cmd[1], "~", 1))
+	if (path && ft_strncmp(path, "~", 1))
 	{
-		if (!access(cmd[1], X_OK))
+		if (!access(path, X_OK))
 		{
 			update_oldpwd(get_path(), env);
-			chdir(cmd[1]);
+			chdir(path);
 			update_pwd(get_path(), env);
 		}
-		else if (access(cmd[1], F_OK))
-			perror(cmd[1]);
+		else if (access(path, F_OK))
+		{
+			free(userhome);
+			return (perror(path), 1);
+		}
 		else
-			perror(cmd[1]);
-		return ;
+		{
+			free(userhome);
+			return (perror(path), 1);
+		}
+		return (free(userhome), 0);
 	}
-	path = get_userhome(*env);
 	update_oldpwd(get_path(), env);
-	chdir(path);
+	chdir(userhome);
 	update_pwd(get_path(), env);
-	free(path);
+	free(userhome);
+	return (0);
 }
