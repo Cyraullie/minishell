@@ -6,13 +6,12 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 15:57:59 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/02/20 14:18:48 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/20 15:23:50 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-//TODO cd "file: Not a directory" if file and not dir
 /**
  * @brief function to move in different directory
  * 
@@ -85,7 +84,7 @@ char	*get_userhome(char **env)
 	free(user);
 	return (userhome_path);
 }
-
+//TODO cd "file: Not a directory" if file and not dir
 /**
  * @brief function to use chdir
  * 
@@ -94,29 +93,52 @@ char	*get_userhome(char **env)
  */
 int	ft_chdir(char *path, char ***env, char *userhome)
 {
+	int	exitv;
+
 	if (path && ft_strncmp(path, "~", 1))
 	{
-		if (!access(path, X_OK))
+		exitv = !check_dir(path);
+		if (!access(path, X_OK) && exitv)
 		{
 			update_oldpwd(get_path(), env);
 			chdir(path);
 			update_pwd(get_path(), env);
+			exitv = 0;
 		}
-		else if (access(path, F_OK))
+		else if (access(path, X_OK) && exitv)
 		{
-			free(userhome);
-			return (perror(path), 1);
+			exitv = 1;
+			perror(path);
 		}
-		else
-		{
-			free(userhome);
-			return (perror(path), 1);
-		}
-		return (free(userhome), 0);
+		return (free(userhome), exitv);
 	}
 	update_oldpwd(get_path(), env);
 	chdir(userhome);
 	update_pwd(get_path(), env);
 	free(userhome);
+	return (0);
+}
+
+/**
+ * @brief 
+ * 
+ * @param path 
+ * @return int 
+ */
+int	check_dir(char *path)
+{
+	struct stat	path_stat;
+
+	if (stat(path, &path_stat) == 0)
+	{
+		if (S_ISREG(path_stat.st_mode))
+		{
+			ft_putstr_fd(path, 2);
+			ft_putstr_fd(": Not a directory\n", 2);
+			return (1);
+		}
+		else if (S_ISDIR(path_stat.st_mode))
+			return (0);
+	}
 	return (0);
 }
