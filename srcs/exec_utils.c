@@ -6,15 +6,27 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:56:40 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/19 13:21:38 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/20 10:14:41 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	create_error_msg(char *msg, char *string, int error_status,
-		t_exec_data *data, char *path)
+void	create_error_msg(char *msg, char *string, t_exec_data *data, char *path)
 {
+	int	error;
+
+	error = 0;
+	if (data->cmd_tmp->read)
+		if (!ft_strncmp(string, data->cmd_tmp->read, ft_strlen(string) + 1))
+			error = 1;
+	if (data->cmd_tmp->write)
+		if (!ft_strncmp(string, data->cmd_tmp->write, ft_strlen(string) + 1))
+			error = 1;
+	if ((!ft_strncmp(": N", msg, 3) || !ft_strncmp(": I", msg, 3)) && !error)
+		error = 126;
+	if (!error)
+		error = 127;
 	string = ft_strjoin(string, msg);
 	if (path)
 		free(path);
@@ -23,7 +35,7 @@ void	create_error_msg(char *msg, char *string, int error_status,
 	ft_listdelete(data->head);
 	clean_tab(*data->env);
 	free(data->pids);
-	exit(error_status);
+	exit(error);
 }
 
 void	wait_pid(pid_t pid, int *status, t_command *cmd)

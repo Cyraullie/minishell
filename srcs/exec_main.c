@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 11:35:35 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/19 13:19:53 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/20 09:59:01 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ int	execute_commands(t_exec_data *data, t_command *first_cmd)
 	while (i < data->cmd_count)
 	{
 		current_cmd = get_cmd_at_index(first_cmd, i);
+		data->cmd_tmp = current_cmd;
 		data->pids[i] = fork();
 		if (data->pids[i] == -1)
 			return (1);
