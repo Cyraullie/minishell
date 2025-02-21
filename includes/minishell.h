@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:38:10 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/20 10:13:56 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/21 09:45:04 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,7 @@ char		**split_equal(char *str);
 
 //clean.c
 void		clean_tab(char **env);
+void		interrupt_exit(t_exec_data *data);
 
 //check.c
 void		check_tabenv(char **env, int i);
@@ -149,7 +150,6 @@ char		**alloc_name(int size, char **env, int *tab);
 int			*alloc_pos(int size);
 void		init_exec_data(t_exec_data *data, t_command *cmd);
 int			**create_pipes(int cmd_count);
-void		interrupt_exit(t_exec_data *data);
 
 // list.c
 t_command	*ft_listnew(char **content);
