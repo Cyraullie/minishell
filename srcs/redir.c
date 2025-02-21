@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 10:21:58 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/20 10:26:45 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/21 11:35:00 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
+//TODO brief
 t_command	*setup_redir_read(t_command *cmd, int i, char **env)
 {
 	int	fd;

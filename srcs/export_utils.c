@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 16:32:33 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/02/05 13:57:03 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/21 11:25:07 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,13 @@ void	add_envline(char **env, char **nenv, char *title, char **name)
 	clean_tab(name);
 }
 
+/**
+ * @brief add line in env without any content
+ * 
+ * @param env array of environment variable
+ * @param nenv new array of environment variable
+ * @param name name of the envitonment variable
+ */
 void	add_envline_without_content(char **env, char **nenv, char **name)
 {
 	int		i;

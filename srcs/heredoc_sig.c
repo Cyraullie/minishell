@@ -6,22 +6,22 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 13:34:34 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/02/18 15:54:09 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/21 11:26:44 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
 /**
- * @brief 
+ * @brief handle for ctrl+c in heredoc
  * 
- * @param sig 
+ * @param sig receive of sigint activation
  */
 void	handle_sigint_heredoc(int sig)
 {
-	(void)sig;
-	g_heredoc_interrupted = 1;
+	g_heredoc_interrupted = sig;
 	write(1, "\n", 1);
+	rl_replace_line("", 0);
 	close(STDIN_FILENO);
 }
 
@@ -36,12 +36,11 @@ void	setup_signals_heredoc(void)
 
 	ft_bzero(&sa, sizeof(sa));
 	ft_bzero(&sq, sizeof(sq));
+	sq.sa_handler = SIG_IGN;
 	sa.sa_handler = handle_sigint_heredoc;
 	sa.sa_flags = SA_RESTART;
 	sigemptyset(&sa.sa_mask);
-	sigaction(SIGINT, &sa, NULL);
-	sq.sa_handler = handle_sigint_heredoc;
-	sq.sa_flags = SA_RESTART;
 	sigemptyset(&sq.sa_mask);
+	sigaction(SIGINT, &sa, NULL);
 	sigaction(SIGQUIT, &sq, NULL);
 }

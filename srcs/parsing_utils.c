@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 13:51:33 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/15 10:32:03 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/21 11:31:36 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	open_previous_file(t_command *cmd)
 	close(fd);
 	return (1);
 }
-
+//TODO brief
 int	ft_isspace(int c)
 {
 	return (c == ' ' || (9 <= c && c <= 13));

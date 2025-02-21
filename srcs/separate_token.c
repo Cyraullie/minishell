@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   separate_token.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 13:18:37 by lpittet           #+#    #+#             */
-/*   Updated: 2025/01/22 16:15:24 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/21 11:31:53 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
+//TODO brief
 int	check_sep(char *line, int i, int in_d_quotes, int in_s_quotes)
 {
 	if ((line[i] == '<' || line[i] == '>') && (line[i - 1] != line[i])
