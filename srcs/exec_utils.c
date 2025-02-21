@@ -6,12 +6,21 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:56:40 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/20 10:19:52 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/21 11:43:00 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+/**
+ * @brief Create an error msg object print it and exit the child process with 
+ * 		  the correct value
+ * 
+ * @param msg the message to be printed
+ * @param string the command or redir file that failed
+ * @param data t_exec_data struct
+ * @param path path or NULL to be freed
+ */
 void	create_error_msg(char *msg, char *string, t_exec_data *data, char *path)
 {
 	int	error;
@@ -38,6 +47,13 @@ void	create_error_msg(char *msg, char *string, t_exec_data *data, char *path)
 	exit(error);
 }
 
+/**
+ * @brief wait for proceess and update it's return value
+ * 
+ * @param pid the process to be waited
+ * @param status the status it returns
+ * @param cmd command being run
+ */
 void	wait_pid(pid_t pid, int *status, t_command *cmd)
 {
 	int	signal;
@@ -56,6 +72,12 @@ void	wait_pid(pid_t pid, int *status, t_command *cmd)
 	}
 }
 
+/**
+ * @brief clear everything if the command given is empty
+ * 
+ * @param data t_exec_data struct
+ * @param pipes pipe table
+ */
 void	no_command_exit(t_exec_data *data, int **pipes)
 {
 	ft_listdelete(data->head);
@@ -65,6 +87,13 @@ void	no_command_exit(t_exec_data *data, int **pipes)
 	exit (0);
 }
 
+/**
+ * @brief Go to the right command
+ * 
+ * @param start the first element in linked list
+ * @param target_index the target index in the linked list
+ * @return t_command* the command at the correct index
+ */
 t_command	*get_cmd_at_index(t_command *start, int target_index)
 {
 	t_command	*current;
@@ -80,6 +109,12 @@ t_command	*get_cmd_at_index(t_command *start, int target_index)
 	return (current);
 }
 
+/**
+ * @brief close all pipes read and write end
+ * 
+ * @param pipes pipes table
+ * @param count the number of element in pipes
+ */
 void	close_pipes(int **pipes, int count)
 {
 	int	i;

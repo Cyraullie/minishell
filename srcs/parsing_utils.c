@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 13:51:33 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/21 11:31:36 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/21 12:07:45 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,24 @@ int	open_previous_file(t_command *cmd)
 	close(fd);
 	return (1);
 }
-//TODO brief
+
+/**
+ * @brief check if the character is a space (UNIX)
+ * 
+ * @param c a character
+ * @return 1 if is_space 0 otherwise
+ */
 int	ft_isspace(int c)
 {
 	return (c == ' ' || (9 <= c && c <= 13));
 }
 
+/**
+ * @brief check if the character is < or >
+ * 
+ * @param c a character
+ * @return int 1 if is < or > 0 otherwise
+ */
 int	ft_isredir(int c)
 {
 	return (c == '<' || c == '>');

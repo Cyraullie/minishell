@@ -3,15 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   separate_token.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 13:18:37 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/21 11:31:53 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/21 13:34:57 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-//TODO brief
+
+/**
+ * @brief check if a pipe or redir symbol is need to be separated from
+ * 		  alphanumeric character
+ * 
+ * @param line input strinf
+ * @param i index in the line
+ * @param in_d_quotes flag to check if inside double quotes
+ * @param in_s_quotes flag to check if inside single quotes
+ * @return int 1 if need to be separated, 0 otherwise
+ */
 int	check_sep(char *line, int i, int in_d_quotes, int in_s_quotes)
 {
 	if ((line[i] == '<' || line[i] == '>') && (line[i - 1] != line[i])
@@ -23,6 +33,12 @@ int	check_sep(char *line, int i, int in_d_quotes, int in_s_quotes)
 	return (0);
 }
 
+/**
+ * @brief count the space to be allocated in the new line
+ * 
+ * @param line string input
+ * @return int the len after adding necessary spaces
+ */
 int	count_char(char *line)
 {
 	int	in_d_quotes;
@@ -45,6 +61,14 @@ int	count_char(char *line)
 	return (count + i);
 }
 
+/**
+ * @brief add space to separate pipes and redir characters
+ * 		  from alphanumeric characters
+ * 
+ * @param old_line input line
+ * @param new_line line with added spaces
+ * @return char* new_line
+ */
 char	*add_space(char *old_line, char *new_line)
 {
 	int	in_d_quotes;

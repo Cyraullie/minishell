@@ -6,12 +6,18 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:58:22 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/20 10:19:40 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/21 11:43:49 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+/**
+ * @brief check if the command start with ./ or /
+ * 
+ * @param path the command to be checked
+ * @return int 1 if it starts with ./ or / 0 otherwise
+ */
 int	check_slash(char *path)
 {
 	if (!path)
@@ -21,6 +27,14 @@ int	check_slash(char *path)
 	return (0);
 }
 
+/**
+ * @brief Get the executable path object
+ * 
+ * @param cmd the actual command in the linked list
+ * @param env env variable
+ * @param data t_exec data struct
+ * @return char* a path that can be executed or NULL if it does not exist
+ */
 char	*get_executable_path(t_command *cmd, char ***env, t_exec_data *data)
 {
 	char		*path;
@@ -50,6 +64,13 @@ char	*get_executable_path(t_command *cmd, char ***env, t_exec_data *data)
 	return (NULL);
 }
 
+/**
+ * @brief iterate through all path in PATH var to find the correct dir
+ * 
+ * @param cmd the actual command in the linked list
+ * @param env env variable
+ * @return char* the complete path after adding the correct the correct dir
+ */
 char	*find_path(char *cmd, char ***env)
 {
 	char	*path_list;
@@ -59,7 +80,7 @@ char	*find_path(char *cmd, char ***env)
 
 	path_list = search_env(*env);
 	if (!path_list)
-		exit(1);
+		return (NULL);
 	src = ft_split(path_list, ':');
 	i = 0;
 	while (src[i])
@@ -77,6 +98,12 @@ char	*find_path(char *cmd, char ***env)
 	return (NULL);
 }
 
+/**
+ * @brief search for the PATH variable in env
+ * 
+ * @param env environnement
+ * @return char* the PATH var in env
+ */
 char	*search_env(char **env)
 {
 	int		i;
@@ -92,10 +119,17 @@ char	*search_env(char **env)
 		}
 		i++;
 	}
-	ft_putendl_fd("PATH not found", 2);
 	return (NULL);
 }
 
+/**
+ * @brief join the PATH part of the full path with the command 
+ * 		  with the input command
+ * 
+ * @param path the path in PATH
+ * @param cmd the input command 
+ * @return char* 
+ */
 char	*get_full_path(char *path, char *cmd)
 {
 	path = ft_strjoin(path, "/");

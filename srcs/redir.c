@@ -3,15 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 10:21:58 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/21 11:35:00 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/21 13:38:44 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-//TODO brief
+
+/**
+ * @brief open previous read redirection, updates it if it succeeds does not
+ * 		  update if open fails
+ * 
+ * @param cmd node in t_command linked list
+ * @param i index in cmd->raw where redir szmbol was found
+ * @param env environnement variable
+ * @return t_command* 
+ */
 t_command	*setup_redir_read(t_command *cmd, int i, char **env)
 {
 	int	fd;
@@ -41,6 +50,12 @@ t_command	*setup_redir_read(t_command *cmd, int i, char **env)
 	return (cmd);
 }
 
+/**
+ * @brief setup_redir_for single builtin
+ * 
+ * @param cmd the node in t_command linked list
+ * @return int 1 on failure, 0 on succes
+ */
 int	redir_singleout_builtin(t_command *cmd)
 {
 	int	fd;
@@ -84,6 +99,13 @@ int	redir_single_builtin(t_command *cmd, char **env)
 	return (0);
 }
 
+/**
+ * @brief Set the up input redirection heredoc or file
+ * 
+ * @param cmd node in t_command linked list
+ * @param env environnement variable
+ * @param data t_exec_data struct
+ */
 void	setup_input_redirection(t_command *cmd, char **env, t_exec_data *data)
 {
 	int	fd;
@@ -111,6 +133,12 @@ void	setup_input_redirection(t_command *cmd, char **env, t_exec_data *data)
 	}
 }
 
+/**
+ * @brief Set the up output redirection in each command
+ * 
+ * @param cmd actual node in the lisr
+ * @param data t_exec_data
+ */
 void	setup_output_redirection(t_command *cmd, t_exec_data *data)
 {
 	int	fd;
