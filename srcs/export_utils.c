@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 16:32:33 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/02/21 11:25:07 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/21 13:32:28 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,4 +126,29 @@ char	**split_equal(char *str)
 		free(f_str);
 	}
 	return (a_str);
+}
+
+/**
+ * @brief strdup with free inside
+ * 
+ * @param s string
+ * @return char* return the malloc string
+ */
+char	*ft_strdup_and_free(char *s)
+{
+	char	*cpy;
+	int		i;
+
+	i = 0;
+	cpy = malloc(ft_strlen(s) * sizeof(char) + 1);
+	if (cpy == NULL)
+		return (NULL);
+	while (s[i])
+	{
+		cpy[i] = s[i];
+		i++;
+	}
+	free(s);
+	cpy[i] = 0;
+	return (cpy);
 }

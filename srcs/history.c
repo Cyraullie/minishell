@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 16:05:17 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/02/21 11:28:27 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/21 14:31:49 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	handle_history(char *line, char **env)
 	{
 		add_history(line);
 		home = get_userhome(env);
-		shell_content = get_env_content("SHLVL", env);
+		shell_content = get_env_content("?SHLVL", env);
 		path = ft_strjoin(home, HISTORY_FILE);
 		free(home);
 		path = ft_strjoin_and_free(path, shell_content);
@@ -64,7 +64,7 @@ char	*read_start_history(char **env)
 	if (!buf)
 		return (NULL);
 	home = get_userhome(env);
-	shell_content = get_env_content("SHLVL", env);
+	shell_content = get_env_content("?SHLVL", env);
 	path = ft_strjoin(home, HISTORY_FILE);
 	free(home);
 	path = ft_strjoin_and_free(path, shell_content);
