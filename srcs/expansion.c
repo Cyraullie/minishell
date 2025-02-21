@@ -3,15 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 16:31:24 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/21 11:34:53 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/21 11:59:45 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-//TODO brief
+/**
+ * @brief check if we need to expand after a dollar or it's not 
+ * 		  followed by anything
+ * 
+ * @param str the command we are working on
+ * @param in_d_quotes flag to check if it's inside double quotes
+ * @param in_s_quotes flag to check if it's inside single quotes
+ * @return int 1 if the dollar does not need expanding 0 otherwise
+ */
 int	check_solo_dollar(char *str, int in_d_quotes, int in_s_quotes)
 {
 	if (!str[1])

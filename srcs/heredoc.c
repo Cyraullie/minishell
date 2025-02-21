@@ -3,15 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 11:04:16 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/02/21 11:27:02 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/21 12:05:55 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-//TODO brief
+
+/**
+ * @brief find the max between two number
+ * 
+ * @param first int
+ * @param second int
+ * @return the greatest between first and second
+ */
 int	max(int first, int second)
 {
 	if (first > second)
@@ -19,6 +26,13 @@ int	max(int first, int second)
 	return (second);
 }
 
+/**
+ * @brief get new len after expansion
+ * 
+ * @param line inout line
+ * @param env environnement variable
+ * @return the len after expansion
+ */
 int	new_len(char *line, char **env)
 {
 	int		i;
@@ -44,6 +58,14 @@ int	new_len(char *line, char **env)
 	return (len);
 }
 
+/**
+ * @brief if it finds a $ in the input expands it with it env variable value
+ * 
+ * @param line the input line inn heredoc
+ * @param new_line line after expansion
+ * @param env environnement variable
+ * @return char* the expanded line
+ */
 char	*expand_heredoc(char *line, char *new_line, char **env)
 {
 	int	index[2];
@@ -63,6 +85,13 @@ char	*expand_heredoc(char *line, char *new_line, char **env)
 	return (new_line);
 }
 
+/**
+ * @brief manager for expansion variable inside heredoc
+ * 
+ * @param line the line received in heredoc
+ * @param env environnement varible
+ * @return char* the line after expansion
+ */
 char	*heredoc_expansion(char *line, char **env)
 {
 	char	*new_line;
@@ -79,6 +108,13 @@ char	*heredoc_expansion(char *line, char **env)
 	return (new_line);
 }
 
+/**
+ * @brief create a heredoc pipe and return it's read end
+ * 
+ * @param cmd the command we are working on
+ * @param env environnement variable
+ * @return int the read end of the heredoc pipe
+ */
 int	heredoc_redir(t_command *cmd, char **env)
 {
 	int		heredocfd[2];

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_commands.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 15:32:36 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/21 11:32:55 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/21 13:38:21 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,14 @@ void	toggle_quotes(char *s, int i, int *in_d_quotes, int *in_s_quotes)
 		}
 	}
 }
-//TODO brief
+
+/**
+ * @brief count the number of commands in the string 
+ * 		   = number of pipes + 1
+ * 
+ * @param s input string
+ * @return unsigned int the number of command  found 
+ */
 unsigned int	count_cmds(char *s)
 {
 	int	i;
@@ -69,6 +76,13 @@ unsigned int	count_cmds(char *s)
 	return (num_cmds);
 }
 
+/**
+ * @brief create a substring of the string containing only one command
+ * 
+ * @param s string input 
+ * @param i index in the string
+ * @return char* 
+ */
 char	*get_substr(char *s, int *i)
 {
 	int		start;
@@ -91,6 +105,13 @@ char	*get_substr(char *s, int *i)
 	return (result);
 }
 
+/**
+ * @brief fill the comand table with the corresponding command
+ * 
+ * @param s string input 
+ * @param tab the command table that is filled
+ * @param num_cmds the number of commands
+ */
 void	split_commands(char *s, char **tab, int num_cmds)
 {
 	int	i;

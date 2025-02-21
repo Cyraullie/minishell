@@ -12,6 +12,14 @@
 
 #include "../includes/minishell.h"
 
+/**
+ * @brief count the number of words in the inpiut line
+ * 
+ * @param line the input line
+ * @param in_d_quotes flag to know if it's in double quotes
+ * @param in_s_quotes flag to know if it's in single quotes
+ * @return int th number of words
+ */
 int	count_words(char *line, int in_d_quotes, int in_s_quotes)
 {
 	int		i;
@@ -38,6 +46,13 @@ int	count_words(char *line, int in_d_quotes, int in_s_quotes)
 	return (count);
 }
 
+/**
+ * @brief get the word that start at a given index
+ * 
+ * @param line the input
+ * @param i the index in the input line
+ * @return char* the word created from the string
+ */
 char	*fill_words(char *line, int *i)
 {
 	int		len;
@@ -63,6 +78,14 @@ char	*fill_words(char *line, int *i)
 	return (word);
 }
 
+/**
+ * @brief put every word at his place in the table
+ * 
+ * @param line the input
+ * @param tab he table of words that need to be filleds
+ * @param num_words the number of words
+ * @return char** a table of words
+ */
 char	**fill_tab(char *line, char **tab, size_t num_words)
 {
 	int		i;
@@ -81,6 +104,12 @@ char	**fill_tab(char *line, char **tab, size_t num_words)
 	return (tab);
 }
 
+/**
+ * @brief split a string on spaces taking quotes into account
+ * 
+ * @param line the input
+ * @return char** a table of words
+ */
 char	**split_quotes(char *line)
 {
 	char	**tab;
@@ -118,4 +147,3 @@ void	create_list(char *line, t_command **cmd)
 	ft_listadd_back(cmd, new);
 	free(line);
 }
-//TODO brief
