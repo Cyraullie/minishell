@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 15:52:39 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/02/05 15:12:32 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/21 11:23:13 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,25 @@ int	ft_exit(char **cmd, char ***env, t_command **og_cmd)
 	return (exit_and_free(env, og_cmd, 0), 0);
 }
 
+/**
+ * @brief function to free all data
+ * 
+ * @param env array of environment variable
+ * @param list struct of command
+ */
 void	free_all(char ***env, t_command **list)
 {
 	clean_tab(*env);
 	ft_listdelete(*list);
 }
 
+/**
+ * @brief regroup exit and free all
+ * 
+ * @param env array of environment variable
+ * @param list struct of command
+ * @param value value of exit
+ */
 void	exit_and_free(char ***env, t_command **list, int value)
 {
 	free_all(env, list);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 15:57:59 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/02/18 17:04:17 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/21 11:13:22 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,20 @@
 int	ft_cd(char **cmd, char ***env)
 {
 	char	*userhome;
+	char	*path;
+	int		exitv;
 
+	path = ft_strdup(cmd[1]);
 	userhome = get_userhome(*env);
-	if (!cmd[1])
-		cmd[1] = userhome;
+	if (get_tab_size(cmd) == 1)
+		path = ft_strdup(userhome);
+	else if (cmd[1][0] == 0)
+		return (free(userhome), 0);
 	else if (cmd[1] && !ft_strncmp(cmd[1], "~/", 2))
 	{
-		cmd[1] = ft_strjoin(userhome, ft_strchr(cmd[1], '/'));
-		if (!cmd[1])
+		free(path);
+		path = ft_strjoin(userhome, ft_strchr(cmd[1], '/'));
+		if (!path)
 			return (free(userhome), 1);
 	}
 	else if (cmd[2])
@@ -36,9 +42,9 @@ int	ft_cd(char **cmd, char ***env)
 		ft_putstr_fd("cd: too many arguments\n", 2);
 		return (free(userhome), 1);
 	}
-	ft_chdir(cmd, env);
-	free(userhome);
-	return (0);
+	exitv = ft_chdir(path, env, userhome);
+	free(path);
+	return (exitv);
 }
 
 /**
@@ -82,30 +88,59 @@ char	*get_userhome(char **env)
 /**
  * @brief function to use chdir
  * 
- * @param cmd array of command
+ * @param path char of the path to move
  * @param env array of environment variable
+ * @param userhome path of userhome
+ * @return int return exit value
  */
-void	ft_chdir(char **cmd, char ***env)
+int	ft_chdir(char *path, char ***env, char *userhome)
 {
-	char	*path;
+	int	exitv;
 
-	if (cmd[1] && ft_strncmp(cmd[1], "~", 1))
+	if (path && ft_strncmp(path, "~", 1))
 	{
-		if (!access(cmd[1], X_OK))
+		exitv = !check_dir(path);
+		if (!access(path, X_OK) && exitv)
 		{
 			update_oldpwd(get_path(), env);
-			chdir(cmd[1]);
+			chdir(path);
 			update_pwd(get_path(), env);
+			exitv = 0;
 		}
-		else if (access(cmd[1], F_OK))
-			perror(cmd[1]);
-		else
-			perror(cmd[1]);
-		return ;
+		else if (access(path, X_OK) && exitv)
+		{
+			exitv = 1;
+			perror(path);
+		}
+		return (free(userhome), exitv);
 	}
-	path = get_userhome(*env);
 	update_oldpwd(get_path(), env);
-	chdir(path);
+	chdir(userhome);
 	update_pwd(get_path(), env);
-	free(path);
+	free(userhome);
+	return (0);
+}
+
+/**
+ * @brief check if the path is a dir or a file
+ * 
+ * @param path 
+ * @return int return true 0 or false 1
+ */
+int	check_dir(char *path)
+{
+	struct stat	path_stat;
+
+	if (stat(path, &path_stat) == 0)
+	{
+		if (S_ISREG(path_stat.st_mode))
+		{
+			ft_putstr_fd(path, 2);
+			ft_putstr_fd(": Not a directory\n", 2);
+			return (1);
+		}
+		else if (S_ISDIR(path_stat.st_mode))
+			return (0);
+	}
+	return (0);
 }

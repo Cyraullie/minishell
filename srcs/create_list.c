@@ -118,3 +118,4 @@ void	create_list(char *line, t_command **cmd)
 	ft_listadd_back(cmd, new);
 	free(line);
 }
+//TODO brief

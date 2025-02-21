@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_commands.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 15:32:36 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/04 17:12:01 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/21 11:32:55 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	toggle_quotes(char *s, int i, int *in_d_quotes, int *in_s_quotes)
 		}
 	}
 }
-
+//TODO brief
 unsigned int	count_cmds(char *s)
 {
 	int	i;

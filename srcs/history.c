@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 16:05:17 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/02/18 16:08:26 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/21 11:28:27 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,12 @@ void	handle_history(char *line, char **env)
 	}
 }
 
+/**
+ * @brief function to read the history at start of minishell
+ * 
+ * @param env array of environment variable
+ * @return char* return content of .ms_history
+ */
 char	*read_start_history(char **env)
 {
 	int		fd;

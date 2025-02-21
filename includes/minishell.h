@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:38:10 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/21 09:45:04 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/21 11:34:40 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,6 @@
 # endif
 # ifndef HISTORY_FILE
 #  define HISTORY_FILE "/.ms_history"
-# endif
-# ifndef HEREDOC_FILE
-#  define HEREDOC_FILE "/.here_doc"
 # endif
 # include <stdio.h>
 # include <unistd.h>
@@ -92,7 +89,8 @@ int			ft_pwd(void);
 int			ft_cd(char **cmd, char ***env);
 char		*get_path(void);
 char		*get_userhome(char **env);
-void		ft_chdir(char **cmd, char ***env);
+int			ft_chdir(char *path, char ***env, char *userhome);
+int			check_dir(char *path);
 
 //update_pwd.c
 void		update_pwd(char *path, char ***env);
