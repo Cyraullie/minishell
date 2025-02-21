@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 16:01:27 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/02/21 11:18:31 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/21 14:48:20 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,74 @@ int	get_envline(char **env, char *title)
 }
 
 /**
+ * @brief function to get the username in home
+ * 
+ * @param env array of environment variable
+ * @return char* return user name
+ */
+char	*userpath(char **env)
+{
+	char	*buf;
+	char	*userenv;
+	char	**ar_path;
+	char	*username;
+
+	userenv = get_env_content("USER", env);
+	if (userenv)
+		username = ft_strdup_and_free(ft_strjoin("?USER=", userenv));
+	else
+	{
+		buf = ft_calloc(sizeof(char *), BUFFER_SIZE);
+		if (!buf)
+			return (NULL);
+		getcwd(buf, BUFFER_SIZE);
+		if (!buf)
+			return (NULL);
+		ar_path = ft_split(buf, '/');
+		free(buf);
+		username = ft_strdup_and_free(ft_strjoin("?USER=", ar_path[1]));
+		clean_tab(ar_path);
+	}
+	free(userenv);
+	return (username);
+}
+
+/**
+ * @brief add SHLVL in env and SHLVL hide
+ * 
+ * @param env array of environment variable
+ * @param id id in env tab
+ */
+void	shell_level(char ***env, int *id)
+{
+	char	*shell_content;
+	int		i;
+	int		lvl;
+
+	i = *id;
+	shell_content = get_env_content("SHLVL", *env);
+	if (!shell_content)
+	{
+		env[0][i++] = ft_strdup("SHLVL=0");
+		env[0][i++] = ft_strdup("?SHLVL=1");
+	}
+	else
+	{
+		lvl = ft_atoi(shell_content);
+		free(shell_content);
+		shell_content = ft_itoa(lvl + 1);
+		if (get_envline(*env, "?SHLVL") == -1)
+			env[0][i++] = ft_strdup_and_free(ft_strjoin("?SHLVL=", \
+			shell_content));
+		else
+			env[0][get_envline(*env, "?SHLVL")] = \
+			ft_strdup_and_free(ft_strjoin("?SHLVL=", shell_content));
+	}
+	free(shell_content);
+	*id = i;
+}
+
+/**
  * @brief create a modifiable environment variable
  * @param envp , env variable
  * @return NULL on failure, char **env on success
@@ -47,7 +115,6 @@ char	**create_env_array(char **envp)
 {
 	int		i;
 	char	**env;
-	char	*shell_content;
 
 	i = get_tab_size(envp);
 	env = ft_calloc(sizeof(char *), (i + 6));
@@ -60,15 +127,12 @@ char	**create_env_array(char **envp)
 		if (!env[i])
 			return (clean_tab(env), NULL);
 	}
-	env[i++] = ft_strdup("?=0");
-	shell_content = get_env_content("USER", env);
-	env[i++] = ft_strdup_and_free(ft_strjoin("?USER=", shell_content));
-	free(shell_content);
-	shell_content = get_env_content("SHLVL", env);
-	if (!shell_content)
-		env[i++] = ft_strdup("SHLVL=1");
+	if (get_envline(env, "?") == -1)
+		env[i++] = ft_strdup("?=0");
+	env[i++] = userpath(env);
+	shell_level(&env, &i);
 	env[i] = NULL;
-	return (free(shell_content), env);
+	return (env);
 }
 
 /**
@@ -92,29 +156,4 @@ char	*get_env_content(char *var_name, char **env)
 		i++;
 	content = ft_substr(env[ienv], i + 1, ft_strlen(env[ienv]));
 	return (content);
-}
-
-/**
- * @brief strdup with free inside
- * 
- * @param s string
- * @return char* return the malloc string
- */
-char	*ft_strdup_and_free(char *s)
-{
-	char	*cpy;
-	int		i;
-
-	i = 0;
-	cpy = malloc(ft_strlen(s) * sizeof(char) + 1);
-	if (cpy == NULL)
-		return (NULL);
-	while (s[i])
-	{
-		cpy[i] = s[i];
-		i++;
-	}
-	free(s);
-	cpy[i] = 0;
-	return (cpy);
 }

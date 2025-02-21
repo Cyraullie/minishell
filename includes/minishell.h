@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:38:10 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/21 11:34:40 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/21 13:34:29 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,6 @@ void		del_envline(char **env, char **nenv, char *title);
 int			get_envline(char **env, char *title);
 char		*get_env_content(char *var_name, char **env);
 char		**create_env_array(char **envp);
-char		*ft_strdup_and_free(char *s);
 
 //export.c
 int			ft_export(char **cmd, char ***env);
@@ -122,8 +121,8 @@ void		concat_nexistvar(char ***nenv, char **name, int j);
 void		add_envline(char **env, char **nenv, char *title, char **name);
 void		add_envline_without_content(char **env, char **nenv, char **name);
 char		*multiple_equal(char **a_str);
-char		*my_getenv(char *var_name, char **env);
 char		**split_equal(char *str);
+char		*ft_strdup_and_free(char *s);
 
 //clean.c
 void		clean_tab(char **env);
