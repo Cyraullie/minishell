@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 15:57:59 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/02/21 11:13:22 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/21 15:11:51 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int	ft_chdir(char *path, char ***env, char *userhome)
 {
 	int	exitv;
 
-	if (path && ft_strncmp(path, "~", 1))
+	if (path && ft_strncmp(path, "~", 2))
 	{
 		exitv = !check_dir(path);
 		if (!access(path, X_OK) && exitv)
