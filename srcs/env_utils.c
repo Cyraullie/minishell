@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 16:01:27 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/02/21 14:34:45 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/21 14:48:20 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,17 +38,22 @@ int	get_envline(char **env, char *title)
 	return (-1);
 }
 
-//TODO faire une fonction poru get
+/**
+ * @brief function to get the username in home
+ * 
+ * @param env array of environment variable
+ * @return char* return user name
+ */
 char	*userpath(char **env)
 {
 	char	*buf;
 	char	*userenv;
 	char	**ar_path;
-	char	*path;
+	char	*username;
 
 	userenv = get_env_content("USER", env);
 	if (userenv)
-		path = ft_strdup_and_free(ft_strjoin("?USER=", userenv));
+		username = ft_strdup_and_free(ft_strjoin("?USER=", userenv));
 	else
 	{
 		buf = ft_calloc(sizeof(char *), BUFFER_SIZE);
@@ -59,13 +64,19 @@ char	*userpath(char **env)
 			return (NULL);
 		ar_path = ft_split(buf, '/');
 		free(buf);
-		path = ft_strdup_and_free(ft_strjoin("?USER=", ar_path[1]));
+		username = ft_strdup_and_free(ft_strjoin("?USER=", ar_path[1]));
 		clean_tab(ar_path);
 	}
 	free(userenv);
-	return (path);
+	return (username);
 }
 
+/**
+ * @brief add SHLVL in env and SHLVL hide
+ * 
+ * @param env array of environment variable
+ * @param id id in env tab
+ */
 void	shell_level(char ***env, int *id)
 {
 	char	*shell_content;
@@ -95,7 +106,6 @@ void	shell_level(char ***env, int *id)
 	*id = i;
 }
 
-//TODO si env vide segfault missing SHLVL
 /**
  * @brief create a modifiable environment variable
  * @param envp , env variable

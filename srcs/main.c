@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:35:36 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/21 14:00:40 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/21 14:43:13 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,3 @@ int	main(int ac, char **av, char **envp)
 	}
 	return (0);
 }
-//TODO command in minishell child is broke
