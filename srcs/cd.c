@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 15:57:59 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/02/20 15:23:50 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/21 11:13:22 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,12 +84,14 @@ char	*get_userhome(char **env)
 	free(user);
 	return (userhome_path);
 }
-//TODO cd "file: Not a directory" if file and not dir
+
 /**
  * @brief function to use chdir
  * 
- * @param cmd array of command
+ * @param path char of the path to move
  * @param env array of environment variable
+ * @param userhome path of userhome
+ * @return int return exit value
  */
 int	ft_chdir(char *path, char ***env, char *userhome)
 {
@@ -120,10 +122,10 @@ int	ft_chdir(char *path, char ***env, char *userhome)
 }
 
 /**
- * @brief 
+ * @brief check if the path is a dir or a file
  * 
  * @param path 
- * @return int 
+ * @return int return true 0 or false 1
  */
 int	check_dir(char *path)
 {

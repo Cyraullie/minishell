@@ -6,12 +6,12 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 11:04:16 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/02/19 14:47:31 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/21 11:27:02 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
+//TODO brief
 int	max(int first, int second)
 {
 	if (first > second)

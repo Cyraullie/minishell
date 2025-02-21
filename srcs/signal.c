@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 15:47:36 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/02/19 14:17:47 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/21 11:32:36 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,11 @@ void	handle_sigint(int sig)
 	}
 }
 
+/**
+ * @brief handle signal for SIGQUIT (Ctrl+\)
+ * 
+ * @param sig the signal in int
+ */
 void	handle_sigquit(int sig)
 {
 	if (sig == SIGQUIT)

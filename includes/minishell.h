@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:38:10 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/20 15:17:23 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/21 11:28:54 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,6 @@
 # endif
 # ifndef HISTORY_FILE
 #  define HISTORY_FILE "/.ms_history"
-# endif
-# ifndef HEREDOC_FILE
-#  define HEREDOC_FILE "/.here_doc"
 # endif
 # include <stdio.h>
 # include <unistd.h>

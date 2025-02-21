@@ -6,7 +6,7 @@
 /*   By: cgoldens <cgoldens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 16:01:27 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/02/18 16:40:58 by cgoldens         ###   ########.fr       */
+/*   Updated: 2025/02/21 11:18:31 by cgoldens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,12 @@ char	*get_env_content(char *var_name, char **env)
 	return (content);
 }
 
+/**
+ * @brief strdup with free inside
+ * 
+ * @param s string
+ * @return char* return the malloc string
+ */
 char	*ft_strdup_and_free(char *s)
 {
 	char	*cpy;
