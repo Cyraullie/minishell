@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 11:35:35 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/20 10:16:44 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/21 11:21:16 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,14 @@ void	execute(t_command *cmd, char ***env, t_exec_data *data)
 	exit(0);
 }
 
+/**
+ * @brief loop through all the command of the linked list 
+ * 		  and execute all commands
+ * 
+ * @param data t_exec_data struct
+ * @param first_cmd the first element of the linked list
+ * @return int 0 on success 1 on failure
+ */
 int	execute_commands(t_exec_data *data, t_command *first_cmd)
 {
 	int			i;
@@ -69,6 +77,13 @@ int	execute_commands(t_exec_data *data, t_command *first_cmd)
 	return (0);
 }
 
+/**
+ * @brief manager for exec that need forks
+ * 
+ * @param cmd the commnand linked list
+ * @param env env variable
+ * @return int 
+ */
 int	standard_exec(t_command **cmd, char ***env)
 {
 	t_exec_data	data;
@@ -91,6 +106,13 @@ int	standard_exec(t_command **cmd, char ***env)
 	return (status);
 }
 
+/**
+ * @brief check what type of exec is needed and call it
+ * 
+ * @param cmd t_command linkde list
+ * @param env **env variable
+ * @param status 
+ */
 void	exec_main(t_command **cmd, char ***env, int status)
 {
 	pid_t	pid;

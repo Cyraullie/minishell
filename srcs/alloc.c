@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 16:23:23 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/02/21 09:44:29 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/21 11:43:25 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,12 @@ char	**alloc_name(int size, char **env, int *tab)
 	return (name);
 }
 
+/**
+ * @brief init all the element of the data struct to correct value 
+ * 
+ * @param data t_exec_data struct
+ * @param cmd the first element of t_command linked list
+ */
 void	init_exec_data(t_exec_data *data, t_command *cmd)
 {
 	data->cmd_count = 0;
@@ -76,6 +82,12 @@ void	init_exec_data(t_exec_data *data, t_command *cmd)
 	data->pids = ft_calloc(sizeof(pid_t), data->cmd_count);
 }
 
+/**
+ * @brief Create and init all the pipes needed for every input
+ * 
+ * @param cmd_count the number of commmand
+ * @return int** a table of pipes 
+ */
 int	**create_pipes(int cmd_count)
 {
 	int	**pipes;
@@ -102,4 +114,3 @@ int	**create_pipes(int cmd_count)
 	}
 	return (pipes);
 }
-
