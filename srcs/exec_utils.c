@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:56:40 by lpittet           #+#    #+#             */
-/*   Updated: 2025/02/21 11:43:00 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/24 09:54:03 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ void	create_error_msg(char *msg, char *string, t_exec_data *data, char *path)
 	ft_putstr_fd(string, 2);
 	free(string);
 	ft_listdelete(data->head);
+	if (data->pipes)
+		close_pipes(data->pipes, data->cmd_count);
 	clean_tab(*data->env);
 	free(data->pids);
 	exit(error);
