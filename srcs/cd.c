@@ -6,7 +6,7 @@
 /*   By: lpittet <lpittet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 15:57:59 by cgoldens          #+#    #+#             */
-/*   Updated: 2025/02/24 10:07:22 by lpittet          ###   ########.fr       */
+/*   Updated: 2025/02/24 10:09:49 by lpittet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ int	ft_cd(char **cmd, char ***env)
 	char	*path;
 	int		exitv;
 
-	path = ft_strdup(cmd[1]);
+	if (cmd[1])
+		path = ft_strdup(cmd[1]);
 	userhome = get_userhome(*env);
 	if (get_tab_size(cmd) == 1)
 		path = ft_strdup(userhome);
@@ -43,8 +44,7 @@ int	ft_cd(char **cmd, char ***env)
 		return (free(userhome), 1);
 	}
 	exitv = ft_chdir(path, env, userhome);
-	free(path);
-	return (exitv);
+	return (free(path), exitv);
 }
 
 /**
